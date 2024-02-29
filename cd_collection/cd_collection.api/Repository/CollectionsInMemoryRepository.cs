@@ -2,35 +2,39 @@ using cd_collection.Models;
 
 namespace cd_collection.Repository;
 
-public class CollectionsInMemoryRepository
+public class CollectionsInMemoryRepository: ICollectionsRepository
 {
-    private List<CdCollection?> _collections;
+    private List<Collection?> _collections;
 
     public CollectionsInMemoryRepository()
     {
-        _collections = new List<CdCollection?>
+        _collections = new List<Collection?>
         {
-            new CdCollection(Guid.NewGuid(), "OneTwoThree", new List<Guid>() { Guid.NewGuid() }, DateTime.Now),
-            new CdCollection(Guid.NewGuid(), "DupaDupa", new List<Guid>() { Guid.NewGuid() }, DateTime.Now)
+            new Collection(Guid.NewGuid(), "OneTwoThree", new List<Guid>() { Guid.NewGuid() }, DateTime.Now),
+            new Collection(Guid.NewGuid(), "FourFiveSix", new List<Guid>() { Guid.NewGuid() }, DateTime.Now)
         };
     }
 
-
-    public CdCollection? AddCollection(string name)
+    public Collection? GetCollection(Guid guid)
     {
-        var collectionId = Guid.NewGuid();
-        _collections.Add(new CdCollection(collectionId, name, new List<Guid>() { Guid.NewGuid() }, DateTime.Now));
-        return _collections.SingleOrDefault(x => x.CollectionId == collectionId);
+        return _collections.SingleOrDefault(x => x.Id == guid);
     }
 
-    public List<CdCollection?> GetCollections()
+    public Collection? AddCollection(string name)
+    {
+        var collectionId = Guid.NewGuid();
+        _collections.Add(new Collection(collectionId, name, new List<Guid>() { Guid.NewGuid() }, DateTime.Now));
+        return _collections.SingleOrDefault(x => x.Id == collectionId);
+    }
+
+    public List<Collection?> GetCollections()
     {
         return _collections;
     }
 
-    public CdCollection? UpdateCollection(Guid guid, string collectionName)
+    public Collection? UpdateCollection(Guid guid, string collectionName)
     {
-        var oldCollection = _collections.SingleOrDefault(x => x.CollectionId == guid);
+        var oldCollection = _collections.SingleOrDefault(x => x.Id == guid);
         if (oldCollection == null)
         {
             return null;
@@ -38,7 +42,7 @@ public class CollectionsInMemoryRepository
         }
 
         var newCollection =
-            new CdCollection(oldCollection.CollectionId, collectionName, oldCollection.CdIds, DateTime.Now);
+            new Collection(oldCollection.Id, collectionName, oldCollection.ItemsIds, DateTime.Now);
 
         _collections.Remove(oldCollection);
         _collections.Add(newCollection);
@@ -48,7 +52,7 @@ public class CollectionsInMemoryRepository
 
     public Guid? DeleteCollection(Guid guid)
     {
-        var collection = _collections.SingleOrDefault(x => x.CollectionId == guid);
+        var collection = _collections.SingleOrDefault(x => x.Id == guid);
         if (collection == null)
         {
             //throw exception
