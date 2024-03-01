@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZCJCM6yMVrpTiGrBIH5lo4mGdLa879CAP6sGcdF8HrU9/deRGY6VTYkxhyh5D4lUXIGz01rZrJKv4euJ6AbpMQ==",
+  "success": true,
+  "projectFilePath": "/Users/szymonkowalski/Documents/Repo/cd_collection/cd_collection/cd_collection.api/cd_collection.api.csproj",
+  "expectedPackageFiles": [
+    "/Users/szymonkowalski/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/szymonkowalski/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/Users/szymonkowalski/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "/Users/szymonkowalski/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
