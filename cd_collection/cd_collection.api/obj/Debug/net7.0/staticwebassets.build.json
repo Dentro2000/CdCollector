@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Ff2dX3sebxSc86+ISzGBWY5ldp4qqmNHlu9rNRb0wdw=",
+  "Source": "cd_collection.api",
+  "BasePath": "_content/cd_collection.api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
