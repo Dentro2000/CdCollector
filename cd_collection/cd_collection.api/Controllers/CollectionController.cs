@@ -8,23 +8,24 @@ namespace cd_collection.Controllers;
 [Route("collections")]
 public class CdCollectionController : ControllerBase
 {
-    private readonly CollectionsInMemoryRepository _repository;
+    private readonly ICollectionsRepository _collectionsRepository;
+    private readonly ICollectionsRepository _itemsRepository;
 
-    public CdCollectionController(CollectionsInMemoryRepository repository)
+    public CdCollectionController(ICollectionsRepository collectionsRepository)
     {
-        _repository = repository;
+        _collectionsRepository = collectionsRepository;
     }
 
     [HttpGet]
     public Task<ActionResult<IEnumerable<Collection>>> GetAllCollections()
     {
-        return Task.FromResult<ActionResult<IEnumerable<Collection>>>(Ok(_repository.GetCollections()));
+        return Task.FromResult<ActionResult<IEnumerable<Collection>>>(Ok(_collectionsRepository.GetCollections()));
     }
 
     [HttpPost]
     public Task<ActionResult<Collection>> CreateCollection(string collectionName)
     {
-        var collection = _repository.AddCollection(collectionName);
+        var collection = _collectionsRepository.AddCollection(collectionName);
         return Task.FromResult<ActionResult<Collection>>(Ok(collection));
     }
 
@@ -32,7 +33,7 @@ public class CdCollectionController : ControllerBase
     [HttpGet("collections/{collectionId:guid}")]
     public Task<ActionResult<IEnumerable<Collection>>> GetCollection(Guid collectionId)
     {
-        var collection = _repository.GetCollections().SingleOrDefault(x => x.Id == collectionId);
+        var collection = _collectionsRepository.GetCollections().SingleOrDefault(x => x.Id == collectionId);
         if (collection == null)
         {
             return Task.FromResult<ActionResult<IEnumerable<Collection>>>(NotFound());
@@ -45,7 +46,7 @@ public class CdCollectionController : ControllerBase
     [HttpPut("collections/{collectionId:guid}")]
     public Task<ActionResult<Collection>> UpdateCollection(Guid collectionId, string collectionName)
     {
-        var collection = _repository.UpdateCollection(collectionId, collectionName);
+        var collection = _collectionsRepository.UpdateCollection(collectionId, collectionName);
         if (collection == null)
         {
             return Task.FromResult<ActionResult<Collection>>(NotFound());
@@ -58,11 +59,7 @@ public class CdCollectionController : ControllerBase
     [HttpDelete("collections{collectionId:guid}")]
     public async Task<ActionResult> DeleteCollection(Guid collectionId)
     {
-        var collection = _repository.DeleteCollection(collectionId);
-        if (collection != null)
-        {
-            return NotFound();
-        }
+        var collection = _collectionsRepository.DeleteCollection(collectionId);
         return NoContent();
     }
 }
