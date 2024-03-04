@@ -9,8 +9,8 @@ public interface ICollectionsRepository
 
     Collection? GetCollection(Guid guid);
     Collection? AddCollection(string name);
-    
-    Collection? UpdateCollection(Guid guid, string collectionName);
 
-    Guid? DeleteCollection(Guid guid);
+    public Collection? UpdateCollection(Guid guid, string? collectionName, Guid? itemId);
+
+    bool DeleteCollection(Guid guid);
 }

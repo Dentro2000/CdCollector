@@ -2,16 +2,17 @@ using cd_collection.Models;
 
 namespace cd_collection.Repository;
 
-public class CollectionsInMemoryRepository: ICollectionsRepository
+public class CollectionsInMemoryRepository : ICollectionsRepository
 {
     private List<Collection?> _collections;
+
 
     public CollectionsInMemoryRepository()
     {
         _collections = new List<Collection?>
         {
-            new Collection(Guid.NewGuid(), "OneTwoThree", new List<Guid>() { Guid.NewGuid() }, DateTime.Now),
-            new Collection(Guid.NewGuid(), "FourFiveSix", new List<Guid>() { Guid.NewGuid() }, DateTime.Now)
+            new Collection(name: "OneTwoThree", itemsIds: new List<Guid>() { Guid.NewGuid(), }),
+            new Collection(name: "FourFiveSix", itemsIds: new List<Guid>() { Guid.NewGuid(), }),
         };
     }
 
@@ -22,9 +23,9 @@ public class CollectionsInMemoryRepository: ICollectionsRepository
 
     public Collection? AddCollection(string name)
     {
-        var collectionId = Guid.NewGuid();
-        _collections.Add(new Collection(collectionId, name, new List<Guid>() { Guid.NewGuid() }, DateTime.Now));
-        return _collections.SingleOrDefault(x => x.Id == collectionId);
+        var collection = new Collection(name: name, new List<Guid>() { Guid.NewGuid() });
+        _collections.Add(collection);
+        return _collections.SingleOrDefault(x => x.Id == collection.Id);
     }
 
     public List<Collection?> GetCollections()
@@ -32,35 +33,66 @@ public class CollectionsInMemoryRepository: ICollectionsRepository
         return _collections;
     }
 
-    public Collection? UpdateCollection(Guid guid, string collectionName)
+    public Collection? UpdateCollection(Guid guid, string? collectionName, Guid? itemId)
     {
-        var oldCollection = _collections.SingleOrDefault(x => x.Id == guid);
-        if (oldCollection == null)
+        var collection = _collections.SingleOrDefault(x => x.Id == guid);
+        if (collection == null)
         {
             return null;
-            //throw exception
+            //TODO: throw exception
         }
 
-        var newCollection =
-            new Collection(oldCollection.Id, collectionName, oldCollection.ItemsIds, DateTime.Now);
+        if (!string.IsNullOrEmpty(collectionName))
+        {
+            collection.ChangeName(collectionName);
+        }
 
-        _collections.Remove(oldCollection);
-        _collections.Add(newCollection);
-
-        return newCollection;
+        if (itemId != null && !collection.ItemsIds.Contains(itemId.Value))
+        {
+            collection.AddItem(itemId.Value);
+        }
+        
+        return collection;
     }
 
-    public Guid? DeleteCollection(Guid guid)
+    public bool DeleteCollection(Guid guid)
     {
+        //return bool
         var collection = _collections.SingleOrDefault(x => x.Id == guid);
         if (collection == null)
         {
             //throw exception
             Console.WriteLine($"No collection found ad id: {guid}");
-            return guid;
+            return false;
         }
 
         _collections.Remove(collection);
-        return null;
+        return true;
+    }
+
+    public Collection? AddItemToCollection(Guid itemId, Guid collectionId)
+    {
+        var collection = _collections.SingleOrDefault(x => x.Id == collectionId);
+        if (collection == null)
+        {
+            //throw exception and get rid of optionals
+            return null;
+        }
+
+        collection.ItemsIds.Add(itemId);
+        return collection;
+    }
+
+    public Collection? RemoveItemFromCollection(Guid itemId, Guid collectionId)
+    {
+        var collection = _collections.SingleOrDefault(x => x.Id == collectionId);
+        if (collection == null)
+        {
+            //throw exception
+            return null;
+        }
+
+        collection.ItemsIds.Remove(itemId);
+        return collection;
     }
 }

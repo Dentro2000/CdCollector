@@ -44,9 +44,9 @@ public class CdCollectionController : ControllerBase
 
 
     [HttpPut("collections/{collectionId:guid}")]
-    public Task<ActionResult<Collection>> UpdateCollection(Guid collectionId, string collectionName)
+    public Task<ActionResult<Collection>> UpdateCollection(Guid collectionId, string? collectionName, Guid? itemId)
     {
-        var collection = _collectionsRepository.UpdateCollection(collectionId, collectionName);
+        var collection = _collectionsRepository.UpdateCollection(collectionId, collectionName, itemId);
         if (collection == null)
         {
             return Task.FromResult<ActionResult<Collection>>(NotFound());

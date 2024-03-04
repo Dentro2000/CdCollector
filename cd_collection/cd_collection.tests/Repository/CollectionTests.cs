@@ -34,7 +34,7 @@ public class CollectionsRepositoryTests
         
         // When
         var newName = "ChangedName";
-        _repository.UpdateCollection(collection.Id, newName);
+        _repository.UpdateCollection(collection.Id, newName, null);
         
         //Then
         var updated = _repository.GetCollection(collection.Id);
