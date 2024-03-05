@@ -10,8 +10,8 @@ public class ItemsInMemoryRepository: IItemsRepository
     {
         _items = new List<CdItemModel?>()
         {
-            new CdItemModel(Guid.NewGuid(), "SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
-            new CdItemModel(Guid.NewGuid(), "SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
+            new CdItemModel("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
+            new CdItemModel( "SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
         };
     }
 
@@ -27,8 +27,7 @@ public class ItemsInMemoryRepository: IItemsRepository
 
     public CdItemModel? CreateItem(string artist, string title, string label, DateTime relaseDate)
     {
-        var guid = Guid.NewGuid();
-        var newItem = new CdItemModel(guid, artist, title, label, relaseDate);
+        var newItem = new CdItemModel(artist, title, label, relaseDate);
         var ifItemAlreadyExist = _items.SingleOrDefault(x =>
             x.Artist == artist 
             && x.Title == title 
@@ -42,25 +41,41 @@ public class ItemsInMemoryRepository: IItemsRepository
         }
 
         _items.Add(newItem);
-        return _items.Single(x => x.Id == guid);
+        return _items.Single(x => x.Id == newItem.Id);
     }
 
-    public CdItemModel? UpdateItem(Guid guid, string artist, string title, string label, DateTime relaseDate)
+    public CdItemModel? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? relaseDate)
     {
-        var oldItem = _items.SingleOrDefault(x => x.Id == guid);
-        if (oldItem == null)
+        
+        var item = _items.SingleOrDefault(x => x.Id == guid);
+        
+        if (item == null)
         {
             return null;
             //throw exception
         }
 
-        var newItem =
-            new CdItemModel(oldItem.Id, artist, title, label, relaseDate);
+        if (!string.IsNullOrEmpty(artist))
+        {
+            item.ChangeArtist(artist);
+        }
 
-        _items.Remove(oldItem);
-        _items.Add(newItem);
+        if (!string.IsNullOrEmpty(title))
+        {
+         item.ChangeTitle(title);   
+        }
+        
+        if (!string.IsNullOrEmpty(label))
+        {
+            item.ChangeLabel(label);
+        }
+        
+        if (relaseDate != null)
+        {
+            item.ChangeReleaseDate(relaseDate.Value);
+        }
 
-        return newItem;
+        return item;
     }
 
     public void DeleteItem(Guid guid)

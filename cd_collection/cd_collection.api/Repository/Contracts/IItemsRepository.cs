@@ -10,7 +10,7 @@ public interface IItemsRepository
 
     CdItemModel? CreateItem(string artist, string title, string label, DateTime relaseDate);
     
-    CdItemModel? UpdateItem(Guid guid, string artist, string title, string label, DateTime relaseDate);
+    CdItemModel? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? relaseDate);
 
     void DeleteItem(Guid guid);
 }

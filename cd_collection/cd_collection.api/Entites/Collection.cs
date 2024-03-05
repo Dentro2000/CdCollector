@@ -19,12 +19,6 @@ public class Collection
 
     public string? ChangeName(string name)
     {
-        if (name == Name)
-        {
-            //TODO: throw exception
-            return null;
-        }
-
         Name = name;
         SetLastUpdate();
         return Name;
