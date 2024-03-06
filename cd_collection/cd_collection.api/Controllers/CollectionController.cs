@@ -1,3 +1,4 @@
+using cd_collection.DTO;
 using cd_collection.Models;
 using cd_collection.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +18,9 @@ public class CdCollectionController : ControllerBase
     }
 
     [HttpGet]
-    public Task<ActionResult<IEnumerable<Collection>>> GetAllCollections()
+    public ActionResult<List<CollectionDto>> GetAllCollections()
     {
-        return Task.FromResult<ActionResult<IEnumerable<Collection>>>(Ok(_collectionsService.GetCollections()));
+        return Ok(_collectionsService.GetCollections());
     }
 
     [HttpPost]

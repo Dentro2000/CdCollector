@@ -5,16 +5,19 @@ public class Collection
     public Guid Id { get; }
     public string Name { get; private set; }
     public List<Guid> ItemsIds { get; }
-    
+
+    public DateTime CreationDate { get; private set;  }
+
     //TODO: ADD ABSTRACTION
     public DateTime LastUpdate { get; private set; }
 
-    public Collection(string name, List<Guid> itemsIds)
+    public Collection(string name)
     {
         Id = Guid.NewGuid();
         Name = name;
-        ItemsIds = itemsIds;
+        ItemsIds = new List<Guid>();
         LastUpdate = DateTime.Now;
+        CreationDate = DateTime.Now;
     }
 
     public string? ChangeName(string name)

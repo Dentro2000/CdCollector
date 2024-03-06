@@ -1,3 +1,4 @@
+using cd_collection.DTO;
 using cd_collection.Models;
 
 namespace cd_collection.Repository;
@@ -5,7 +6,7 @@ namespace cd_collection.Repository;
 public interface ICollectionsService
 {
     
-    List<Collection?> GetCollections();
+    IEnumerable<CollectionDto?> GetCollections();
 
     Collection? GetCollection(Guid guid);
     Collection? AddCollection(string name);

@@ -1,3 +1,4 @@
+using cd_collection.DTO;
 using cd_collection.Models;
 
 namespace cd_collection.Repository;
@@ -11,8 +12,8 @@ public class CollectionsService : ICollectionsService
     {
         _collections = new List<Collection?>
         {
-            new Collection(name: "OneTwoThree", itemsIds: new List<Guid>() { Guid.NewGuid(), }),
-            new Collection(name: "FourFiveSix", itemsIds: new List<Guid>() { Guid.NewGuid(), }),
+            new Collection(name: "OneTwoThree"),
+            new Collection(name: "FourFiveSix"),
         };
     }
 
@@ -23,14 +24,18 @@ public class CollectionsService : ICollectionsService
 
     public Collection? AddCollection(string name)
     {
-        var collection = new Collection(name: name, new List<Guid>() { Guid.NewGuid() });
+        var collection = new Collection(name: name);
         _collections.Add(collection);
         return _collections.SingleOrDefault(x => x.Id == collection.Id);
     }
 
-    public List<Collection?> GetCollections()
+    public IEnumerable<CollectionDto?> GetCollections()
     {
-        return _collections;
+        return _collections.Select(x => new CollectionDto
+        {
+            ItemsIds = x.ItemsIds,
+            Name = x.Name,
+        });
     }
 
     public Collection? UpdateCollection(Guid guid, string? collectionName, Guid? itemId)
