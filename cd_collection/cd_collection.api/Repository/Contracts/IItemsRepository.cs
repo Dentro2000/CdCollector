@@ -8,9 +8,9 @@ public interface IItemsRepository
 
     CdItemModel GetItem(Guid id);
 
-    CdItemModel? CreateItem(string artist, string title, string label, DateTime relaseDate);
+    CdItemModel? CreateItem(string artist, string title, string label, DateTime releaseDate);
     
-    CdItemModel? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? relaseDate);
+    CdItemModel? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate);
 
     void DeleteItem(Guid guid);
 }

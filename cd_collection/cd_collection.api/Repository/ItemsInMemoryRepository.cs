@@ -10,8 +10,8 @@ public class ItemsInMemoryRepository: IItemsRepository
     {
         _items = new List<CdItemModel?>()
         {
-            new CdItemModel("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
-            new CdItemModel( "SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
+            new ("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
+            new ("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
         };
     }
 
@@ -25,14 +25,14 @@ public class ItemsInMemoryRepository: IItemsRepository
         return _items.SingleOrDefault(x => x.Id == id);
     }
 
-    public CdItemModel? CreateItem(string artist, string title, string label, DateTime relaseDate)
+    public CdItemModel? CreateItem(string artist, string title, string label, DateTime releaseDate)
     {
-        var newItem = new CdItemModel(artist, title, label, relaseDate);
+        var newItem = new CdItemModel(artist, title, label, releaseDate);
         var ifItemAlreadyExist = _items.SingleOrDefault(x =>
             x.Artist == artist 
             && x.Title == title 
             && x.Label == label 
-            && x.ReleaseDate == relaseDate);
+            && x.ReleaseDate == releaseDate);
 
         if (ifItemAlreadyExist != null)
         {
@@ -44,7 +44,7 @@ public class ItemsInMemoryRepository: IItemsRepository
         return _items.Single(x => x.Id == newItem.Id);
     }
 
-    public CdItemModel? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? relaseDate)
+    public CdItemModel? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate)
     {
         
         var item = _items.SingleOrDefault(x => x.Id == guid);
@@ -70,9 +70,9 @@ public class ItemsInMemoryRepository: IItemsRepository
             item.ChangeLabel(label);
         }
         
-        if (relaseDate != null)
+        if (releaseDate != null)
         {
-            item.ChangeReleaseDate(relaseDate.Value);
+            item.ChangeReleaseDate(releaseDate.Value);
         }
 
         return item;
