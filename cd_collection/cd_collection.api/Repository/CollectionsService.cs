@@ -2,12 +2,12 @@ using cd_collection.Models;
 
 namespace cd_collection.Repository;
 
-public class CollectionsInMemoryRepository : ICollectionsRepository
+public class CollectionsService : ICollectionsService
 {
     private List<Collection?> _collections;
 
 
-    public CollectionsInMemoryRepository()
+    public CollectionsService()
     {
         _collections = new List<Collection?>
         {

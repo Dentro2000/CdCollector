@@ -8,24 +8,24 @@ namespace cd_collection.Controllers;
 [Route("collections")]
 public class CdCollectionController : ControllerBase
 {
-    private readonly ICollectionsRepository _collectionsRepository;
-    private readonly ICollectionsRepository _itemsRepository;
+    private readonly ICollectionsService _collectionsService;
+    private readonly ICollectionsService _itemsService;
 
-    public CdCollectionController(ICollectionsRepository collectionsRepository)
+    public CdCollectionController(ICollectionsService collectionsService)
     {
-        _collectionsRepository = collectionsRepository;
+        _collectionsService = collectionsService;
     }
 
     [HttpGet]
     public Task<ActionResult<IEnumerable<Collection>>> GetAllCollections()
     {
-        return Task.FromResult<ActionResult<IEnumerable<Collection>>>(Ok(_collectionsRepository.GetCollections()));
+        return Task.FromResult<ActionResult<IEnumerable<Collection>>>(Ok(_collectionsService.GetCollections()));
     }
 
     [HttpPost]
     public Task<ActionResult<Collection>> CreateCollection(string collectionName)
     {
-        var collection = _collectionsRepository.AddCollection(collectionName);
+        var collection = _collectionsService.AddCollection(collectionName);
         return Task.FromResult<ActionResult<Collection>>(Ok(collection));
     }
 
@@ -33,7 +33,7 @@ public class CdCollectionController : ControllerBase
     [HttpGet("collections/{collectionId:guid}")]
     public Task<ActionResult<IEnumerable<Collection>>> GetCollection(Guid collectionId)
     {
-        var collection = _collectionsRepository.GetCollections().SingleOrDefault(x => x.Id == collectionId);
+        var collection = _collectionsService.GetCollections().SingleOrDefault(x => x.Id == collectionId);
         if (collection == null)
         {
             return Task.FromResult<ActionResult<IEnumerable<Collection>>>(NotFound());
@@ -46,7 +46,7 @@ public class CdCollectionController : ControllerBase
     [HttpPut("collections/{collectionId:guid}")]
     public Task<ActionResult<Collection>> UpdateCollection(Guid collectionId, string? collectionName, Guid? itemId)
     {
-        var collection = _collectionsRepository.UpdateCollection(collectionId, collectionName, itemId);
+        var collection = _collectionsService.UpdateCollection(collectionId, collectionName, itemId);
         if (collection == null)
         {
             return Task.FromResult<ActionResult<Collection>>(NotFound());
@@ -59,7 +59,7 @@ public class CdCollectionController : ControllerBase
     [HttpDelete("collections{collectionId:guid}")]
     public async Task<ActionResult> DeleteCollection(Guid collectionId)
     {
-        var collection = _collectionsRepository.DeleteCollection(collectionId);
+        var collection = _collectionsService.DeleteCollection(collectionId);
         return NoContent();
     }
 }

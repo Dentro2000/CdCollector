@@ -2,11 +2,11 @@ using cd_collection.Models;
 
 namespace cd_collection.Repository;
 
-public class ItemsInMemoryRepository: IItemsRepository
+public class ItemsService: IItemsService
 {
     private List<CdItemModel?> _items;
     
-    public ItemsInMemoryRepository()
+    public ItemsService()
     {
         _items = new List<CdItemModel?>()
         {

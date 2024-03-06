@@ -2,7 +2,7 @@ using cd_collection.Models;
 
 namespace cd_collection.Repository;
 
-public interface ICollectionsRepository
+public interface ICollectionsService
 {
     
     List<Collection?> GetCollections();

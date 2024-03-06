@@ -4,12 +4,12 @@ namespace cd_collection.tests;
 
 public class ItemTests
 {
-    private  IItemsRepository _repository;
+    private  IItemsService _service;
     
     [SetUp]
     public void Setup()
     {
-        _repository = new ItemsInMemoryRepository();
+        _service = new ItemsService();
     }
 
     [Test]
@@ -17,10 +17,10 @@ public class ItemTests
     {
         // Given
         // When
-        var newItem =  _repository.CreateItem("Zenek", "Kupatasa", "KupatasaRecords", new DateTime(2024, 02, 29));
+        var newItem =  _service.CreateItem("Zenek", "Kupatasa", "KupatasaRecords", new DateTime(2024, 02, 29));
         
         //Then
-        var item = _repository.GetItem(newItem.Id);
+        var item = _service.GetItem(newItem.Id);
         
         Assert.IsNotNull(item);
     }
@@ -29,16 +29,16 @@ public class ItemTests
     public void TestUpdate()
     {
         // Given
-        var oldItem =  _repository.CreateItem("Nowy", "Album", "KupatasaRecords", new DateTime(2024, 02, 29));
+        var oldItem =  _service.CreateItem("Nowy", "Album", "KupatasaRecords", new DateTime(2024, 02, 29));
 
         
         // When
         var newLabel = "NewLabel";
-        var newItem = _repository.UpdateItem(oldItem.Id, oldItem.Artist, oldItem.Title, newLabel, oldItem.ReleaseDate);
+        var newItem = _service.UpdateItem(oldItem.Id, oldItem.Artist, oldItem.Title, newLabel, oldItem.ReleaseDate);
 
         
         //Then
-        var updated = _repository.GetItem(oldItem.Id);
+        var updated = _service.GetItem(oldItem.Id);
         
         Assert.True(updated.Label == newLabel);
     }

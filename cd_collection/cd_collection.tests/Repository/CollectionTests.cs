@@ -4,12 +4,12 @@ namespace cd_collection.tests;
 
 public class CollectionsRepositoryTests
 {
-    private  ICollectionsRepository _repository;
+    private  ICollectionsService _service;
     
     [SetUp]
     public void Setup()
     {
-        _repository = new CollectionsInMemoryRepository();
+        _service = new CollectionsService();
     }
 
     [Test]
@@ -17,10 +17,10 @@ public class CollectionsRepositoryTests
     {
         // Given
         // When
-       var newCollection =  _repository.AddCollection("TestCollection");
+       var newCollection =  _service.AddCollection("TestCollection");
         
         //Then
-        var collection = _repository.GetCollection(newCollection.Id);
+        var collection = _service.GetCollection(newCollection.Id);
         
         Assert.IsNotNull(collection);
 
@@ -30,14 +30,14 @@ public class CollectionsRepositoryTests
     public void TestUpdate()
     {
         // Given
-        var collection =  _repository.AddCollection("NewTestCollection");
+        var collection =  _service.AddCollection("NewTestCollection");
         
         // When
         var newName = "ChangedName";
-        _repository.UpdateCollection(collection.Id, newName, null);
+        _service.UpdateCollection(collection.Id, newName, null);
         
         //Then
-        var updated = _repository.GetCollection(collection.Id);
+        var updated = _service.GetCollection(collection.Id);
         
         Assert.True(updated.Name == newName);
     }
