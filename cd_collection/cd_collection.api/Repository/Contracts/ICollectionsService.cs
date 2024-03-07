@@ -8,8 +8,8 @@ public interface ICollectionsService
     
     IEnumerable<CollectionDto?> GetCollections();
 
-    Collection? GetCollection(Guid guid);
-    Collection? AddCollection(string name);
+    CollectionDto? GetCollection(Guid guid);
+    CollectionDto? CreateCollection(string name);
 
     public Collection? UpdateCollection(Guid guid, string? collectionName, Guid? itemId);
 

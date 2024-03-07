@@ -17,7 +17,7 @@ public class CollectionsRepositoryTests
     {
         // Given
         // When
-       var newCollection =  _service.AddCollection("TestCollection");
+       var newCollection =  _service.CreateCollection("TestCollection");
         
         //Then
         var collection = _service.GetCollection(newCollection.Id);
@@ -30,7 +30,7 @@ public class CollectionsRepositoryTests
     public void TestUpdate()
     {
         // Given
-        var collection =  _service.AddCollection("NewTestCollection");
+        var collection =  _service.CreateCollection("NewTestCollection");
         
         // When
         var newName = "ChangedName";

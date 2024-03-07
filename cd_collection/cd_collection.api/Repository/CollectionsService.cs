@@ -17,16 +17,28 @@ public class CollectionsService : ICollectionsService
         };
     }
 
-    public Collection? GetCollection(Guid guid)
+    public CollectionDto? GetCollection(Guid guid)
     {
-        return _collections.SingleOrDefault(x => x.Id == guid);
+        var collection = _collections.SingleOrDefault(x => x.Id == guid);
+        return new CollectionDto
+        {
+            Name = collection.Name,
+            ItemsIds = collection.ItemsIds,
+        };
     }
 
-    public Collection? AddCollection(string name)
+    public CollectionDto? CreateCollection(string name)
     {
         var collection = new Collection(name: name);
         _collections.Add(collection);
-        return _collections.SingleOrDefault(x => x.Id == collection.Id);
+        
+        var createdCollection = _collections.SingleOrDefault(x => x.Id == collection.Id);
+        
+        return new CollectionDto
+        {
+            Name = createdCollection.Name,
+            ItemsIds = createdCollection.ItemsIds
+        };
     }
 
     public IEnumerable<CollectionDto?> GetCollections()

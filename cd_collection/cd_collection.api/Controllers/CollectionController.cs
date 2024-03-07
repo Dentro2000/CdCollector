@@ -1,3 +1,4 @@
+using cd_collection.Commands;
 using cd_collection.DTO;
 using cd_collection.Models;
 using cd_collection.Repository;
@@ -24,10 +25,10 @@ public class CdCollectionController : ControllerBase
     }
 
     [HttpPost]
-    public Task<ActionResult<Collection>> CreateCollection(string collectionName)
+    public ActionResult<Collection> CreateCollection(CreateCollection command)
     {
-        var collection = _collectionsService.AddCollection(collectionName);
-        return Task.FromResult<ActionResult<Collection>>(Ok(collection));
+        var collection = _collectionsService.CreateCollection(command.Name);
+        return Ok(collection);
     }
 
 
