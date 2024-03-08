@@ -25,7 +25,7 @@ public class CdCollectionController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Collection> CreateCollection(CreateCollection command)
+    public ActionResult<CollectionDto> CreateCollection(CreateCollection command)
     {
         var collection = _collectionsService.CreateCollection(command.Name);
         return Ok(collection);
@@ -33,28 +33,31 @@ public class CdCollectionController : ControllerBase
 
 
     [HttpGet("collections/{collectionId:guid}")]
-    public Task<ActionResult<IEnumerable<Collection>>> GetCollection(Guid collectionId)
+    public ActionResult<List<CollectionDto>> GetCollection(Guid collectionId)
     {
-        var collection = _collectionsService.GetCollections().SingleOrDefault(x => x.Id == collectionId);
+        var collection = _collectionsService
+            .GetCollections()
+            .SingleOrDefault(x => x.Id == collectionId);
+        
         if (collection == null)
         {
-            return Task.FromResult<ActionResult<IEnumerable<Collection>>>(NotFound());
+            return NotFound();
         }
 
-        return Task.FromResult<ActionResult<IEnumerable<Collection>>>(Ok(collection));
+        return (Ok(collection));
     }
 
 
     [HttpPut("collections/{collectionId:guid}")]
-    public Task<ActionResult<Collection>> UpdateCollection(Guid collectionId, string? collectionName, Guid? itemId)
+    public ActionResult<Collection> UpdateCollection(Guid collectionId, string? collectionName, Guid? itemId)
     {
         var collection = _collectionsService.UpdateCollection(collectionId, collectionName, itemId);
         if (collection == null)
         {
-            return Task.FromResult<ActionResult<Collection>>(NotFound());
+            return NotFound();
         }
 
-        return Task.FromResult<ActionResult<Collection>>(Ok(collection));
+        return Ok(collection);
     }
 
 

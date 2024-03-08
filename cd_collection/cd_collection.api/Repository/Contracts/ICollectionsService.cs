@@ -11,7 +11,11 @@ public interface ICollectionsService
     CollectionDto? GetCollection(Guid guid);
     CollectionDto? CreateCollection(string name);
 
-    public Collection? UpdateCollection(Guid guid, string? collectionName, Guid? itemId);
+    public CollectionDto? UpdateCollection(Guid guid, string? collectionName, Guid? itemId);
 
     bool DeleteCollection(Guid guid);
+
+    CollectionDto? RemoveItemFromCollection(Guid itemId, Guid collectionId);
+
+    CollectionDto? AddItemToCollection(Guid itemId, Guid collectionId);
 }

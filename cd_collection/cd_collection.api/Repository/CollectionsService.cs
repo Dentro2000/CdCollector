@@ -19,12 +19,9 @@ public class CollectionsService : ICollectionsService
 
     public CollectionDto? GetCollection(Guid guid)
     {
-        var collection = _collections.SingleOrDefault(x => x.Id == guid);
-        return new CollectionDto
-        {
-            Name = collection.Name,
-            ItemsIds = collection.ItemsIds,
-        };
+        return _collections
+            .SingleOrDefault(x => x.Id == guid)
+            .ConvertToDto();
     }
 
     public CollectionDto? CreateCollection(string name)
@@ -32,25 +29,17 @@ public class CollectionsService : ICollectionsService
         var collection = new Collection(name: name);
         _collections.Add(collection);
         
-        var createdCollection = _collections.SingleOrDefault(x => x.Id == collection.Id);
-        
-        return new CollectionDto
-        {
-            Name = createdCollection.Name,
-            ItemsIds = createdCollection.ItemsIds
-        };
+        return _collections
+            .SingleOrDefault(x => x.Id == collection.Id)
+            .ConvertToDto();
     }
 
     public IEnumerable<CollectionDto?> GetCollections()
     {
-        return _collections.Select(x => new CollectionDto
-        {
-            ItemsIds = x.ItemsIds,
-            Name = x.Name,
-        });
+        return _collections.Select(x => x.ConvertToDto());
     }
 
-    public Collection? UpdateCollection(Guid guid, string? collectionName, Guid? itemId)
+    public CollectionDto? UpdateCollection(Guid guid, string? collectionName, Guid? itemId)
     {
         var collection = _collections.SingleOrDefault(x => x.Id == guid);
         if (collection == null)
@@ -69,7 +58,7 @@ public class CollectionsService : ICollectionsService
             collection.AddItem(itemId.Value);
         }
         
-        return collection;
+        return collection.ConvertToDto();
     }
 
     public bool DeleteCollection(Guid guid)
@@ -87,7 +76,7 @@ public class CollectionsService : ICollectionsService
         return true;
     }
 
-    public Collection? AddItemToCollection(Guid itemId, Guid collectionId)
+    public CollectionDto? AddItemToCollection(Guid itemId, Guid collectionId)
     {
         var collection = _collections.SingleOrDefault(x => x.Id == collectionId);
         if (collection == null)
@@ -97,10 +86,10 @@ public class CollectionsService : ICollectionsService
         }
 
         collection.ItemsIds.Add(itemId);
-        return collection;
+        return collection.ConvertToDto();
     }
 
-    public Collection? RemoveItemFromCollection(Guid itemId, Guid collectionId)
+    public CollectionDto? RemoveItemFromCollection(Guid itemId, Guid collectionId)
     {
         var collection = _collections.SingleOrDefault(x => x.Id == collectionId);
         if (collection == null)
@@ -110,6 +99,6 @@ public class CollectionsService : ICollectionsService
         }
 
         collection.ItemsIds.Remove(itemId);
-        return collection;
+        return collection.ConvertToDto();
     }
 }

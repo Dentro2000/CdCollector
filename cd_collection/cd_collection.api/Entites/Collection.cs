@@ -1,3 +1,5 @@
+using cd_collection.DTO;
+
 namespace cd_collection.Models;
 
 public class Collection
@@ -54,4 +56,17 @@ public class Collection
     }
 
     private void SetLastUpdate() => LastUpdate = DateTime.Now;
+}
+
+
+public static class CollectionConvertingExtension
+{
+
+    public static CollectionDto ConvertToDto(this Collection collection) =>
+        new CollectionDto
+        {
+            Name = collection.Name,
+            ItemsIds = collection.ItemsIds
+        };
+
 }
