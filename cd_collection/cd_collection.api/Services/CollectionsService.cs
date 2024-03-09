@@ -1,28 +1,20 @@
 using cd_collection.DTO;
 using cd_collection.Models;
+using cd_collection.Repositories.Contracts;
 
 namespace cd_collection.Repository;
 
 public class CollectionsService : ICollectionsService
 {
-    private List<Collection?> _collections;
+    private IInMemoryCollectionRepository _repository;
 
 
-    public CollectionsService()
+    public CollectionsService(IInMemoryCollectionRepository repository)
     {
-        _collections = new List<Collection?>
-        {
-            new Collection(name: "OneTwoThree"),
-            new Collection(name: "FourFiveSix"),
-        };
+        _repository = repository;
     }
 
-    public CollectionDto? GetCollection(Guid guid)
-    {
-        return _collections
-            .SingleOrDefault(x => x.Id == guid)
-            .ConvertToDto();
-    }
+    public CollectionDto? GetCollection(Guid guid) => _repository.GetCollection(guid)?.ConvertToDto();
 
     public CollectionDto? CreateCollection(string name)
     {
