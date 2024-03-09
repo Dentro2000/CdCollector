@@ -9,6 +9,7 @@ public interface ICollectionsService
     IEnumerable<CollectionDto?> GetCollections();
 
     CollectionDto? GetCollection(Guid guid);
+    
     CollectionDto? CreateCollection(string name);
 
     public CollectionDto? UpdateCollection(Guid guid, string? collectionName, Guid? itemId);

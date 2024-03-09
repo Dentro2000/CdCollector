@@ -49,9 +49,9 @@ public class CdCollectionController : ControllerBase
 
 
     [HttpPut("collections/{collectionId:guid}")]
-    public ActionResult<Collection> UpdateCollection(Guid collectionId, string? collectionName, Guid? itemId)
+    public ActionResult<CollectionDto> UpdateCollection(Guid collectionId, UpdateCollection command)
     {
-        var collection = _collectionsService.UpdateCollection(collectionId, collectionName, itemId);
+        var collection = _collectionsService.UpdateCollection(collectionId, command.collectionName, command.itemId);
         if (collection == null)
         {
             return NotFound();
