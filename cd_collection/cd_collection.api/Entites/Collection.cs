@@ -4,7 +4,7 @@ namespace cd_collection.Models;
 
 public class Collection
 {
-    public Guid Id { get; }
+    public Guid Id { get; private set;  } 
     public string Name { get; private set; }
     public List<Guid> ItemsIds { get; }
 
@@ -62,9 +62,10 @@ public class Collection
 public static class CollectionConvertingExtension
 {
 
-    public static CollectionDto ConvertToDto(this Collection collection) =>
+    public static CollectionDto ConvertToDto(this Collection? collection) =>
         new CollectionDto
         {
+            Id = collection.Id,
             Name = collection.Name,
             ItemsIds = collection.ItemsIds
         };

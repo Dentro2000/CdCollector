@@ -8,7 +8,6 @@ public class CollectionsService : ICollectionsService
 {
     private IInMemoryCollectionRepository _repository;
 
-
     public CollectionsService(IInMemoryCollectionRepository repository)
     {
         _repository = repository;
@@ -16,24 +15,28 @@ public class CollectionsService : ICollectionsService
 
     public CollectionDto? GetCollection(Guid guid) => _repository.GetCollection(guid)?.ConvertToDto();
 
-    public CollectionDto? CreateCollection(string name)
+    public CollectionDto CreateCollection(string name)
     {
         var collection = new Collection(name: name);
-        _collections.Add(collection);
         
-        return _collections
-            .SingleOrDefault(x => x.Id == collection.Id)
+        _repository.AddCollection(collection: collection);
+        
+        return _repository
+            .GetCollection(collection.Id)
             .ConvertToDto();
     }
 
     public IEnumerable<CollectionDto?> GetCollections()
     {
-        return _collections.Select(x => x.ConvertToDto());
+        return _repository
+            .GetCollections()
+            .Select(x => x.ConvertToDto());
     }
 
     public CollectionDto? UpdateCollection(Guid guid, string? collectionName, Guid? itemId)
     {
-        var collection = _collections.SingleOrDefault(x => x.Id == guid);
+        var collection = _repository.GetCollection(guid);
+        
         if (collection == null)
         {
             return null;
@@ -56,7 +59,7 @@ public class CollectionsService : ICollectionsService
     public bool DeleteCollection(Guid guid)
     {
         //return bool
-        var collection = _collections.SingleOrDefault(x => x.Id == guid);
+        var collection = _repository.GetCollection(guid);
         if (collection == null)
         {
             //throw exception
@@ -64,13 +67,13 @@ public class CollectionsService : ICollectionsService
             return false;
         }
 
-        _collections.Remove(collection);
+        _repository.DeleteCollection(collection);
         return true;
     }
 
     public CollectionDto? AddItemToCollection(Guid itemId, Guid collectionId)
     {
-        var collection = _collections.SingleOrDefault(x => x.Id == collectionId);
+        var collection = _repository.GetCollection(collectionId);
         if (collection == null)
         {
             //throw exception and get rid of optionals
@@ -83,7 +86,7 @@ public class CollectionsService : ICollectionsService
 
     public CollectionDto? RemoveItemFromCollection(Guid itemId, Guid collectionId)
     {
-        var collection = _collections.SingleOrDefault(x => x.Id == collectionId);
+        var collection = _repository.GetCollection(collectionId);
         if (collection == null)
         {
             //throw exception

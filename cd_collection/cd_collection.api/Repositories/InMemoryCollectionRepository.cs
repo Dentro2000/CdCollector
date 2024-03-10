@@ -5,16 +5,29 @@ namespace cd_collection.Repositories;
 
 public class InMemoryCollectionRepository : IInMemoryCollectionRepository
 {
-    public List<Collection?>  collections = new List<Collection?>
+    private List<Collection?>  _collections = new List<Collection?>
     {
-        new Collection(name: "OneTwoThree"),
-        new Collection(name: "FourFiveSix"),
+        new (name: "OneTwoThree"),
+        new (name: "FourFiveSix"),
     };
-
-    public void SaveCollections(Collection collection)
-    {
-        
-    }
     
+    public void AddCollection(Collection collection)
+    {
+       _collections.Add(collection);
+    }
 
+    public void DeleteCollection(Collection collection)
+    {
+        _collections.Remove(collection);
+    }
+
+    public IEnumerable<Collection?> GetCollections()
+    {
+        return _collections;
+    }
+
+    public Collection? GetCollection(Guid id)
+    {
+        return _collections.SingleOrDefault(x => x.Id == id);
+    }
 }

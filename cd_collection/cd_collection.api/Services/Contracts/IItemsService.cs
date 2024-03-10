@@ -4,7 +4,7 @@ namespace cd_collection.Repository;
 
 public interface IItemsService
 {
-    List<CdItemModel?> GetItems();
+    IList<CdItemModel?> GetItems();
 
     CdItemModel GetItem(Guid id);
 

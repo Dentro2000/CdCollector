@@ -1,34 +1,34 @@
 using cd_collection.Models;
+using cd_collection.Repositories.Contracts;
 
 namespace cd_collection.Repository;
 
 public class ItemsService: IItemsService
 {
-    private List<CdItemModel?> _items;
+    private IInMemoryItemsRepository _repository;
     
-    public ItemsService()
+    public ItemsService(IInMemoryItemsRepository repository)
     {
-        _items = new List<CdItemModel?>()
-        {
-            new ("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
-            new ("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
-        };
+        _repository = repository;
     }
 
-    public List<CdItemModel?> GetItems()
+    //TODO: Serwisy powinny zwracac listy a nie enumerable
+    public IList<CdItemModel?> GetItems()
     {
-        return _items;
+        return _repository.GetItems().ToList();
     }
 
-    public CdItemModel GetItem(Guid id)
+    public CdItemModel? GetItem(Guid id)
     {
-        return _items.SingleOrDefault(x => x.Id == id);
+        return _repository.GetItem(id: id);
     }
 
     public CdItemModel? CreateItem(string artist, string title, string label, DateTime releaseDate)
     {
         var newItem = new CdItemModel(artist, title, label, releaseDate);
-        var ifItemAlreadyExist = _items.SingleOrDefault(x =>
+        
+        var ifItemAlreadyExist = _repository.GetItems()
+            .SingleOrDefault(x =>
             x.Artist == artist 
             && x.Title == title 
             && x.Label == label 
@@ -40,15 +40,14 @@ public class ItemsService: IItemsService
             return null;
         }
 
-        _items.Add(newItem);
-        return _items.Single(x => x.Id == newItem.Id);
+        _repository.AddItem(newItem);
+        return _repository.GetItem(newItem.Id);
     }
 
     public CdItemModel? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate)
     {
-        
-        var item = _items.SingleOrDefault(x => x.Id == guid);
-        
+        var item = _repository.GetItem(guid);
+
         if (item == null)
         {
             return null;
@@ -81,12 +80,6 @@ public class ItemsService: IItemsService
     public void DeleteItem(Guid guid)
     {
         //return bool
-        var itemToDelete = _items.SingleOrDefault(x => x.Id == guid);
-        if (itemToDelete == null)
-        {
-            //throw exception
-        }
-        
-        _items.Remove(itemToDelete);
+        _repository.DeleteItem(guid);
     }
 }
