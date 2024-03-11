@@ -7,9 +7,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ICollectionsService, CollectionsService>();
 builder.Services.AddScoped<IItemsService, ItemsService>();
+builder.Services.AddScoped<ICollectionsService, CollectionsService>();
+
+builder.Services.AddSingleton<IInMemoryItemsRepository, InMemoryItemsRepository>();
 builder.Services.AddSingleton<IInMemoryCollectionRepository, InMemoryCollectionRepository>();
+
 
 var app = builder.Build();
 app.UseSwagger();

@@ -1,9 +1,11 @@
+using cd_collection.Commands;
 using cd_collection.Models;
 using cd_collection.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cd_collection.Controllers;
 
+[ApiController]
 public class ItemController : ControllerBase
 {
     private readonly IItemsService _itemsService;
@@ -14,41 +16,50 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet]
-    Task<ActionResult<IEnumerable<CdItemModel>>> GetItems()
+    ActionResult<IEnumerable<CdItemModel>> GetItems()
     {
-        return Task.FromResult<ActionResult<IEnumerable<CdItemModel>>>(Ok(_itemsService.GetItems()));
+        return Ok(_itemsService.GetItems());
     }
 
     [HttpGet("items/{guid:guid}")]
-    Task<ActionResult<CdItemModel>> GetItem(Guid guid)
+    ActionResult<CdItemModel> GetItem(Guid guid)
     {
-        return Task.FromResult<ActionResult<CdItemModel>>(Ok(_itemsService.GetItem(guid)));
+        return Ok(_itemsService.GetItem(guid));
     }
 
     [HttpPost]
-    Task<ActionResult<CdItemModel>> CreateItem(string artist, string title, string label, DateTime releaseDate)
+    ActionResult<CdItemModel> CreateItem(CreateItem command)
     {
-        var newItem = _itemsService.CreateItem(artist, title, label, releaseDate);
+        var newItem = _itemsService.CreateItem(
+            command.Artist,
+            command.Title,
+            command.Label,
+            command.ReleaseDate);
+
         if (newItem == null)
         {
-            return Task.FromResult<ActionResult<CdItemModel>>(BadRequest("Item already exists"));
+            return BadRequest("Item already exists");
         }
 
-        return Task.FromResult<ActionResult<CdItemModel>>(Ok(newItem));
+        return (Ok(newItem));
     }
 
     [HttpPut("items/{guid:guid}")]
-    Task<ActionResult<CdItemModel>> UpdateItem(Guid guid, string artist, string title, string label, DateTime releaseDate)
+    ActionResult<CdItemModel> UpdateItem(Guid guid, string artist, string title, string label,
+        DateTime releaseDate)
     {
         var itemToUpdate = _itemsService.UpdateItem(guid, artist, title, label, releaseDate);
+        if (itemToUpdate == null)
+        {
+            return BadRequest();
+        }
+
         var updatedItem = _itemsService.GetItem(itemToUpdate.Id);
-        return Task.FromResult<ActionResult<CdItemModel>>(Ok(updatedItem));
+
+        return Ok(updatedItem);
     }
-    
+
     [HttpDelete("items/{guid:guid}")]
     public async Task<ActionResult> DeleteCollection(Guid guid)
-    {
-       _itemsService.DeleteItem(guid);
-       return NoContent();
-    }
+        => _itemsService.DeleteItem(guid) == false ? BadRequest() : NoContent();
 }

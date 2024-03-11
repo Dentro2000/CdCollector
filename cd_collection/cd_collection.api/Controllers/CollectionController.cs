@@ -1,6 +1,5 @@
 using cd_collection.Commands;
 using cd_collection.DTO;
-using cd_collection.Models;
 using cd_collection.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,13 +31,13 @@ public class CdCollectionController : ControllerBase
     }
 
 
-    [HttpGet("collections/{collectionId:guid}")]
+    [HttpGet("{collectionId:guid}")]
     public ActionResult<List<CollectionDto>> GetCollection(Guid collectionId)
     {
         var collection = _collectionsService
             .GetCollections()
             .SingleOrDefault(x => x.Id == collectionId);
-        
+
         if (collection == null)
         {
             return NotFound();
@@ -48,10 +47,10 @@ public class CdCollectionController : ControllerBase
     }
 
 
-    [HttpPut("collections/{collectionId:guid}")]
+    [HttpPut("{collectionId:guid}")]
     public ActionResult<CollectionDto> UpdateCollection(Guid collectionId, UpdateCollection command)
     {
-        var collection = _collectionsService.UpdateCollection(collectionId, command.collectionName, command.itemId);
+        var collection = _collectionsService.UpdateCollection(collectionId, command.collectionName, command.items);
         if (collection == null)
         {
             return NotFound();
@@ -61,10 +60,40 @@ public class CdCollectionController : ControllerBase
     }
 
 
-    [HttpDelete("collections{collectionId:guid}")]
+    [HttpDelete("{collectionId:guid}")]
     public async Task<ActionResult> DeleteCollection(Guid collectionId)
     {
-        var collection = _collectionsService.DeleteCollection(collectionId);
+        var isCollectionDeleted = _collectionsService.DeleteCollection(collectionId);
+        if (isCollectionDeleted == false)
+        {
+            return BadRequest();
+        }
+
         return NoContent();
+    }
+
+    [HttpPut("itemsPu/{collectionId:guid}")]
+    public ActionResult<CollectionDto> AddItemToCollection( Guid itemId, Guid collectionId)
+    {
+        var collection = _collectionsService.AddItemToCollection(itemId, collectionId);
+        if (collection == null)
+        {
+            return BadRequest();
+        }
+        
+        return Ok(collection);
+
+    }
+    
+    [HttpDelete("items/{collectionId:guid}")]
+    public ActionResult<CollectionDto> RemoveItemFromCollection(Guid itemId, Guid collectionId)
+    {
+        var collection = _collectionsService.RemoveItemFromCollection(itemId, collectionId);
+        if (collection == null)
+        {
+            return BadRequest();
+        }
+        
+        return Ok(collection);
     }
 }

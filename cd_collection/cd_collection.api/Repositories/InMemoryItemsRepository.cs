@@ -3,31 +3,39 @@ using cd_collection.Repositories.Contracts;
 
 namespace cd_collection.Repositories;
 
-public class InMemoryItemsRepository: IInMemoryItemsRepository
+public class InMemoryItemsRepository : IInMemoryItemsRepository
 {
     private List<CdItemModel?> _items = new List<CdItemModel?>()
     {
-        new ("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
-        new ("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
+        new("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
+        new("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
     };
 
     public void AddItem(CdItemModel item)
     {
-        throw new NotImplementedException();
+        _items.Add(item);
     }
 
-    public void DeleteItem(Guid guid)
+    public bool DeleteItem(Guid guid)
     {
-        throw new NotImplementedException();
+        var itemToRemove = _items.SingleOrDefault(x => x.Id == guid);
+        if (itemToRemove == null)
+        {
+            //throw exception
+            return false;
+        }
+
+        _items.Remove(itemToRemove);
+        return true;
     }
 
     public IEnumerable<CdItemModel?> GetItems()
     {
-        throw new NotImplementedException();
+        return _items;
     }
 
     public CdItemModel? GetItem(Guid id)
     {
-        throw new NotImplementedException();
+        return _items.SingleOrDefault(x => x.Id == id);
     }
 }

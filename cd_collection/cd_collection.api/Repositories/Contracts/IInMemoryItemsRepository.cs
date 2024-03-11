@@ -6,7 +6,7 @@ public interface IInMemoryItemsRepository
 {
     void AddItem(CdItemModel item);
 
-    void DeleteItem(Guid guid);
+    bool DeleteItem(Guid guid);
 
     IEnumerable<CdItemModel?> GetItems();
     

@@ -1,42 +1,49 @@
 using cd_collection.DTO;
 using cd_collection.Models;
+using cd_collection.Repositories;
 using cd_collection.Repositories.Contracts;
 
 namespace cd_collection.Repository;
 
 public class CollectionsService : ICollectionsService
 {
-    private IInMemoryCollectionRepository _repository;
+    private IInMemoryCollectionRepository _collectionsRepository;
 
-    public CollectionsService(IInMemoryCollectionRepository repository)
+    private InMemoryItemsRepository _itemsRepository;
+    // private IInMemoryCollectionRepository _repository;
+
+    public CollectionsService(
+        IInMemoryCollectionRepository collectionsRepository,
+        InMemoryItemsRepository itemsRepository)
     {
-        _repository = repository;
+        _collectionsRepository = collectionsRepository;
+        _itemsRepository = itemsRepository;
     }
 
-    public CollectionDto? GetCollection(Guid guid) => _repository.GetCollection(guid)?.ConvertToDto();
+    public CollectionDto? GetCollection(Guid guid) => _collectionsRepository.GetCollection(guid)?.ConvertToDto();
 
     public CollectionDto CreateCollection(string name)
     {
         var collection = new Collection(name: name);
-        
-        _repository.AddCollection(collection: collection);
-        
-        return _repository
+
+        _collectionsRepository.AddCollection(collection: collection);
+
+        return _collectionsRepository
             .GetCollection(collection.Id)
             .ConvertToDto();
     }
 
     public IEnumerable<CollectionDto?> GetCollections()
     {
-        return _repository
+        return _collectionsRepository
             .GetCollections()
             .Select(x => x.ConvertToDto());
     }
 
-    public CollectionDto? UpdateCollection(Guid guid, string? collectionName, Guid? itemId)
+    public CollectionDto? UpdateCollection(Guid guid, string? collectionName, List<Guid> items)
     {
-        var collection = _repository.GetCollection(guid);
-        
+        var collection = _collectionsRepository.GetCollection(guid);
+
         if (collection == null)
         {
             return null;
@@ -48,18 +55,31 @@ public class CollectionsService : ICollectionsService
             collection.ChangeName(collectionName);
         }
 
-        if (itemId != null && !collection.ItemsIds.Contains(itemId.Value))
+        //check if collection contain items.
+        var commonItems = collection.ItemsIds.Intersect(items);
+        items.ForEach(item =>
         {
-            collection.AddItem(itemId.Value);
-        }
-        
+            if (!commonItems.Contains(item))
+            {
+                collection.ItemsIds.Add(item);
+            }
+        });
+
+        collection.ItemsIds.ForEach(item =>
+        {
+            if (!commonItems.Contains(item))
+            {
+                collection.ItemsIds.Remove(item);
+            }
+        });
+
         return collection.ConvertToDto();
     }
 
     public bool DeleteCollection(Guid guid)
     {
         //return bool
-        var collection = _repository.GetCollection(guid);
+        var collection = _collectionsRepository.GetCollection(guid);
         if (collection == null)
         {
             //throw exception
@@ -67,14 +87,17 @@ public class CollectionsService : ICollectionsService
             return false;
         }
 
-        _repository.DeleteCollection(collection);
+        _collectionsRepository.DeleteCollection(collection);
         return true;
     }
 
     public CollectionDto? AddItemToCollection(Guid itemId, Guid collectionId)
     {
-        var collection = _repository.GetCollection(collectionId);
-        if (collection == null)
+        //Handle on the items side
+        var collection = _collectionsRepository.GetCollection(collectionId);
+        var item = _itemsRepository.GetItem(itemId);
+        
+        if (collection == null || item == null)
         {
             //throw exception and get rid of optionals
             return null;
@@ -86,13 +109,27 @@ public class CollectionsService : ICollectionsService
 
     public CollectionDto? RemoveItemFromCollection(Guid itemId, Guid collectionId)
     {
-        var collection = _repository.GetCollection(collectionId);
+        var collection = _collectionsRepository.GetCollection(collectionId);
+        var item = _itemsRepository.GetItem(itemId);
+
+        if (item == null)
+        {
+            return null;
+        }
+
         if (collection == null)
         {
             //throw exception
             return null;
         }
 
+        if (!_itemsRepository.DeleteItem(item.Id))
+        {
+            //throw exception
+            return null; 
+        }    
+        
+        
         collection.ItemsIds.Remove(itemId);
         return collection.ConvertToDto();
     }

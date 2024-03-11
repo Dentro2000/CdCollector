@@ -12,7 +12,7 @@ public interface ICollectionsService
     
     CollectionDto? CreateCollection(string name);
 
-    public CollectionDto? UpdateCollection(Guid guid, string? collectionName, Guid? itemId);
+    public CollectionDto? UpdateCollection(Guid guid, string? collectionName, List<Guid> items);
 
     bool DeleteCollection(Guid guid);
 

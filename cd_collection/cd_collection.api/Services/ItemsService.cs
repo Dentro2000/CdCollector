@@ -1,38 +1,54 @@
+using cd_collection.DTO;
 using cd_collection.Models;
 using cd_collection.Repositories.Contracts;
 
 namespace cd_collection.Repository;
 
-public class ItemsService: IItemsService
+public class ItemsService : IItemsService
 {
     private IInMemoryItemsRepository _repository;
-    
+
     public ItemsService(IInMemoryItemsRepository repository)
     {
         _repository = repository;
     }
 
     //TODO: Serwisy powinny zwracac listy a nie enumerable
-    public IList<CdItemModel?> GetItems()
+    public IList<CdItemDto?> GetItems()
     {
-        return _repository.GetItems().ToList();
+        return _repository.GetItems().Select(item => new CdItemDto
+        {
+            Id = item.Id,
+            Artist = item.Artist,
+            Title = item.Title,
+            Label = item.Label,
+            ReleaseDate = item.ReleaseDate,
+        }).ToList();
     }
 
-    public CdItemModel? GetItem(Guid id)
+    public CdItemDto? GetItem(Guid id)
     {
-        return _repository.GetItem(id: id);
+        var item = _repository.GetItem(id: id);
+        return new CdItemDto
+        {
+            Id = item.Id,
+            Artist = item.Artist,
+            Title = item.Title,
+            Label = item.Label,
+            ReleaseDate = item.ReleaseDate,
+        };
     }
 
-    public CdItemModel? CreateItem(string artist, string title, string label, DateTime releaseDate)
+    public CdItemDto? CreateItem(string artist, string title, string label, DateTime releaseDate)
     {
         var newItem = new CdItemModel(artist, title, label, releaseDate);
-        
+
         var ifItemAlreadyExist = _repository.GetItems()
             .SingleOrDefault(x =>
-            x.Artist == artist 
-            && x.Title == title 
-            && x.Label == label 
-            && x.ReleaseDate == releaseDate);
+                x.Artist == artist
+                && x.Title == title
+                && x.Label == label
+                && x.ReleaseDate == releaseDate);
 
         if (ifItemAlreadyExist != null)
         {
@@ -41,10 +57,18 @@ public class ItemsService: IItemsService
         }
 
         _repository.AddItem(newItem);
-        return _repository.GetItem(newItem.Id);
+        var item = _repository.GetItem(newItem.Id);
+        return new CdItemDto
+        {
+            Id = item.Id,
+            Artist = item.Artist,
+            Title = item.Title,
+            Label = item.Label,
+            ReleaseDate = item.ReleaseDate,
+        };
     }
 
-    public CdItemModel? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate)
+    public CdItemDto? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate)
     {
         var item = _repository.GetItem(guid);
 
@@ -61,25 +85,31 @@ public class ItemsService: IItemsService
 
         if (!string.IsNullOrEmpty(title))
         {
-         item.ChangeTitle(title);   
+            item.ChangeTitle(title);
         }
-        
+
         if (!string.IsNullOrEmpty(label))
         {
             item.ChangeLabel(label);
         }
-        
+
         if (releaseDate != null)
         {
             item.ChangeReleaseDate(releaseDate.Value);
         }
 
-        return item;
+        return new CdItemDto
+        {
+            Id = item.Id,
+            Artist = item.Artist,
+            Title = item.Title,
+            Label = item.Label,
+            ReleaseDate = item.ReleaseDate
+        };
     }
 
-    public void DeleteItem(Guid guid)
+    public bool DeleteItem(Guid guid)
     {
-        //return bool
-        _repository.DeleteItem(guid);
+        return _repository.DeleteItem(guid);
     }
 }

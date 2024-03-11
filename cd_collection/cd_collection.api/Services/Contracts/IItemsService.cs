@@ -1,16 +1,17 @@
+using cd_collection.DTO;
 using cd_collection.Models;
 
 namespace cd_collection.Repository;
 
 public interface IItemsService
 {
-    IList<CdItemModel?> GetItems();
+    IList<CdItemDto?> GetItems();
 
-    CdItemModel GetItem(Guid id);
+    CdItemDto GetItem(Guid id);
 
-    CdItemModel? CreateItem(string artist, string title, string label, DateTime releaseDate);
+    CdItemDto? CreateItem(string artist, string title, string label, DateTime releaseDate);
     
-    CdItemModel? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate);
+    CdItemDto? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate);
 
-    void DeleteItem(Guid guid);
+    bool DeleteItem(Guid guid);
 }
