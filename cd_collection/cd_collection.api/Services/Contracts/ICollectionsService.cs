@@ -1,7 +1,6 @@
 using cd_collection.DTO;
-using cd_collection.Models;
 
-namespace cd_collection.Repository;
+namespace cd_collection.Services.Contracts;
 
 public interface ICollectionsService
 {
@@ -11,8 +10,7 @@ public interface ICollectionsService
     CollectionDto? GetCollection(Guid guid);
     
     CollectionDto? CreateCollection(string name);
-
-    public CollectionDto? UpdateCollection(Guid guid, string? collectionName, List<Guid> items);
+    CollectionDto? UpdateCollection(Guid guid, string? collectionName, List<Guid> items);
 
     bool DeleteCollection(Guid guid);
 

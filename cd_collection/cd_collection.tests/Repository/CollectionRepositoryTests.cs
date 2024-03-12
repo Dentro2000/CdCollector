@@ -1,6 +1,7 @@
-using cd_collection.Repository;
+using cd_collection.Services;
+using cd_collection.Services.Contracts;
 
-namespace cd_collection.tests;
+namespace cd_collection.tests.Repository;
 
 public class CollectionsRepositoryTests
 {

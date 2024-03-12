@@ -1,8 +1,8 @@
 using cd_collection.Repository;
 
-namespace cd_collection.tests;
+namespace cd_collection.tests.Repository;
 
-public class ItemTests
+public class ItemsRepositoryTests
 {
     private  IItemsService _service;
     

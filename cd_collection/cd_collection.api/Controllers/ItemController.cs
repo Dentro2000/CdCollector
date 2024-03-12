@@ -44,7 +44,7 @@ public class ItemController : ControllerBase
         return (Ok(newItem));
     }
 
-    [HttpPut("items/{guid:guid}")]
+    [HttpPut("items/{guid:guid}/update")]
     ActionResult<CdItemModel> UpdateItem(Guid guid, string artist, string title, string label,
         DateTime releaseDate)
     {
@@ -59,7 +59,7 @@ public class ItemController : ControllerBase
         return Ok(updatedItem);
     }
 
-    [HttpDelete("items/{guid:guid}")]
+    [HttpDelete("items/{guid:guid}/remove")]
     public async Task<ActionResult> DeleteCollection(Guid guid)
         => _itemsService.DeleteItem(guid) == false ? BadRequest() : NoContent();
 }
