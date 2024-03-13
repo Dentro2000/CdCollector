@@ -1,5 +1,7 @@
 //system
 
+using cd_collection.DTO;
+using cd_collection.Models;
 using cd_collection.Repositories.Contracts;
 using Moq;
 
@@ -15,6 +17,7 @@ public class CollectionServiceTests
     private IItemsService _itemsService;
     private Mock<IInMemoryItemsRepository> _itemsRepositoryMock;
     private Mock<IInMemoryCollectionRepository> _collectionRepositoryMock;
+    private List<Collection> _collections;
 
     [SetUp]
     public void Setup()
@@ -26,15 +29,39 @@ public class CollectionServiceTests
         _sut = new CollectionsService(
             collectionsRepository: _collectionRepositoryMock.Object,
             itemsRepository: _itemsRepositoryMock.Object);
+        
+        _collections = new List<Collection>
+        {
+            new (name: "OneTwoThree"),
+            new (name: "FourFiveSix"),
+        };
     }
 
     [Test]
-    public void GetCollectionTest()
+    public void GetCollectionsTest()
     {
         //given
-        
+        _collectionRepositoryMock.Setup(x => x.GetCollections()).Returns(_collections);
         
         //when
+        var collectionsDtos = _sut.GetCollections();
+        
         //then
+        Assert.True(collectionsDtos.ToArray().First().Name == _collections.First().Name);
+        Assert.True(typeof(IEnumerable<CollectionDto>) == collectionsDtos.GetType());
+    }
+    
+    [Test]
+    public void CreateCollection()
+    {
+        //given
+        _collectionRepositoryMock.Setup(x => x.GetCollections()).Returns(_collections);
+        
+        //when
+        var collectionsDtos = _sut.GetCollections();
+        
+        //then
+        Assert.True(collectionsDtos.ToArray().First().Name == _collections.First().Name);
+        
     }
 }
