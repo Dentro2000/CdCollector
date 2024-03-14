@@ -47,21 +47,48 @@ public class CollectionServiceTests
         var collectionsDtos = _sut.GetCollections();
         
         //then
-        Assert.True(collectionsDtos.ToArray().First().Name == _collections.First().Name);
-        Assert.True(typeof(IEnumerable<CollectionDto>) == collectionsDtos.GetType());
+        Assert.True(collectionsDtos.ToArray().First()?.Name == _collections.First().Name);
     }
     
     [Test]
-    public void CreateCollection()
+    public void GetCollectionTests()
     {
         //given
-        _collectionRepositoryMock.Setup(x => x.GetCollections()).Returns(_collections);
+        var collection = _collections.First();
+        
+        _collectionRepositoryMock.Setup(x => 
+            x.GetCollection(collection.Id))
+            .Returns(collection);
         
         //when
-        var collectionsDtos = _sut.GetCollections();
+        var collectionDto = _sut.GetCollection(collection.Id);
         
         //then
-        Assert.True(collectionsDtos.ToArray().First().Name == _collections.First().Name);
-        
+        Assert.True(collectionDto?.Name == _collections.First().Name);
     }
+    
+    [Test]
+    public void CreateCollectionTest()
+    {
+        //given
+        var collectionName = "NewCollection";
+
+        _collectionRepositoryMock.Setup(
+                x => x.AddCollection(It.IsAny<Collection>()))
+            .Callback(() =>
+            {
+                _collections.Add(new Collection(collectionName));
+            });
+        
+        _collectionRepositoryMock.Setup(x => 
+                x.GetCollection(It.IsAny<Guid>()))
+            .Returns(_collections.Last());
+        
+        //when
+        var collectionDto = _sut.CreateCollection(collectionName);
+        
+        //then
+        Assert.True(collectionDto?.Name == _collections.Last().Name);
+    }
+    
 }
