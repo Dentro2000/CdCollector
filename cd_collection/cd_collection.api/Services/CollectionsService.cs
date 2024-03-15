@@ -54,24 +54,31 @@ public class CollectionsService : ICollectionsService
             collection.ChangeName(collectionName);
         }
 
-        //check if collection contain items.
-        var commonItems = collection.ItemsIds.Intersect(items);
-        items.ForEach(item =>
-        {
-            if (!commonItems.Contains(item))
-            {
-                collection.ItemsIds.Add(item);
-            }
-        });
+        //User should pass updated list of items
+        // not only items that should be added
 
-        collection.ItemsIds.ForEach(item =>
+        //TODO: NOT PERFORMANT CODE + SHOULD BE MOVED TO METHOD
+        if (items.Count > 0)
         {
-            if (!commonItems.Contains(item))
-            {
-                collection.ItemsIds.Remove(item);
-            }
-        });
+            var commonItems = collection.ItemsIds.Intersect(items).ToList();
 
+            collection.ItemsIds.ToList().ForEach(alreadyExistingItem =>
+            {
+                if (!commonItems.Contains(alreadyExistingItem))
+                {
+                    collection.RemoveItem(alreadyExistingItem);
+                }
+            });
+            
+            items.ForEach(item =>
+            {
+                if (!commonItems.ToList().Contains(item))
+                {
+                    collection.AddItem(item);
+                }
+            });
+        }
+        
         return collection.ConvertToDto();
     }
 
@@ -95,7 +102,7 @@ public class CollectionsService : ICollectionsService
         //Handle on the items side
         var collection = _collectionsRepository.GetCollection(collectionId);
         var item = _itemsRepository.GetItem(itemId);
-        
+
         if (collection == null || item == null)
         {
             //throw exception and get rid of optionals
@@ -125,10 +132,10 @@ public class CollectionsService : ICollectionsService
         if (!_itemsRepository.DeleteItem(item.Id))
         {
             //throw exception
-            return null; 
-        }    
-        
-        
+            return null;
+        }
+
+
         collection.ItemsIds.Remove(itemId);
         return collection.ConvertToDto();
     }
