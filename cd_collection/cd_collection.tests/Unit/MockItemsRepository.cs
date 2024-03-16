@@ -3,10 +3,10 @@ using cd_collection.Repositories.Contracts;
 
 namespace cd_collection.tests;
 
-public class MockItemsRepository: IInMemoryItemsRepository
+public class MockItemsRepository : IInMemoryItemsRepository
 {
-    
     private List<CdItemModel> _items = new List<CdItemModel> { };
+
     public void AddItem(CdItemModel item)
     {
         _items.Add(item);
@@ -19,11 +19,21 @@ public class MockItemsRepository: IInMemoryItemsRepository
 
     public IEnumerable<CdItemModel?> GetItems()
     {
-        throw new NotImplementedException();
+        return _items;
     }
 
     public CdItemModel? GetItem(Guid id)
     {
-        throw new NotImplementedException();
+        return _items.SingleOrDefault(x => x.Id == id);
     }
+}
+
+public static class MockItem
+{
+    public static CdItemModel MockCdItem =>
+        new(
+            "MockArtist",
+            "MockTitle",
+            "MockLabel",
+            new DateTime(2024, 01, 01));
 }

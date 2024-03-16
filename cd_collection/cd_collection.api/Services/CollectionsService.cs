@@ -101,14 +101,8 @@ public class CollectionsService : ICollectionsService
         var collection = _collectionsRepository.GetCollection(collectionId);
         var item = _itemsRepository.GetItem(itemId);
 
-        if (item == null)
+        if (item == null || collection == null)
         {
-            return null;
-        }
-
-        if (collection == null)
-        {
-            //throw exception
             return null;
         }
 

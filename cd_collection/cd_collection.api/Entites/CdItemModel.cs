@@ -44,16 +44,4 @@ public class CdItemModel
     }
     
     private void SetLastUpdate() => LastUpdate = DateTime.Now;
-
-    public CdItemModel MockCdItem
-    {
-        get
-        {
-            return new CdItemModel(
-                "MockArtist", 
-                "MockTitle", 
-                "MockLabel", 
-                new DateTime(2024, 01, 01));
-        }
-    }
 }

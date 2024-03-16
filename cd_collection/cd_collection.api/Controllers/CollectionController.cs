@@ -73,7 +73,7 @@ public class CdCollectionController : ControllerBase
         return NoContent();
     }
 
-    [HttpPut("itemsPu/{collectionId:guid}")]
+    [HttpPut("items/{collectionId:guid}/add")]
     public ActionResult<CollectionDto> AddItemToCollection( Guid itemId, Guid collectionId)
     {
         var collection = _collectionsService.AddItemToCollection(itemId, collectionId);
@@ -86,7 +86,7 @@ public class CdCollectionController : ControllerBase
 
     }
     
-    [HttpDelete("items/{collectionId:guid}")]
+    [HttpDelete("items/{collectionId:guid}/remove")]
     public ActionResult<CollectionDto> RemoveItemFromCollection(Guid itemId, Guid collectionId)
     {
         var collection = _collectionsService.RemoveItemFromCollection(itemId, collectionId);
