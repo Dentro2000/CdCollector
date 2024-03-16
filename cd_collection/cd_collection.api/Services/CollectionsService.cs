@@ -56,27 +56,10 @@ public class CollectionsService : ICollectionsService
 
         //User should pass updated list of items
         // not only items that should be added
-
-        //TODO: NOT PERFORMANT CODE + SHOULD BE MOVED TO METHOD
+        
         if (items.Count > 0)
         {
-            var commonItems = collection.ItemsIds.Intersect(items).ToList();
-
-            collection.ItemsIds.ToList().ForEach(alreadyExistingItem =>
-            {
-                if (!commonItems.Contains(alreadyExistingItem))
-                {
-                    collection.RemoveItem(alreadyExistingItem);
-                }
-            });
-            
-            items.ForEach(item =>
-            {
-                if (!commonItems.ToList().Contains(item))
-                {
-                    collection.AddItem(item);
-                }
-            });
+            collection.SetAllItems(items);
         }
         
         return collection.ConvertToDto();

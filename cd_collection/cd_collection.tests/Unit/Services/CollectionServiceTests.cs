@@ -1,33 +1,30 @@
 //system
-
 using cd_collection.Models;
-using cd_collection.Repositories;
 using cd_collection.Repositories.Contracts;
-using Moq;
-
-//local
 using cd_collection.Repository;
 using cd_collection.Services;
 
-namespace cd_collection.tests.Services;
+
+//local
+namespace cd_collection.tests.Unit.Services;
 
 public class CollectionServiceTests
 {
     private CollectionsService _sut;
     private IItemsService _itemsService;
-    private Mock<IInMemoryItemsRepository> _itemsRepositoryMock;
+    private IInMemoryItemsRepository _itemsRepositoryMock;
     private IInMemoryCollectionRepository _collectionRepositoryMock;
 
     [SetUp]
     public void Setup()
     {
-        _collectionRepositoryMock = new MockRepo();
-        _itemsRepositoryMock = new Mock<IInMemoryItemsRepository>();
-        _itemsService = new ItemsService(_itemsRepositoryMock.Object);
+        _collectionRepositoryMock = new MockCollectionRepository();
+        _itemsRepositoryMock = new MockItemsRepository();
+        _itemsService = new ItemsService(_itemsRepositoryMock);
 
         _sut = new CollectionsService(
             collectionsRepository: _collectionRepositoryMock,
-            itemsRepository: _itemsRepositoryMock.Object);
+            itemsRepository: _itemsRepositoryMock);
         
     }
 
@@ -52,7 +49,7 @@ public class CollectionServiceTests
         var collectionsDtos = _sut.GetCollections();
 
         //then
-        Assert.True(collectionsDtos.ToArray().First()?.Name == newColelction.Name);
+        Assert.True(collectionsDtos.First()?.Name == newColelction.Name);
     }
 
     [Test]
@@ -82,7 +79,7 @@ public class CollectionServiceTests
         _sut.CreateCollection(collectionName);
         
         //then
-        Assert.True(_collectionRepositoryMock.GetCollections().ToArray().Length == 2);
+        Assert.True(_collectionRepositoryMock.GetCollections().Count()== 2);
     }
 
     [Test]
@@ -140,7 +137,7 @@ public class CollectionServiceTests
     }
     
     [Test]
-    public void UpdateCollection_ShouldReturnUpdateItemsProperly()
+    public void UpdateCollection_ShouldAddItem()
     {
 
         //given
@@ -171,11 +168,9 @@ public class CollectionServiceTests
     }
     
     [Test]
-    public void UpdateCollection_ShouldReturnUpdateItemsProperly1()
+    public void UpdateCollection_ShouldRemoveItem()
     {
         //given
-        _collectionRepositoryMock.GetCollections();
-        
         var newCollection = new Collection("Test");
         _collectionRepositoryMock.AddCollection(newCollection);
         
@@ -201,30 +196,50 @@ public class CollectionServiceTests
         Assert.IsTrue(updated.ItemsIds.Contains(cd3));
         Assert.IsTrue(!updated.ItemsIds.Contains(cd1));
     }
+
+    [Test]
+    public void DeleteCollection_Should_DeleteCollection()
+    {
+        //given
+        var newCollection = new Collection("Test");
+        _collectionRepositoryMock.AddCollection(newCollection);
+        
+        //when
+        var isDeleted = _sut.DeleteCollection(newCollection.Id);
+
+        //then
+        Assert.True(isDeleted);
+    }
+    
+    [Test]
+    public void DeleteCollection_Should_ReturnFalseIfNoCollection()
+    {
+        //given
+        //when
+       var isDeleted = _sut.DeleteCollection(Guid.NewGuid());
+
+        //then
+        Assert.False(isDeleted);
+    }
+    
+    [Test]
+    public void AddItemToCollection_Should_AddItemToCollection()
+    {
+        //given
+        var newCollection = new Collection("Test");
+        var itemGuid = new CdItemModel();
+        
+        _collectionRepositoryMock.AddCollection(newCollection);
+        _itemsRepositoryMock.AddItem( itemGuid,z);
+        
+        //when
+        
+        var collection = _sut.AddItemToCollection(itemGuid, newCollection.Id);
+
+        //then
+        Assert.True(collection.ItemsIds.First() == itemGuid);
+    }
+    
+    
 }
 
-class MockRepo: IInMemoryCollectionRepository
-{
-   private List<Collection> _collections = new List<Collection> { };
-
-
-   public void AddCollection(Collection collection)
-   {
-       _collections.Add(collection);
-   }
-
-   public void DeleteCollection(Collection collection)
-   {
-       _collections.Remove(collection);
-   }
-
-   public IEnumerable<Collection?> GetCollections()
-   {
-       return _collections;
-   }
-
-   public Collection? GetCollection(Guid id)
-   {
-       return _collections.SingleOrDefault(x => x.Id == id);
-   }
-}
