@@ -16,19 +16,19 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet]
-    ActionResult<IEnumerable<CdItemModel>> GetItems()
+    ActionResult<IEnumerable<CdItem>> GetItems()
     {
         return Ok(_itemsService.GetItems());
     }
 
     [HttpGet("items/{guid:guid}")]
-    ActionResult<CdItemModel> GetItem(Guid guid)
+    ActionResult<CdItem> GetItem(Guid guid)
     {
         return Ok(_itemsService.GetItem(guid));
     }
 
     [HttpPost]
-    ActionResult<CdItemModel> CreateItem(CreateItem command)
+    ActionResult<CdItem> CreateItem(CreateItem command)
     {
         var newItem = _itemsService.CreateItem(
             command.Artist,
@@ -45,7 +45,7 @@ public class ItemController : ControllerBase
     }
 
     [HttpPut("items/{guid:guid}/update")]
-    ActionResult<CdItemModel> UpdateItem(Guid guid, string artist, string title, string label,
+    ActionResult<CdItem> UpdateItem(Guid guid, string artist, string title, string label,
         DateTime releaseDate)
     {
         var itemToUpdate = _itemsService.UpdateItem(guid, artist, title, label, releaseDate);

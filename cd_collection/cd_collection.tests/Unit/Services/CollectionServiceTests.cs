@@ -232,7 +232,6 @@ public class CollectionServiceTests
         _itemsRepositoryMock.AddItem(mockItem);
 
         //when
-
         var collection = _sut.AddItemToCollection(mockItem.Id, newCollection.Id);
 
         //then
@@ -244,40 +243,58 @@ public class CollectionServiceTests
     {
         //given
         var newCollection = new Collection("Test");
-        var mockItemId = Guid.NewGuid();
 
         _collectionRepositoryMock.AddCollection(newCollection);
 
         //when
-        var collection = _sut.AddItemToCollection(mockItemId, newCollection.Id);
+        var collection = _sut.AddItemToCollection(Guid.NewGuid(), newCollection.Id);
 
         //then
         Assert.Null(collection);
     }
-    
+
     [Test]
     public void RemoveItemFromCollection_Should_ReturnNullIfNoItem()
     {
+        
         //given
- 
-
+        
         //when
-   
-
+        
         //then
-
+        
+        
     }
-    
+
     [Test]
     public void RemoveItemFromCollection_Should_ReturnCollection()
     {
         //given
- 
+        var newCollection = new Collection("Test");
+        var mockItem = MockItem.MockCdItem;
+
+        _collectionRepositoryMock.AddCollection(newCollection);
+        _itemsRepositoryMock.AddItem(mockItem);
+        _sut.AddItemToCollection(mockItem.Id, newCollection.Id);
+        
+        Assert.True(newCollection.ItemsIds.First() == mockItem.Id);
+        
+        //when
+        var collectionWithoutItem = _sut.RemoveItemFromCollection(mockItem.Id, newCollection.Id);
+        
+        //then
+        Assert.True(collectionWithoutItem.ItemsIds.Count == 0);
+    }
+    
+    [Test]
+    public void ChangesToCollection_Should_UpdateLastChange()
+    {
+        //given
+
 
         //when
-   
+
 
         //then
-
     }
 }

@@ -4,11 +4,11 @@ namespace cd_collection.Repositories.Contracts;
 
 public interface IInMemoryItemsRepository
 {
-    void AddItem(CdItemModel item);
+    void AddItem(CdItem item);
 
     bool DeleteItem(Guid guid);
 
-    IEnumerable<CdItemModel?> GetItems();
+    IEnumerable<CdItem?> GetItems();
     
-    CdItemModel? GetItem(Guid id);
+    CdItem? GetItem(Guid id);
 }

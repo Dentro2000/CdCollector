@@ -41,7 +41,7 @@ public class ItemsService : IItemsService
 
     public CdItemDto? CreateItem(string artist, string title, string label, DateTime releaseDate)
     {
-        var newItem = new CdItemModel(artist, title, label, releaseDate);
+        var newItem = new CdItem(artist, title, label, releaseDate);
 
         var ifItemAlreadyExist = _repository.GetItems()
             .SingleOrDefault(x =>

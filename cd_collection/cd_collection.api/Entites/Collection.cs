@@ -10,7 +10,7 @@ public class Collection
 
     public DateTime CreationDate { get; private set;  }
 
-    //TODO: ADD ABSTRACTION
+    //TODO: ADD ABSTRACTION TO DATE TIME
     public DateTime LastUpdate { get; private set; }
 
     public Collection(string name)

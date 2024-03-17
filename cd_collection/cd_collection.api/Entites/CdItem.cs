@@ -1,6 +1,6 @@
 namespace cd_collection.Models;
 
-public class CdItemModel
+public class CdItem
 {
     public Guid Id { get; private set; }
     public string Artist { get; private set; }
@@ -9,7 +9,7 @@ public class CdItemModel
     public DateTime ReleaseDate { get; private set; }
     public DateTime LastUpdate { get; private set; }
 
-    public CdItemModel(string artist, string title, string label, DateTime releaseDate)
+    public CdItem(string artist, string title, string label, DateTime releaseDate)
     {
         Id = Guid.NewGuid();
         Artist = artist;

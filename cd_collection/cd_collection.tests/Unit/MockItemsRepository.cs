@@ -5,24 +5,31 @@ namespace cd_collection.tests;
 
 public class MockItemsRepository : IInMemoryItemsRepository
 {
-    private List<CdItemModel> _items = new List<CdItemModel> { };
+    private List<CdItem> _items = new List<CdItem> { };
 
-    public void AddItem(CdItemModel item)
+    public void AddItem(CdItem item)
     {
         _items.Add(item);
     }
 
     public bool DeleteItem(Guid guid)
     {
-        throw new NotImplementedException();
+        var item = GetItem(guid);
+        if (item != null)
+        {
+            _items.Remove(item);
+            return true; 
+        }
+
+        return false;
     }
 
-    public IEnumerable<CdItemModel?> GetItems()
+    public IEnumerable<CdItem?> GetItems()
     {
         return _items;
     }
 
-    public CdItemModel? GetItem(Guid id)
+    public CdItem? GetItem(Guid id)
     {
         return _items.SingleOrDefault(x => x.Id == id);
     }
@@ -30,7 +37,7 @@ public class MockItemsRepository : IInMemoryItemsRepository
 
 public static class MockItem
 {
-    public static CdItemModel MockCdItem =>
+    public static CdItem MockCdItem =>
         new(
             "MockArtist",
             "MockTitle",

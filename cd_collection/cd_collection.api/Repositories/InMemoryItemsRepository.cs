@@ -5,13 +5,13 @@ namespace cd_collection.Repositories;
 
 public class InMemoryItemsRepository : IInMemoryItemsRepository
 {
-    private List<CdItemModel?> _items = new List<CdItemModel?>()
+    private List<CdItem?> _items = new List<CdItem?>()
     {
         new("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
         new("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
     };
 
-    public void AddItem(CdItemModel item)
+    public void AddItem(CdItem item)
     {
         _items.Add(item);
     }
@@ -29,12 +29,12 @@ public class InMemoryItemsRepository : IInMemoryItemsRepository
         return true;
     }
 
-    public IEnumerable<CdItemModel?> GetItems()
+    public IEnumerable<CdItem?> GetItems()
     {
         return _items;
     }
 
-    public CdItemModel? GetItem(Guid id)
+    public CdItem? GetItem(Guid id)
     {
         return _items.SingleOrDefault(x => x.Id == id);
     }
