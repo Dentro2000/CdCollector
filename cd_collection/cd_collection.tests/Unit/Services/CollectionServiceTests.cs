@@ -1,5 +1,6 @@
 //system
 
+using cd_collection.Entities;
 using cd_collection.Models;
 using cd_collection.Repositories.Contracts;
 using cd_collection.Repository;
@@ -115,7 +116,7 @@ public class CollectionServiceTests
 
         //then
         Assert.IsTrue(collections.First().Name == "Elo");
-        Assert.IsTrue(collections.First().ItemsIds.Count == 0);
+        Assert.IsTrue(collections.First().GetItemsIds().Count == 0);
     }
 
     [Test]
@@ -133,7 +134,7 @@ public class CollectionServiceTests
             new List<Guid> { Guid.NewGuid(), Guid.NewGuid() });
 
         //then
-        Assert.IsTrue(collections.First().ItemsIds.Count == 2);
+        Assert.IsTrue(collections.First().GetItemsIds().Count == 2);
     }
 
     [Test]
@@ -161,9 +162,8 @@ public class CollectionServiceTests
             new List<Guid> { cd1, cd2, cd3 });
 
         //then
-
         Assert.IsTrue(
-            newCollection.ItemsIds.Count == 3);
+            newCollection.GetItemsIds().Count == 3);
     }
 
     [Test]
@@ -189,7 +189,6 @@ public class CollectionServiceTests
             new List<Guid> { cd2, cd3 });
 
         //then
-
         Assert.IsTrue(updated.ItemsIds.Count == 2);
         Assert.IsTrue(updated.ItemsIds.Contains(cd2));
         Assert.IsTrue(updated.ItemsIds.Contains(cd3));
@@ -256,14 +255,15 @@ public class CollectionServiceTests
     [Test]
     public void RemoveItemFromCollection_Should_ReturnNullIfNoItem()
     {
-        
         //given
-        
+        var newCollection = new Collection("Test");
+        _collectionRepositoryMock.AddCollection(newCollection);
+
         //when
-        
+        var collectionWithoutItem = _sut.RemoveItemFromCollection(Guid.NewGuid(), newCollection.Id);
+
         //then
-        
-        
+        Assert.Null(collectionWithoutItem);
     }
 
     [Test]
@@ -276,25 +276,13 @@ public class CollectionServiceTests
         _collectionRepositoryMock.AddCollection(newCollection);
         _itemsRepositoryMock.AddItem(mockItem);
         _sut.AddItemToCollection(mockItem.Id, newCollection.Id);
-        
-        Assert.True(newCollection.ItemsIds.First() == mockItem.Id);
-        
+
+        Assert.True(newCollection.GetItemsIds().First() == mockItem.Id);
+
         //when
         var collectionWithoutItem = _sut.RemoveItemFromCollection(mockItem.Id, newCollection.Id);
-        
+
         //then
         Assert.True(collectionWithoutItem.ItemsIds.Count == 0);
-    }
-    
-    [Test]
-    public void ChangesToCollection_Should_UpdateLastChange()
-    {
-        //given
-
-
-        //when
-
-
-        //then
     }
 }

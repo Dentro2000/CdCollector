@@ -1,6 +1,5 @@
 using cd_collection.DTO;
-using cd_collection.Models;
-using cd_collection.Repositories;
+using cd_collection.Entities;
 using cd_collection.Repositories.Contracts;
 using cd_collection.Services.Contracts;
 
@@ -32,11 +31,12 @@ public class CollectionsService : ICollectionsService
             .ConvertToDto();
     }
 
-    public IEnumerable<CollectionDto?> GetCollections()
+    public IList<CollectionDto?> GetCollections()
     {
         return _collectionsRepository
             .GetCollections()
-            .Select(x => x.ConvertToDto());
+            .Select(x => x.ConvertToDto())
+            .ToList();
     }
 
     public CollectionDto? UpdateCollection(Guid guid, string? collectionName, List<Guid> items)
@@ -56,12 +56,12 @@ public class CollectionsService : ICollectionsService
 
         //User should pass updated list of items
         // not only items that should be added
-        
+
         if (items.Count > 0)
         {
             collection.SetAllItems(items);
         }
-        
+
         return collection.ConvertToDto();
     }
 
@@ -92,8 +92,7 @@ public class CollectionsService : ICollectionsService
             return null;
         }
 
-        collection.ItemsIds.Add(itemId);
-        return collection.ConvertToDto();
+        return collection.AddItem(itemId).ConvertToDto();
     }
 
     public CollectionDto? RemoveItemFromCollection(Guid itemId, Guid collectionId)
@@ -106,14 +105,6 @@ public class CollectionsService : ICollectionsService
             return null;
         }
 
-        if (!_itemsRepository.DeleteItem(item.Id))
-        {
-            //throw exception
-            return null;
-        }
-
-
-        collection.ItemsIds.Remove(itemId);
-        return collection.ConvertToDto();
+        return collection.RemoveItem(itemId).ConvertToDto();
     }
 }

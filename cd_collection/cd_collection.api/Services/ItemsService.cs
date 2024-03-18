@@ -1,8 +1,9 @@
 using cd_collection.DTO;
 using cd_collection.Models;
 using cd_collection.Repositories.Contracts;
+using cd_collection.Repository;
 
-namespace cd_collection.Repository;
+namespace cd_collection.Services;
 
 public class ItemsService : IItemsService
 {

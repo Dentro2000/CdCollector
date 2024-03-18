@@ -1,3 +1,4 @@
+using cd_collection.Entities;
 using cd_collection.Models;
 using cd_collection.Repositories.Contracts;
 

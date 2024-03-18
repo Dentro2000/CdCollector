@@ -1,17 +1,17 @@
 using cd_collection.DTO;
+using cd_collection.Exceptions.Collection;
 
-namespace cd_collection.Models;
+namespace cd_collection.Entities;
 
 public class Collection
 {
-    public Guid Id { get; private set;  } 
+    public Guid Id { get; private set; }
     public string Name { get; private set; }
-    public List<Guid> ItemsIds { get; private set; }
-
-    public DateTime CreationDate { get; private set;  }
+    private List<Guid> ItemsIds { get; set; }
+    private DateTime CreationDate { get; set;  }
 
     //TODO: ADD ABSTRACTION TO DATE TIME
-    public DateTime LastUpdate { get; private set; }
+    private DateTime LastUpdate { get;  set; }
 
     public Collection(string name)
     {
@@ -22,37 +22,32 @@ public class Collection
         CreationDate = DateTime.Now;
     }
 
-    public string? ChangeName(string name)
+    public void ChangeName(string name)
     {
         Name = name;
         SetLastUpdate();
-        return Name;
     }
 
-    public List<Guid>? AddItem(Guid itemId)
+    public Collection AddItem(Guid itemId)
     {
-        if (ItemsIds.Contains(itemId))
-        {
-             //TODO: throw exception
-            return null;
-        }
-
         ItemsIds.Add(itemId);
         SetLastUpdate();
-        return ItemsIds;
+        return this;
     }
-    
-    public List<Guid>? RemoveItem(Guid itemId)
+
+    public List<Guid> GetItemsIds() => ItemsIds;
+
+
+    public Collection RemoveItem(Guid itemId)
     {
         if (!ItemsIds.Contains(itemId))
         {
-            //TODO: throw exception
-            return null;
+            throw new CannotRemoveItemException(itemId);
         }
 
         ItemsIds.Remove(itemId);
         SetLastUpdate();
-        return ItemsIds;
+        return this;
     }
 
     public void SetAllItems(List<Guid> items)
@@ -63,16 +58,13 @@ public class Collection
     private void SetLastUpdate() => LastUpdate = DateTime.Now;
 }
 
-
 public static class CollectionConvertingExtension
 {
-
     public static CollectionDto ConvertToDto(this Collection? collection) =>
         new CollectionDto
         {
             Id = collection.Id,
             Name = collection.Name,
-            ItemsIds = collection.ItemsIds
+            ItemsIds = collection.GetItemsIds()
         };
-
 }
