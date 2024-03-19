@@ -13,7 +13,6 @@ namespace cd_collection.tests.Unit.Services;
 public class CollectionServiceTests
 {
     private CollectionsService _sut;
-    private IItemsService _itemsService;
     private IInMemoryItemsRepository _itemsRepositoryMock;
     private IInMemoryCollectionRepository _collectionRepositoryMock;
 
@@ -22,7 +21,6 @@ public class CollectionServiceTests
     {
         _collectionRepositoryMock = new MockCollectionRepository();
         _itemsRepositoryMock = new MockItemsRepository();
-        _itemsService = new ItemsService(_itemsRepositoryMock);
 
         _sut = new CollectionsService(
             collectionsRepository: _collectionRepositoryMock,
@@ -34,7 +32,6 @@ public class CollectionServiceTests
     {
         _collectionRepositoryMock = null;
         _itemsRepositoryMock = null;
-        _itemsService = null;
 
         _sut = null;
     }
