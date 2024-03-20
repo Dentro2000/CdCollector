@@ -1,4 +1,5 @@
 using cd_collection.DTO;
+using cd_collection.Exceptions.ItemServiceExceptions;
 using cd_collection.Models;
 using cd_collection.Repositories.Contracts;
 using cd_collection.Repository;
@@ -40,7 +41,7 @@ public class ItemsService : IItemsService
         };
     }
 
-    public CdItemDto? CreateItem(string artist, string title, string label, DateTime releaseDate)
+    public CdItemDto CreateItem(string artist, string title, string label, DateTime releaseDate)
     {
         var newItem = new CdItem(artist, title, label, releaseDate);
 
@@ -53,8 +54,7 @@ public class ItemsService : IItemsService
 
         if (ifItemAlreadyExist != null)
         {
-            //should throw exception
-            return null;
+            throw new ItemAlreadyExistsException(title, artist, label, releaseDate);
         }
 
         _repository.AddItem(newItem);
@@ -69,14 +69,14 @@ public class ItemsService : IItemsService
         };
     }
 
-    public CdItemDto? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate)
+    public CdItemDto UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate)
     {
         var item = _repository.GetItem(guid);
 
         if (item == null)
         {
-            return null;
-            //throw exception
+            throw new CantUpdateItemException(guid);
+
         }
 
         if (!string.IsNullOrEmpty(artist))
