@@ -1,12 +1,12 @@
 using cd_collection.Entities;
+using cd_collection.Exceptions.Collection;
 
 namespace cd_collection.tests.Unit.Entities;
-
 
 public class CollectionEntitiesTests
 {
     private Collection _sut;
-    
+
     [SetUp]
     public void Setup()
     {
@@ -16,7 +16,6 @@ public class CollectionEntitiesTests
     [TearDown]
     public void TearDown()
     {
-       
     }
 
     [Test]
@@ -24,14 +23,14 @@ public class CollectionEntitiesTests
     {
         //given
         var newName = "NewCollectionName";
-        
+
         //when
         _sut.ChangeName(newName);
-        
+
         //then
         Assert.IsTrue(_sut.Name == newName);
     }
-    
+
     [Test]
     public void RemoveItem_ShouldRemoveItem()
     {
@@ -39,47 +38,70 @@ public class CollectionEntitiesTests
         var newItemGuid = Guid.NewGuid();
         _sut.AddItem(newItemGuid);
         Assert.IsTrue(_sut.GetItemsIds().Count == 1);
-        
+
         //when
         _sut.RemoveItem(newItemGuid);
 
         //then
         Assert.IsTrue(_sut.GetItemsIds().Count == 0);
     }
-    
+
     [Test]
-    public void RemoveItem_ShouldRemoveItem_ShouldThrowException_If()
+    public void RemoveItem_ShouldRemoveItem_ShouldThrowException_If_NoItemID()
     {
-        
+        //given
+        //when
+        //then
+        Assert.Throws<CannotRemoveItemException>(() =>
+            _sut.RemoveItem(Guid.NewGuid()));
     }
-    
+
     [Test]
     public void AddItem_ShouldAddItem()
     {
-        
+        //given
+        var itemId = Guid.NewGuid();
+        //when
+        var collection = _sut.AddItem(itemId);
+        //then
+        Assert.IsTrue(collection.GetItemsIds().First() == itemId);
     }
-    
+
     [Test]
-    public void AddItem_ShouldThrowException_If()
+    public void GetItemsIds_ShouldGetItemsIds()
     {
-        
+        //given
+        var newItemGuid = Guid.NewGuid();
+        _sut.AddItem(newItemGuid);
+
+        //when
+        var items = _sut.GetItemsIds();
+
+        //then
+        Assert.IsTrue(items.First() == newItemGuid);
     }
-    
-    [Test]
-    public void GetItemsIds_ShouldGetItemsIds ()
-    {
-        
-    }
-    
+
     [Test]
     public void SetAllItems_ShouldSetAllItems()
     {
+        //given
+        var items = new List<Guid>
+        {
+            Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(),
+        };
+        //when
+        _sut.SetAllItems(items);
+        
+        //then
+        Assert.IsTrue(_sut.GetItemsIds().Count == 3);
         
     }
-    
+
     [Test]
     public void SetLastUpdate_ShouldSetLastUpdate()
     {
-        
+        //given
+        //when
+        //then
     }
 }
