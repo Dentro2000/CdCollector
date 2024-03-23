@@ -1,9 +1,11 @@
+using cd_collection.ValueObjects;
+
 namespace cd_collection.Models;
 
 public class CdItem
 {
     public Guid Id { get; private set; }
-    public string Artist { get; private set; }
+    public Artist Artist { get; private set; }
     public string Title { get; private set; }
     public string Label { get; private set; }
     public DateTime ReleaseDate { get; private set; }
