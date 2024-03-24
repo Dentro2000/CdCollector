@@ -102,7 +102,7 @@ public class ItemsServiceTests
 
         Assert.IsTrue(updatedItem.Artist == item1.Artist);
         Assert.IsTrue(updatedItem.Title == item1.Title);
-        Assert.IsTrue(updatedItem.ReleaseDate == item1.ReleaseDate);
+        Assert.IsTrue(updatedItem.ReleaseDate == item1.ReleaseDate.Value);
         Assert.IsTrue(updatedItem.Label == newLabel);
     }
 

@@ -50,7 +50,7 @@ public class ItemsService : IItemsService
                 x.Artist == artist
                 && x.Title == title
                 && x.Label == label
-                && x.ReleaseDate == releaseDate);
+                && x.ReleaseDate.Value == releaseDate);
 
         if (ifItemAlreadyExist != null)
         {

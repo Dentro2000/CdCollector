@@ -6,10 +6,10 @@ public class CdItem
 {
     public Guid Id { get; private set; }
     public Artist Artist { get; private set; }
-    public string Title { get; private set; }
-    public string Label { get; private set; }
-    public DateTime ReleaseDate { get; private set; }
-    public DateTime LastUpdate { get; private set; }
+    public Title Title { get; private set; }
+    public Label Label { get; private set; }
+    public Date ReleaseDate { get; private set; }
+    private Date LastUpdate { get;  set; }
 
     public CdItem(string artist, string title, string label, DateTime releaseDate)
     {
