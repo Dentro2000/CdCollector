@@ -1,7 +1,6 @@
-using cd_collection.DTO;
-using cd_collection.Models;
+using cd_collection.application.DTO;
 
-namespace cd_collection.Repository;
+namespace cd_collection.application.Services.Contracts;
 
 public interface IItemsService
 {

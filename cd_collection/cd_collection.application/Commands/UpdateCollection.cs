@@ -1,3 +1,3 @@
-namespace cd_collection.Commands;
+namespace cd_collection.application.Commands;
 
-public record UpdateCollection(string? collectionName, List<Guid> items);
+public record UpdateCollection(string? CollectionName, List<Guid> Items);

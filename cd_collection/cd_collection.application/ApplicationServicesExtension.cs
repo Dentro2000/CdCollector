@@ -1,11 +1,10 @@
-using cd_collection.Repository;
-using cd_collection.Services;
-using cd_collection.Services.Contracts;
+using cd_collection.application.Services;
+using cd_collection.application.Services.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace cd_collection.application;
 
-public static class Extensions
+public static class ApplicationServicesExtension
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {

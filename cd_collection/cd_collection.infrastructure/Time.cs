@@ -1,6 +1,6 @@
 using cd_collection.core.Contracts;
 
-namespace cd_collection.Abstractions;
+namespace cd_collection.infrastructure;
 
 public class Time: ITime
 {

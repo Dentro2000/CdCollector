@@ -1,6 +1,6 @@
-using cd_collection.ValueObjects;
+using cd_collection.core.ValueObjects;
 
-namespace cd_collection.Models;
+namespace cd_collection.core.Entities;
 
 public class CdItem
 {

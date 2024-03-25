@@ -1,11 +1,10 @@
-
+using cd_collection.application.DTO;
+using cd_collection.application.Extensions;
+using cd_collection.application.Services.Contracts;
 using cd_collection.core.Contracts;
-using cd_collection.DTO;
-using cd_collection.Entities;
-using cd_collection.Extensions;
-using cd_collection.Services.Contracts;
+using cd_collection.core.Entities;
 
-namespace cd_collection.Services;
+namespace cd_collection.application.Services;
 
 public class CollectionsService : ICollectionsService
 {

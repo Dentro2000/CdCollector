@@ -1,6 +1,6 @@
-using cd_collection.Exceptions.Collection;
+using cd_collection.core.Exceptions.Collection;
 
-namespace cd_collection.Entities;
+namespace cd_collection.core.Entities;
 
 public class Collection
 {

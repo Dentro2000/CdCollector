@@ -1,4 +1,4 @@
-namespace cd_collection.Exceptions;
+namespace cd_collection.core.Exceptions;
 
 public abstract class CustomException : Exception
 {

@@ -1,4 +1,4 @@
-namespace cd_collection.Exceptions.ItemServiceExceptions;
+namespace cd_collection.core.Exceptions.ItemServiceExceptions;
 
 public class CantUpdateItemException: CustomException
 {

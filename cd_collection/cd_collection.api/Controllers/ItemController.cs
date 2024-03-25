@@ -1,6 +1,6 @@
-using cd_collection.Commands;
-using cd_collection.Models;
-using cd_collection.Repository;
+using cd_collection.application.Commands;
+using cd_collection.application.Services.Contracts;
+using cd_collection.core.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cd_collection.Controllers;

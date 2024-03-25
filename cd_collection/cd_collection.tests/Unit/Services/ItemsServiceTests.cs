@@ -1,7 +1,7 @@
+using cd_collection.application.Services;
+using cd_collection.application.Services.Contracts;
 using cd_collection.core.Contracts;
-using cd_collection.Exceptions.ItemServiceExceptions;
-using cd_collection.Repository;
-using cd_collection.Services;
+using cd_collection.core.Exceptions.ItemServiceExceptions;
 
 namespace cd_collection.tests.Unit.Services;
 

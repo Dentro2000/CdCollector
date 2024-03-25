@@ -1,5 +1,5 @@
-using cd_collection.Entities;
-using cd_collection.Exceptions.Collection;
+using cd_collection.core.Entities;
+using cd_collection.core.Exceptions.Collection;
 
 namespace cd_collection.tests.Unit.Entities;
 

@@ -1,5 +1,5 @@
 using cd_collection.core.Contracts;
-using cd_collection.Models;
+using cd_collection.core.Entities;
 
 namespace cd_collection.infrastructure.Repositories;
 

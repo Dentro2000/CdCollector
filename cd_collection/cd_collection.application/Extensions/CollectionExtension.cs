@@ -1,8 +1,7 @@
-using cd_collection.DTO;
-using cd_collection.Entities;
+using cd_collection.application.DTO;
+using cd_collection.core.Entities;
 
-namespace cd_collection.Extensions;
-
+namespace cd_collection.application.Extensions;
 
     public static class CollectionConvertingExtension
     {

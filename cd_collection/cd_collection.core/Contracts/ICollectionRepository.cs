@@ -1,4 +1,4 @@
-using cd_collection.Entities;
+using cd_collection.core.Entities;
 
 namespace cd_collection.core.Contracts;
 

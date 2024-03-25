@@ -1,10 +1,10 @@
+using cd_collection.application.DTO;
+using cd_collection.application.Services.Contracts;
 using cd_collection.core.Contracts;
-using cd_collection.DTO;
-using cd_collection.Exceptions.ItemServiceExceptions;
-using cd_collection.Models;
-using cd_collection.Repository;
+using cd_collection.core.Entities;
+using cd_collection.core.Exceptions.ItemServiceExceptions;
 
-namespace cd_collection.Services;
+namespace cd_collection.application.Services;
 
 public class ItemsService : IItemsService
 {

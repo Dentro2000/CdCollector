@@ -1,4 +1,4 @@
-namespace cd_collection.Exceptions.Collection;
+namespace cd_collection.core.Exceptions.Collection;
 
 public sealed class CannotRemoveItemException: CustomException
 {

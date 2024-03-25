@@ -1,3 +1,3 @@
-namespace cd_collection.Commands;
+namespace cd_collection.application.Commands;
 
 public record CreateItem(string Artist, string Title, string Label, DateTime ReleaseDate);

@@ -1,6 +1,6 @@
-using cd_collection.Commands;
-using cd_collection.DTO;
-using cd_collection.Services.Contracts;
+using cd_collection.application.Commands;
+using cd_collection.application.DTO;
+using cd_collection.application.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cd_collection.Controllers;
@@ -50,7 +50,7 @@ public class CdCollectionController : ControllerBase
     [HttpPut("{collectionId:guid}")]
     public ActionResult<CollectionDto> UpdateCollection(Guid collectionId, UpdateCollection command)
     {
-        var collection = _collectionsService.UpdateCollection(collectionId, command.collectionName, command.items);
+        var collection = _collectionsService.UpdateCollection(collectionId, command.CollectionName, command.Items);
         if (collection == null)
         {
             return NotFound();

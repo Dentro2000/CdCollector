@@ -1,6 +1,6 @@
-using cd_collection.DTO;
+using cd_collection.application.DTO;
 
-namespace cd_collection.Services.Contracts;
+namespace cd_collection.application.Services.Contracts;
 
 public interface ICollectionsService
 {

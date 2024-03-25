@@ -1,4 +1,4 @@
-namespace cd_collection.ValueObjects;
+namespace cd_collection.core.ValueObjects;
 
 public sealed record Date
 {

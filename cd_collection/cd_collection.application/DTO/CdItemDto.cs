@@ -1,4 +1,4 @@
-namespace cd_collection.DTO;
+namespace cd_collection.application.DTO;
 
 public class CdItemDto
 {
