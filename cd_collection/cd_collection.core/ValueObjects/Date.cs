@@ -9,8 +9,8 @@ public sealed record Date
         Value = value;
     }
     
-    public static implicit operator DateTime(Date name)
-        => name.Value;
+    public static implicit operator DateTime(Date date)
+        => date.Value;
 
     public static implicit operator Date(DateTime value)
         => new(value);

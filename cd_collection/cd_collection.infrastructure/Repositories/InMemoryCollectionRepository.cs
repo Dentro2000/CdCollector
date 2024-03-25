@@ -1,10 +1,9 @@
+using cd_collection.core.Contracts;
 using cd_collection.Entities;
-using cd_collection.Models;
-using cd_collection.Repositories.Contracts;
 
-namespace cd_collection.Repositories;
+namespace cd_collection.infrastructure.Repositories;
 
-public class InMemoryCollectionRepository : IInMemoryCollectionRepository
+internal class InMemoryCollectionRepository : ICollectionRepository
 {
     private readonly List<Collection?> _collections = new List<Collection?>
     {

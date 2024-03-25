@@ -1,4 +1,3 @@
-using cd_collection.DTO;
 using cd_collection.Exceptions.Collection;
 
 namespace cd_collection.Entities;
@@ -56,15 +55,4 @@ public class Collection
     }
 
     private void SetLastUpdate() => LastUpdate = DateTime.Now;
-}
-
-public static class CollectionConvertingExtension
-{
-    public static CollectionDto ConvertToDto(this Collection? collection) =>
-        new CollectionDto
-        {
-            Id = collection.Id,
-            Name = collection.Name,
-            ItemsIds = collection.GetItemsIds()
-        };
 }

@@ -1,8 +1,8 @@
 using cd_collection.Models;
 
-namespace cd_collection.Repositories.Contracts;
+namespace cd_collection.core.Contracts;
 
-public interface IInMemoryItemsRepository
+public interface IItemsRepository
 {
     void AddItem(CdItem item);
 

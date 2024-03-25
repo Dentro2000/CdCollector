@@ -1,10 +1,10 @@
+using cd_collection.core.Contracts;
 using cd_collection.Entities;
 using cd_collection.Models;
-using cd_collection.Repositories.Contracts;
 
 namespace cd_collection.tests.Unit;
 
-class MockCollectionRepository : IInMemoryCollectionRepository
+class MockCollectionRepository : ICollectionRepository
 {
     private List<Collection> _collections = new List<Collection> { };
 

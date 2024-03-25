@@ -1,9 +1,9 @@
+using cd_collection.core.Contracts;
 using cd_collection.Models;
-using cd_collection.Repositories.Contracts;
 
 namespace cd_collection.tests;
 
-public class MockItemsRepository : IInMemoryItemsRepository
+public class MockItemsRepository : IItemsRepository
 {
     private List<CdItem> _items = new List<CdItem> { };
 

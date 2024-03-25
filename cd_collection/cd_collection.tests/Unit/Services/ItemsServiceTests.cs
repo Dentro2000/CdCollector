@@ -1,5 +1,5 @@
+using cd_collection.core.Contracts;
 using cd_collection.Exceptions.ItemServiceExceptions;
-using cd_collection.Repositories.Contracts;
 using cd_collection.Repository;
 using cd_collection.Services;
 
@@ -8,7 +8,7 @@ namespace cd_collection.tests.Unit.Services;
 public class ItemsServiceTests
 {
     private IItemsService _sut;
-    private IInMemoryItemsRepository _mockItemsRepository;
+    private IItemsRepository _mockItemsRepository;
 
     [SetUp]
     public void SetUp()

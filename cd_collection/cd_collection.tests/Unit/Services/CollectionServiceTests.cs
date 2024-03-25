@@ -1,8 +1,8 @@
 //system
 
+using cd_collection.core.Contracts;
 using cd_collection.Entities;
 using cd_collection.Models;
-using cd_collection.Repositories.Contracts;
 using cd_collection.Repository;
 using cd_collection.Services;
 
@@ -13,8 +13,8 @@ namespace cd_collection.tests.Unit.Services;
 public class CollectionServiceTests
 {
     private CollectionsService _sut;
-    private IInMemoryItemsRepository _itemsRepositoryMock;
-    private IInMemoryCollectionRepository _collectionRepositoryMock;
+    private IItemsRepository _itemsRepositoryMock;
+    private ICollectionRepository _collectionRepositoryMock;
 
     [SetUp]
     public void Setup()

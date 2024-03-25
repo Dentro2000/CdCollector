@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace cd_collection.Controllers;
 
 [ApiController]
+[Route("items")]
 public class ItemController : ControllerBase
 {
     private readonly IItemsService _itemsService;
@@ -21,10 +22,10 @@ public class ItemController : ControllerBase
         return Ok(_itemsService.GetItems());
     }
 
-    [HttpGet("items/{guid:guid}")]
-    ActionResult<CdItem> GetItem(Guid guid)
+    [HttpGet("{itemIdentifier:guid}")]
+    ActionResult<CdItem> GetItem(Guid itemIdentifier)
     {
-        return Ok(_itemsService.GetItem(guid));
+        return Ok(_itemsService.GetItem(itemIdentifier));
     }
 
     [HttpPost]
@@ -44,7 +45,7 @@ public class ItemController : ControllerBase
         return (Ok(newItem));
     }
 
-    [HttpPut("items/{guid:guid}/update")]
+    [HttpPut("{guid:guid}/update")]
     ActionResult<CdItem> UpdateItem(Guid guid, string artist, string title, string label,
         DateTime releaseDate)
     {
@@ -59,7 +60,7 @@ public class ItemController : ControllerBase
         return Ok(updatedItem);
     }
 
-    [HttpDelete("items/{guid:guid}/remove")]
+    [HttpDelete("{guid:guid}/remove")]
     public async Task<ActionResult> DeleteCollection(Guid guid)
         => _itemsService.DeleteItem(guid) == false ? BadRequest() : NoContent();
 }

@@ -1,14 +1,20 @@
+using cd_collection.core.Contracts;
 using cd_collection.Models;
-using cd_collection.Repositories.Contracts;
 
-namespace cd_collection.Repositories;
+namespace cd_collection.infrastructure.Repositories;
 
-public class InMemoryItemsRepository : IInMemoryItemsRepository
+internal class InMemoryItemsRepository : IItemsRepository
 {
-    private List<CdItem?> _items = new List<CdItem?>()
+
+    private readonly ITime _time;
+    public InMemoryItemsRepository(ITime time)
     {
-        new("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
-        new("SomeArtist", "SomeTitle", "SomeLabel", DateTime.Now),
+        _time = time;
+    }
+    private List<CdItem?> _items => new List<CdItem?>()
+    {
+        new("SomeArtist", "SomeTitle", "SomeLabel", _time.Current()),
+        new("SomeArtist", "SomeTitle", "SomeLabel",_time.Current()),
     };
 
     public void AddItem(CdItem item)

@@ -9,8 +9,8 @@ public sealed record Label
         Value = value;
     }
     
-    public static implicit operator string(Label name)
-        => name.Value;
+    public static implicit operator string(Label label)
+        => label.Value;
 
     public static implicit operator Label(string value)
         => new(value);

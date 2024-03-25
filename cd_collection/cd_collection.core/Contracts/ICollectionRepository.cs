@@ -1,9 +1,8 @@
 using cd_collection.Entities;
-using cd_collection.Models;
 
-namespace cd_collection.Repositories.Contracts;
+namespace cd_collection.core.Contracts;
 
-public interface IInMemoryCollectionRepository
+public interface ICollectionRepository
 {
     void AddCollection(Collection collection);
 

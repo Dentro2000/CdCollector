@@ -9,8 +9,8 @@ public sealed record Artist
         Value = value;
     }
     
-    public static implicit operator string(Artist name)
-        => name.Value;
+    public static implicit operator string(Artist artist)
+        => artist.Value;
 
     public static implicit operator Artist(string value)
         => new(value);

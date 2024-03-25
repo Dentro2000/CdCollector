@@ -1,18 +1,20 @@
+
+using cd_collection.core.Contracts;
 using cd_collection.DTO;
 using cd_collection.Entities;
-using cd_collection.Repositories.Contracts;
+using cd_collection.Extensions;
 using cd_collection.Services.Contracts;
 
 namespace cd_collection.Services;
 
 public class CollectionsService : ICollectionsService
 {
-    private readonly IInMemoryCollectionRepository _collectionsRepository;
-    private readonly IInMemoryItemsRepository _itemsRepository;
+    private readonly ICollectionRepository _collectionsRepository;
+    private readonly IItemsRepository _itemsRepository;
 
     public CollectionsService(
-        IInMemoryCollectionRepository collectionsRepository,
-        IInMemoryItemsRepository itemsRepository)
+        ICollectionRepository collectionsRepository,
+        IItemsRepository itemsRepository)
     {
         _collectionsRepository = collectionsRepository;
         _itemsRepository = itemsRepository;

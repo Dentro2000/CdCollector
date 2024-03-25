@@ -1,16 +1,16 @@
+using cd_collection.core.Contracts;
 using cd_collection.DTO;
 using cd_collection.Exceptions.ItemServiceExceptions;
 using cd_collection.Models;
-using cd_collection.Repositories.Contracts;
 using cd_collection.Repository;
 
 namespace cd_collection.Services;
 
 public class ItemsService : IItemsService
 {
-    private IInMemoryItemsRepository _repository;
+    private IItemsRepository _repository;
 
-    public ItemsService(IInMemoryItemsRepository repository)
+    public ItemsService(IItemsRepository repository)
     {
         _repository = repository;
     }
@@ -59,6 +59,8 @@ public class ItemsService : IItemsService
 
         _repository.AddItem(newItem);
         var item = _repository.GetItem(newItem.Id);
+        
+        //TODO: move to extension converting to dto
         return new CdItemDto
         {
             Id = item.Id,
