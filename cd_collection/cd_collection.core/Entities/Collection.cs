@@ -4,6 +4,7 @@ namespace cd_collection.core.Entities;
 
 public class Collection
 {
+    //TODO: Add value objects
     public Guid Id { get; private set; }
     public string Name { get; private set; }
     private List<Guid> ItemsIds { get; set; }
