@@ -18,7 +18,7 @@ public class MockItemsRepository : IItemsRepository
         if (item != null)
         {
             _items.Remove(item);
-            return true; 
+            return true;
         }
 
         return false;

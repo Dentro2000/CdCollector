@@ -9,7 +9,7 @@ public interface IItemsService
     CdItemDto GetItem(Guid id);
 
     CdItemDto? CreateItem(string artist, string title, string label, DateTime releaseDate);
-    
+
     CdItemDto? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate);
 
     bool DeleteItem(Guid guid);

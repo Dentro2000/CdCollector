@@ -10,7 +10,7 @@ public class CdItem
     public Title Title { get; private set; }
     public Label Label { get; private set; }
     public Date ReleaseDate { get; private set; }
-    private Date LastUpdate { get;  set; }
+    private Date LastUpdate { get; set; }
 
     public CdItem(string artist, string title, string label, DateTime releaseDate)
     {
@@ -45,6 +45,6 @@ public class CdItem
         ReleaseDate = newReleaseDate;
         SetLastUpdate();
     }
-    
+
     private void SetLastUpdate() => LastUpdate = DateTime.Now;
 }

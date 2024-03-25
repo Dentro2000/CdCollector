@@ -91,10 +91,9 @@ public class CollectionEntitiesTests
         };
         //when
         _sut.SetAllItems(items);
-        
+
         //then
         Assert.IsTrue(_sut.GetItemsIds().Count == 3);
-        
     }
 
     [Test]

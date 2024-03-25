@@ -8,10 +8,10 @@ public class Collection
     public Guid Id { get; private set; }
     public string Name { get; private set; }
     private List<Guid> ItemsIds { get; set; }
-    private DateTime CreationDate { get; set;  }
+    private DateTime CreationDate { get; set; }
 
     //TODO: ADD ABSTRACTION TO DATE TIME
-    private DateTime LastUpdate { get;  set; }
+    private DateTime LastUpdate { get; set; }
 
     public Collection(string name)
     {

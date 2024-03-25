@@ -6,12 +6,12 @@ namespace cd_collection.infrastructure;
 
 public static class InfrastructureServicesExtension
 {
- public static IServiceCollection AddInfrastructure(this IServiceCollection services)
- {
-  services.AddSingleton<IItemsRepository, InMemoryItemsRepository>();
-  services.AddSingleton<ICollectionRepository, InMemoryCollectionRepository>();
-  services.AddTransient<ITime, Time>();
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    {
+        services.AddSingleton<IItemsRepository, InMemoryItemsRepository>();
+        services.AddSingleton<ICollectionRepository, InMemoryCollectionRepository>();
+        services.AddTransient<ITime, Time>();
 
-  return services;
- }
+        return services;
+    }
 }

@@ -7,13 +7,13 @@ internal class InMemoryCollectionRepository : ICollectionRepository
 {
     private readonly List<Collection?> _collections = new List<Collection?>
     {
-        new (name: "OneTwoThree"),
-        new (name: "FourFiveSix"),
+        new(name: "OneTwoThree"),
+        new(name: "FourFiveSix"),
     };
-    
+
     public void AddCollection(Collection collection)
     {
-       _collections.Add(collection);
+        _collections.Add(collection);
     }
 
     public void DeleteCollection(Collection collection)

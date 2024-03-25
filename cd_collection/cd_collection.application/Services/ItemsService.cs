@@ -59,7 +59,7 @@ public class ItemsService : IItemsService
 
         _repository.AddItem(newItem);
         var item = _repository.GetItem(newItem.Id);
-        
+
         //TODO: move to extension converting to dto
         return new CdItemDto
         {
@@ -78,7 +78,6 @@ public class ItemsService : IItemsService
         if (item == null)
         {
             throw new CantUpdateItemException(guid);
-
         }
 
         if (!string.IsNullOrEmpty(artist))

@@ -73,18 +73,17 @@ public class CdCollectionController : ControllerBase
     }
 
     [HttpPut("items/{collectionId:guid}/add")]
-    public ActionResult<CollectionDto> AddItemToCollection( Guid itemId, Guid collectionId)
+    public ActionResult<CollectionDto> AddItemToCollection(Guid itemId, Guid collectionId)
     {
         var collection = _collectionsService.AddItemToCollection(itemId, collectionId);
         if (collection == null)
         {
             return BadRequest();
         }
-        
-        return Ok(collection);
 
+        return Ok(collection);
     }
-    
+
     [HttpDelete("items/{collectionId:guid}/remove")]
     public ActionResult<CollectionDto> RemoveItemFromCollection(Guid itemId, Guid collectionId)
     {
@@ -93,7 +92,7 @@ public class CdCollectionController : ControllerBase
         {
             return BadRequest();
         }
-        
+
         return Ok(collection);
     }
 }

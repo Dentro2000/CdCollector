@@ -9,6 +9,6 @@ public interface ICollectionRepository
     void DeleteCollection(Collection collection);
 
     IEnumerable<Collection?> GetCollections();
-    
+
     Collection? GetCollection(Guid id);
 }

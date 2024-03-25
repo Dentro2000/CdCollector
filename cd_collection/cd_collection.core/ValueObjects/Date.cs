@@ -8,7 +8,7 @@ public sealed record Date
     {
         Value = value;
     }
-    
+
     public static implicit operator DateTime(Date date)
         => date.Value;
 

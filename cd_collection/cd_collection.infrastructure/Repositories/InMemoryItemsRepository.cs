@@ -5,16 +5,17 @@ namespace cd_collection.infrastructure.Repositories;
 
 internal class InMemoryItemsRepository : IItemsRepository
 {
-
     private readonly ITime _time;
+
     public InMemoryItemsRepository(ITime time)
     {
         _time = time;
     }
+
     private List<CdItem?> _items => new List<CdItem?>()
     {
         new("SomeArtist", "SomeTitle", "SomeLabel", _time.Current()),
-        new("SomeArtist", "SomeTitle", "SomeLabel",_time.Current()),
+        new("SomeArtist", "SomeTitle", "SomeLabel", _time.Current()),
     };
 
     public void AddItem(CdItem item)
