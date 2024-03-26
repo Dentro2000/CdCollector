@@ -1,6 +1,6 @@
 using cd_collection.application.Commands;
+using cd_collection.application.DTO;
 using cd_collection.application.Services.Contracts;
-using cd_collection.core.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cd_collection.Controllers;
@@ -17,19 +17,19 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet]
-    ActionResult<IEnumerable<CdItem>> GetItems()
+    public ActionResult<List<CdItemDto>> GetAllItems()
     {
         return Ok(_itemsService.GetItems());
     }
 
     [HttpGet("{itemIdentifier:guid}")]
-    ActionResult<CdItem> GetItem(Guid itemIdentifier)
+    public ActionResult<CdItemDto> GetItem(Guid itemIdentifier)
     {
         return Ok(_itemsService.GetItem(itemIdentifier));
     }
 
     [HttpPost]
-    ActionResult<CdItem> CreateItem(CreateItem command)
+    public ActionResult<CdItemDto> CreateItem(CreateItem command)
     {
         var newItem = _itemsService.CreateItem(
             command.Artist,
@@ -45,11 +45,11 @@ public class ItemController : ControllerBase
         return (Ok(newItem));
     }
 
-    [HttpPut("{guid:guid}/update")]
-    ActionResult<CdItem> UpdateItem(Guid guid, string artist, string title, string label,
+    [HttpPut("{itemIdentifier:guid}/update")]
+    public ActionResult<CdItemDto> UpdateItem(Guid itemIdentifier, string artist, string title, string label,
         DateTime releaseDate)
     {
-        var itemToUpdate = _itemsService.UpdateItem(guid, artist, title, label, releaseDate);
+        var itemToUpdate = _itemsService.UpdateItem(itemIdentifier, artist, title, label, releaseDate);
         if (itemToUpdate == null)
         {
             return BadRequest();
@@ -60,7 +60,7 @@ public class ItemController : ControllerBase
         return Ok(updatedItem);
     }
 
-    [HttpDelete("{guid:guid}/remove")]
-    public async Task<ActionResult> DeleteCollection(Guid guid)
-        => _itemsService.DeleteItem(guid) == false ? BadRequest() : NoContent();
+    [HttpDelete("{itemIdentifier:guid}/remove")]
+    public ActionResult DeleteCollection(Guid itemIdentifier)
+        => _itemsService.DeleteItem(itemIdentifier) == false ? BadRequest() : NoContent();
 }

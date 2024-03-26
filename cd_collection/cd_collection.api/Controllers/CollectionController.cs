@@ -10,7 +10,6 @@ namespace cd_collection.Controllers;
 public class CdCollectionController : ControllerBase
 {
     private readonly ICollectionsService _collectionsService;
-    private readonly ICollectionsService _itemsService;
 
     public CdCollectionController(ICollectionsService collectionsService)
     {
