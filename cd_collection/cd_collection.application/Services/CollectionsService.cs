@@ -3,6 +3,7 @@ using cd_collection.application.Extensions;
 using cd_collection.application.Services.Contracts;
 using cd_collection.core.Contracts;
 using cd_collection.core.Entities;
+using cd_collection.core.ValueObjects;
 
 namespace cd_collection.application.Services;
 
@@ -28,7 +29,7 @@ public class CollectionsService : ICollectionsService
         _collectionsRepository.AddCollection(collection: collection);
 
         return _collectionsRepository
-            .GetCollection(collection.Id)
+            .GetCollection(collection.Identifier)
             .ConvertToDto();
     }
 
@@ -60,7 +61,7 @@ public class CollectionsService : ICollectionsService
 
         if (items.Count > 0)
         {
-            collection.SetAllItems(items);
+            collection.SetAllItems(items.ToIdentifiers());
         }
 
         return collection.ConvertToDto();

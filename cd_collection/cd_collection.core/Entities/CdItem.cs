@@ -5,7 +5,7 @@ namespace cd_collection.core.Entities;
 public class CdItem
 {
     //TODO: Check if any validation need to be moved to value objects
-    public Guid Id { get; private set; }
+    public Identifier Identifier { get; private set; }
     public Artist Artist { get; private set; }
     public Title Title { get; private set; }
     public Label Label { get; private set; }
@@ -14,7 +14,7 @@ public class CdItem
 
     public CdItem(string artist, string title, string label, DateTime releaseDate)
     {
-        Id = Guid.NewGuid();
+        Identifier = Guid.NewGuid();
         Artist = artist;
         Title = title;
         Label = label;

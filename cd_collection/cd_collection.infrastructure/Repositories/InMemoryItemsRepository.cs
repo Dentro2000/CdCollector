@@ -25,7 +25,7 @@ internal class InMemoryItemsRepository : IItemsRepository
 
     public bool DeleteItem(Guid guid)
     {
-        var itemToRemove = _items.SingleOrDefault(x => x.Id == guid);
+        var itemToRemove = _items.SingleOrDefault(x => x.Identifier.Value == guid);
         if (itemToRemove == null)
         {
             //throw exception
@@ -43,6 +43,6 @@ internal class InMemoryItemsRepository : IItemsRepository
 
     public CdItem? GetItem(Guid id)
     {
-        return _items.SingleOrDefault(x => x.Id == id);
+        return _items.SingleOrDefault(x => x.Identifier.Value == id);
     }
 }

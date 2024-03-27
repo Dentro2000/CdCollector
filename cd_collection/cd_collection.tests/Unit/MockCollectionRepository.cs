@@ -25,6 +25,6 @@ class MockCollectionRepository : ICollectionRepository
 
     public Collection? GetCollection(Guid id)
     {
-        return _collections.SingleOrDefault(x => x.Id == id);
+        return _collections.SingleOrDefault(x => x.Identifier.Value == id);
     }
 }

@@ -1,5 +1,6 @@
 using cd_collection.core.Entities;
 using cd_collection.core.Exceptions.Collection;
+using cd_collection.core.ValueObjects;
 
 namespace cd_collection.tests.Unit.Entities;
 
@@ -64,7 +65,7 @@ public class CollectionEntitiesTests
         //when
         var collection = _sut.AddItem(itemId);
         //then
-        Assert.IsTrue(collection.GetItemsIds().First() == itemId);
+        Assert.IsTrue(collection.GetItemsIds().First().Value == itemId);
     }
 
     [Test]
@@ -78,7 +79,7 @@ public class CollectionEntitiesTests
         var items = _sut.GetItemsIds();
 
         //then
-        Assert.IsTrue(items.First() == newItemGuid);
+        Assert.IsTrue(items.First().Value == newItemGuid);
     }
 
     [Test]
@@ -90,7 +91,7 @@ public class CollectionEntitiesTests
             Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(),
         };
         //when
-        _sut.SetAllItems(items);
+        _sut.SetAllItems(items.ToIdentifiers());
 
         //then
         Assert.IsTrue(_sut.GetItemsIds().Count == 3);

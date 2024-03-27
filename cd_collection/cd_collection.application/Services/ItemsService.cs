@@ -20,7 +20,7 @@ public class ItemsService : IItemsService
     {
         return _repository.GetItems().Select(item => new CdItemDto
         {
-            Id = item.Id,
+            Id = item.Identifier,
             Artist = item.Artist,
             Title = item.Title,
             Label = item.Label,
@@ -33,7 +33,7 @@ public class ItemsService : IItemsService
         var item = _repository.GetItem(id: id);
         return new CdItemDto
         {
-            Id = item.Id,
+            Id = item.Identifier,
             Artist = item.Artist,
             Title = item.Title,
             Label = item.Label,
@@ -58,12 +58,12 @@ public class ItemsService : IItemsService
         }
 
         _repository.AddItem(newItem);
-        var item = _repository.GetItem(newItem.Id);
+        var item = _repository.GetItem(newItem.Identifier);
 
         //TODO: move to extension converting to dto
         return new CdItemDto
         {
-            Id = item.Id,
+            Id = item.Identifier,
             Artist = item.Artist,
             Title = item.Title,
             Label = item.Label,
@@ -102,7 +102,7 @@ public class ItemsService : IItemsService
 
         return new CdItemDto
         {
-            Id = item.Id,
+            Id = item.Identifier,
             Artist = item.Artist,
             Title = item.Title,
             Label = item.Label,

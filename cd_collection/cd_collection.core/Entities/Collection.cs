@@ -1,23 +1,21 @@
 using cd_collection.core.Exceptions.Collection;
+using cd_collection.core.ValueObjects;
 
 namespace cd_collection.core.Entities;
 
 public class Collection
 {
-    //TODO: Add value objects
-    public Guid Id { get; private set; }
-    public string Name { get; private set; }
-    private List<Guid> ItemsIds { get; set; }
-    private DateTime CreationDate { get; set; }
-
-    //TODO: ADD ABSTRACTION TO DATE TIME
-    private DateTime LastUpdate { get; set; }
+    public Identifier Identifier { get; private set; }
+    public CollectionName Name { get; private set; }
+    private List<Identifier> ItemIdentifiers { get; set; }
+    private Date CreationDate { get; set; }
+    private Date LastUpdate { get; set; }
 
     public Collection(string name)
     {
-        Id = Guid.NewGuid();
+        Identifier = Guid.NewGuid();
         Name = name;
-        ItemsIds = new List<Guid>();
+        ItemIdentifiers = new List<Identifier>();
         LastUpdate = DateTime.Now;
         CreationDate = DateTime.Now;
     }
@@ -30,29 +28,29 @@ public class Collection
 
     public Collection AddItem(Guid itemId)
     {
-        ItemsIds.Add(itemId);
+        ItemIdentifiers.Add(itemId);
         SetLastUpdate();
         return this;
     }
 
-    public List<Guid> GetItemsIds() => ItemsIds;
+    public List<Identifier> GetItemsIds() => ItemIdentifiers;
 
 
     public Collection RemoveItem(Guid itemId)
     {
-        if (!ItemsIds.Contains(itemId))
+        if (!ItemIdentifiers.Contains(itemId))
         {
             throw new CannotRemoveItemException(itemId);
         }
 
-        ItemsIds.Remove(itemId);
+        ItemIdentifiers.Remove(itemId);
         SetLastUpdate();
         return this;
     }
 
-    public void SetAllItems(List<Guid> items)
+    public void SetAllItems(List<Identifier> items)
     {
-        ItemsIds = items;
+        ItemIdentifiers = items;
     }
 
     private void SetLastUpdate() => LastUpdate = DateTime.Now;
