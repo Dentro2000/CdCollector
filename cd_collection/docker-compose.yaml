@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - 15432:5432
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: sa
+      POSTGRES_DB: cd_collection
+    volumes:
+      - postgres:/var/lib/postgresql/data  
+
+volumes:
+  postgres:
