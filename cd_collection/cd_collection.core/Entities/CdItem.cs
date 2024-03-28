@@ -4,7 +4,6 @@ namespace cd_collection.core.Entities;
 
 public class CdItem
 {
-    //TODO: Check if any validation need to be moved to value objects
     public Identifier Identifier { get; private set; }
     public Artist Artist { get; private set; }
     public Title Title { get; private set; }

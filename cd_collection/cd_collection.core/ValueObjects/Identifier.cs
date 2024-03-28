@@ -6,6 +6,12 @@ public sealed record Identifier
 
     public Identifier(Guid value)
     {
+        if (value == Guid.Empty)
+        {
+            //TODO: ADD VALID EXCEPTION
+            throw new NotImplementedException();
+        }
+
         Value = value;
     }
 
