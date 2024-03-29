@@ -12,4 +12,16 @@ public static class CollectionConvertingExtension
             itemsIds: collection
                 .GetItemsIds()
                 .ToGuids());
+
+    public static CdItemDto(this CdItem item)
+    {
+        return new CdItemDto
+        {
+            Id = item,
+            Artist = null,
+            Title = null,
+            Label = null,
+            ReleaseDate = default
+        }
+    }
 }
