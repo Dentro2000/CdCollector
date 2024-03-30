@@ -55,7 +55,7 @@ public class ItemController : ControllerBase
             return BadRequest();
         }
 
-        var updatedItem = _itemsService.GetItem(itemToUpdate.Id);
+        var updatedItem = _itemsService.GetItem(itemToUpdate.Identifier);
 
         return Ok(updatedItem);
     }

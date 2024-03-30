@@ -2,7 +2,7 @@ namespace cd_collection.application.DTO;
 
 public class CdItemDto
 {
-    public Guid Id { get; set; }
+    public Guid Identifier { get; set; }
 
     public string Artist { get; set; }
 

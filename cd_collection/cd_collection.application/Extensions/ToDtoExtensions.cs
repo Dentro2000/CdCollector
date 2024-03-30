@@ -4,7 +4,7 @@ using cd_collection.core.ValueObjects;
 
 namespace cd_collection.application.Extensions;
 
-public static class CollectionConvertingExtension
+public static class ToDtoExtensions
 {
     public static CollectionDto ConvertToDto(this Collection? collection) =>
         new(id: collection.Identifier,
@@ -13,15 +13,13 @@ public static class CollectionConvertingExtension
                 .GetItemsIds()
                 .ToGuids());
 
-    public static CdItemDto(this CdItem item)
-    {
-        return new CdItemDto
+    public static CdItemDto ConvertToDto(this CdItem? item) =>
+        new CdItemDto
         {
-            Id = item,
-            Artist = null,
-            Title = null,
-            Label = null,
-            ReleaseDate = default
-        }
-    }
+            Identifier = item.Identifier,
+            Artist = item.Artist,
+            Title = item.Title,
+            Label = item.Label,
+            ReleaseDate = item.ReleaseDate
+        };
 }

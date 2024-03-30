@@ -1,4 +1,5 @@
 using cd_collection.application.DTO;
+using cd_collection.application.Extensions;
 using cd_collection.application.Services.Contracts;
 using cd_collection.core.Contracts;
 using cd_collection.core.Entities;
@@ -6,11 +7,11 @@ using cd_collection.core.Exceptions.ItemServiceExceptions;
 
 namespace cd_collection.application.Services;
 
-public class ItemsService : IItemsService
+public class CdItemsService : IItemsService
 {
     private IItemsRepository _repository;
 
-    public ItemsService(IItemsRepository repository)
+    public CdItemsService(IItemsRepository repository)
     {
         _repository = repository;
     }
@@ -20,7 +21,7 @@ public class ItemsService : IItemsService
     {
         return _repository.GetItems().Select(item => new CdItemDto
         {
-            Id = item.Identifier,
+            Identifier = item.Identifier,
             Artist = item.Artist,
             Title = item.Title,
             Label = item.Label,
@@ -28,18 +29,8 @@ public class ItemsService : IItemsService
         }).ToList();
     }
 
-    public CdItemDto? GetItem(Guid id)
-    {
-        var item = _repository.GetItem(id: id);
-        return new CdItemDto
-        {
-            Id = item.Identifier,
-            Artist = item.Artist,
-            Title = item.Title,
-            Label = item.Label,
-            ReleaseDate = item.ReleaseDate,
-        };
-    }
+    public CdItemDto? GetItem(Guid id) => _repository.GetItem(id: id).ConvertToDto();
+
 
     public CdItemDto CreateItem(string artist, string title, string label, DateTime releaseDate)
     {
@@ -58,17 +49,7 @@ public class ItemsService : IItemsService
         }
 
         _repository.AddItem(newItem);
-        var item = _repository.GetItem(newItem.Identifier);
-
-        //TODO: move to extension converting to dto
-        return new CdItemDto
-        {
-            Id = item.Identifier,
-            Artist = item.Artist,
-            Title = item.Title,
-            Label = item.Label,
-            ReleaseDate = item.ReleaseDate,
-        };
+        return _repository.GetItem(newItem.Identifier).ConvertToDto();
     }
 
     public CdItemDto UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate)
@@ -100,14 +81,7 @@ public class ItemsService : IItemsService
             item.ChangeReleaseDate(releaseDate.Value);
         }
 
-        return new CdItemDto
-        {
-            Id = item.Identifier,
-            Artist = item.Artist,
-            Title = item.Title,
-            Label = item.Label,
-            ReleaseDate = item.ReleaseDate
-        };
+        return item.ConvertToDto();
     }
 
     public bool DeleteItem(Guid guid)

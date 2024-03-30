@@ -14,7 +14,7 @@ public class ItemsServiceTests
     public void SetUp()
     {
         _mockItemsRepository = new MockItemsRepository();
-        _sut = new ItemsService(_mockItemsRepository);
+        _sut = new CdItemsService(_mockItemsRepository);
     }
 
     [TearDown]
@@ -50,7 +50,7 @@ public class ItemsServiceTests
         var item = _sut.GetItem(item1.Identifier);
 
         //then
-        Assert.IsTrue(item.Id == item1.Identifier.Value);
+        Assert.IsTrue(item.Identifier == item1.Identifier.Value);
     }
 
     [Test]
@@ -66,7 +66,7 @@ public class ItemsServiceTests
         var newItem = _sut.CreateItem(artist, title, label, releaseDate);
 
         //then
-        var result = _sut.GetItem(newItem.Id);
+        var result = _sut.GetItem(newItem.Identifier);
 
         Assert.IsTrue(result.Artist == artist);
         Assert.IsTrue(result.Label == label);
