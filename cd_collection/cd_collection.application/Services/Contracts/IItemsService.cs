@@ -4,7 +4,7 @@ namespace cd_collection.application.Services.Contracts;
 
 public interface IItemsService
 {
-    IList<CdItemDto> GetItems();
+    IList<CdItemDto?> GetItems();
 
     CdItemDto GetItem(Guid id);
 

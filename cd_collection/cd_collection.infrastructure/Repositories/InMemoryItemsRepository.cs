@@ -18,10 +18,8 @@ internal class InMemoryItemsRepository : IItemsRepository
         new("SomeArtist", "SomeTitle", "SomeLabel", _time.Current()),
     };
 
-    public void AddItem(CdItem item)
-    {
-        _items.Add(item);
-    }
+    public void AddItem(CdItem item) => _items.Add(item);
+
 
     public bool DeleteItem(Guid guid)
     {
@@ -36,13 +34,8 @@ internal class InMemoryItemsRepository : IItemsRepository
         return true;
     }
 
-    public IEnumerable<CdItem?> GetItems()
-    {
-        return _items;
-    }
+    public IEnumerable<CdItem?> GetItems() => _items;
 
-    public CdItem? GetItem(Guid id)
-    {
-        return _items.SingleOrDefault(x => x.Identifier.Value == id);
-    }
+    public CdItem? GetItem(Guid id) => _items.SingleOrDefault(x => x.Identifier.Value == id);
+
 }

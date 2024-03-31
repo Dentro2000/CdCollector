@@ -11,23 +11,11 @@ internal class InMemoryCollectionRepository : ICollectionRepository
         new(name: "FourFiveSix"),
     };
 
-    public void AddCollection(Collection collection)
-    {
-        _collections.Add(collection);
-    }
+    public void AddCollection(Collection collection) => _collections.Add(collection);
 
-    public void DeleteCollection(Collection collection)
-    {
-        _collections.Remove(collection);
-    }
+    public void DeleteCollection(Collection collection) => _collections.Remove(collection);
 
-    public IEnumerable<Collection> GetCollections()
-    {
-        return _collections;
-    }
+    public IEnumerable<Collection> GetCollections() => _collections;
 
-    public Collection? GetCollection(Guid id)
-    {
-        return _collections.SingleOrDefault(x => x.Identifier.Value == id);
-    }
+    public Collection? GetCollection(Guid id) => _collections.SingleOrDefault(x => x.Identifier.Value == id);
 }
