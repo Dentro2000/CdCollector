@@ -3,6 +3,7 @@ using cd_collection.application.Extensions;
 using cd_collection.application.Services.Contracts;
 using cd_collection.core.Contracts;
 using cd_collection.core.Entities;
+using cd_collection.core.Exceptions.Collection;
 using cd_collection.core.ValueObjects;
 
 namespace cd_collection.application.Services;
@@ -47,8 +48,7 @@ public class CollectionsService : ICollectionsService
 
         if (collection == null)
         {
-            return null;
-            //TODO: throw exception
+            throw new CannotUpdateException(guid);
         }
 
         if (!string.IsNullOrEmpty(collectionName))
