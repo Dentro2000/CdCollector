@@ -1,3 +1,5 @@
+using cd_collection.core.Exceptions;
+
 namespace cd_collection.core.ValueObjects;
 
 public sealed record Identifier
@@ -8,8 +10,7 @@ public sealed record Identifier
     {
         if (value == Guid.Empty)
         {
-            //TODO: ADD VALID EXCEPTION
-            throw new NotImplementedException();
+            throw new NotValidIdentifierException();
         }
 
         Value = value;
