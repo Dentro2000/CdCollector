@@ -1,7 +1,7 @@
 using cd_collection.core.Contracts;
 using cd_collection.core.Entities;
 
-namespace cd_collection.infrastructure.Repositories;
+namespace cd_collection.infrastructure.DataAccessLayer.Repositories;
 
 internal class InMemoryItemsRepository : IItemsRepository
 {

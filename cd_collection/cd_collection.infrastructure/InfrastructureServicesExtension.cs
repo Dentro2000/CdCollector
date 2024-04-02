@@ -1,5 +1,5 @@
 using cd_collection.core.Contracts;
-using cd_collection.infrastructure.Repositories;
+using cd_collection.infrastructure.DataAccessLayer.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace cd_collection.infrastructure;

@@ -7,9 +7,9 @@ public class Collection
 {
     public Identifier Identifier { get; private set; }
     public CollectionName Name { get; private set; }
-    private List<Identifier> ItemIdentifiers { get; set; }
-    private Date CreationDate { get; set; }
-    private Date LastUpdate { get; set; }
+    public List<Identifier> ItemIdentifiers { get; private set; }
+    public Date CreationDate { get; private set; }
+    public Date LastUpdate { get; private set; }
 
     public Collection(string name)
     {
