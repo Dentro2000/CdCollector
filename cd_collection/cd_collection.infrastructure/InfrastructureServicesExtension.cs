@@ -1,4 +1,5 @@
 using cd_collection.core.Contracts;
+using cd_collection.infrastructure.DataAccessLayer;
 using cd_collection.infrastructure.DataAccessLayer.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,7 @@ public static class InfrastructureServicesExtension
         services.AddSingleton<IItemsRepository, InMemoryItemsRepository>();
         services.AddSingleton<ICollectionRepository, InMemoryCollectionRepository>();
         services.AddTransient<ITime, Time>();
+        services.AddPostgres();
 
         return services;
     }

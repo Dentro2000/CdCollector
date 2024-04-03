@@ -7,11 +7,11 @@ public class Collection
 {
     public Identifier Identifier { get; private set; }
     public CollectionName Name { get; private set; }
-    public List<Identifier> ItemIdentifiers { get; private set; }
+    public IEnumerable<Identifier> ItemIdentifiers { get; private set; }
     public Date CreationDate { get; private set; }
     public Date LastUpdate { get; private set; }
 
-    public Collection(string name)
+    public Collection(CollectionName name)
     {
         Identifier = Guid.NewGuid();
         Name = name;
@@ -28,22 +28,22 @@ public class Collection
 
     public Collection AddItem(Guid itemId)
     {
-        ItemIdentifiers.Add(itemId);
+        ItemIdentifiers.ToList().Add(itemId);
         SetLastUpdate();
         return this;
     }
 
-    public List<Identifier> GetItemsIds() => ItemIdentifiers;
+    public IEnumerable<Identifier> GetItemsIds() => ItemIdentifiers;
 
 
     public Collection RemoveItem(Guid itemId)
     {
-        if (!ItemIdentifiers.Contains(itemId))
+        if (!ItemIdentifiers.ToList().Contains(itemId))
         {
             throw new CannotRemoveItemException(itemId);
         }
 
-        ItemIdentifiers.Remove(itemId);
+        ItemIdentifiers.ToList().Remove(itemId);
         SetLastUpdate();
         return this;
     }

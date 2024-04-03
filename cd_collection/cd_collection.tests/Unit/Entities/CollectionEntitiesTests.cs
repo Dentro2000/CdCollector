@@ -38,13 +38,13 @@ public class CollectionEntitiesTests
         //given
         var newItemGuid = Guid.NewGuid();
         _sut.AddItem(newItemGuid);
-        Assert.IsTrue(_sut.GetItemsIds().Count == 1);
+        Assert.IsTrue(_sut.GetItemsIds().ToList().Count == 1);
 
         //when
         _sut.RemoveItem(newItemGuid);
 
         //then
-        Assert.IsTrue(_sut.GetItemsIds().Count == 0);
+        Assert.IsTrue(_sut.GetItemsIds().ToList().Count == 0);
     }
 
     [Test]
@@ -94,7 +94,7 @@ public class CollectionEntitiesTests
         _sut.SetAllItems(items.ToIdentifiers());
 
         //then
-        Assert.IsTrue(_sut.GetItemsIds().Count == 3);
+        Assert.IsTrue(_sut.GetItemsIds().ToList().Count == 3);
     }
 
     [Test]

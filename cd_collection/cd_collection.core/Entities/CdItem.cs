@@ -9,9 +9,10 @@ public class CdItem
     public Title Title { get; private set; }
     public Label Label { get; private set; }
     public Date ReleaseDate { get; private set; }
-    private Date LastUpdate { get; set; }
+    public Date LastUpdate { get;  private set; }
 
-    public CdItem(string artist, string title, string label, DateTime releaseDate)
+
+    public CdItem(Artist artist, Title title, Label label, Date releaseDate)
     {
         Identifier = Guid.NewGuid();
         Artist = artist;

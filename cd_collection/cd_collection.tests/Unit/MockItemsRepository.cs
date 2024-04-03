@@ -42,5 +42,6 @@ public static class MockItem
             "MockArtist",
             "MockTitle",
             "MockLabel",
-            new DateTime(2024, 01, 01));
+            new DateTime(2024, 01, 01)
+        );
 }

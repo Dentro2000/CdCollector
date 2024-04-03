@@ -5,27 +5,29 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace cd_collection.infrastructure.DataAccessLayer.Configurations;
 
-internal sealed class CollectionsConfiguration : IEntityTypeConfiguration<Collection>
+public sealed class CDItems : IEntityTypeConfiguration<CdItem>
 {
-    public void Configure(EntityTypeBuilder<Collection> builder)
+    public void Configure(EntityTypeBuilder<CdItem> builder)
     {
         builder.HasKey(x => x.Identifier);
-        
+
         builder.Property(x => x.Identifier)
             .HasConversion(x => x.Value, x => new Identifier(x));
         
-        builder.Property(x => x.Name)
-            .HasConversion(x => x.Value, x => new CollectionName(x));
+        builder.Property(x => x.Artist)
+            .HasConversion(x => x.Value, x => new Artist(x));
         
-        builder.Property(x => x.ItemIdentifiers)
-            .HasConversion(x => x.Select( x => x.Value), 
-                x => x.Select( x => new Identifier(x)));
-            
-        builder.Property(x => x.CreationDate)
+        builder.Property(x => x.Title)
+            .HasConversion(x => x.Value, x => new Title(x));
+        
+        builder.Property(x => x.Label)
+            .HasConversion(x => x.Value, x => new Label(x));
+        
+        builder.Property(x => x.ReleaseDate)
             .HasConversion(x => x.Value, x => new Date(x));
         
         builder.Property(x => x.LastUpdate)
             .HasConversion(x => x.Value, x => new Date(x));
-        
+            
     }
 }

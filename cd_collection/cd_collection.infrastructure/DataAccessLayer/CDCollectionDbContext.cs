@@ -8,9 +8,12 @@ internal sealed class CDCollectionDbContext : DbContext
     public DbSet<Collection> Collections { get; set; }
     public DbSet<CdItem> CdItems { get; set; }
 
-    protected CDCollectionDbContext(DbContextOptions<CDCollectionDbContext> options) : base(options)
+    public CDCollectionDbContext(DbContextOptions<CDCollectionDbContext> options) : base(options)
     {
-        
-     
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
     }
 }

@@ -111,7 +111,7 @@ public class CollectionServiceTests
 
         //then
         Assert.IsTrue(collections.First().Name == "Elo");
-        Assert.IsTrue(collections.First().GetItemsIds().Count == 0);
+        Assert.IsTrue(collections.First().GetItemsIds().ToList().Count == 0);
     }
 
     [Test]
@@ -129,7 +129,7 @@ public class CollectionServiceTests
             new List<Guid> { Guid.NewGuid(), Guid.NewGuid() });
 
         //then
-        Assert.IsTrue(collections.First().GetItemsIds().Count == 2);
+        Assert.IsTrue(collections.First().GetItemsIds().ToList().Count == 2);
     }
 
     [Test]
@@ -158,7 +158,7 @@ public class CollectionServiceTests
 
         //then
         Assert.IsTrue(
-            newCollection.GetItemsIds().Count == 3);
+            newCollection.GetItemsIds().ToList().Count == 3);
     }
 
     [Test]
