@@ -56,7 +56,7 @@ public class CollectionServiceTests
         _collectionRepositoryMock.AddCollection(newColelction);
 
         //when
-        var collectionDto = _sut.GetCollection(newColelction.Identifier);
+        var collectionDto = _sut.GetCollection(newColelction.Id);
 
         //then
         Assert.True(collectionDto?.Name == "Test");
@@ -105,7 +105,7 @@ public class CollectionServiceTests
 
         //when
         _sut.UpdateCollection(
-            newCollection.Identifier,
+            newCollection.Id,
             "Elo",
             new List<Guid> { });
 
@@ -124,7 +124,7 @@ public class CollectionServiceTests
 
         //when
         var updated = _sut.UpdateCollection(
-            newCollection.Identifier,
+            newCollection.Id,
             null,
             new List<Guid> { Guid.NewGuid(), Guid.NewGuid() });
 
@@ -145,14 +145,14 @@ public class CollectionServiceTests
         var cd2 = Guid.NewGuid();
         var cd3 = Guid.NewGuid();
         _sut.UpdateCollection(
-            newCollection.Identifier,
+            newCollection.Id,
             null,
             new List<Guid> { cd1, cd2, });
 
 
         //then
         var updated = _sut.UpdateCollection(
-            newCollection.Identifier,
+            newCollection.Id,
             null,
             new List<Guid> { cd1, cd2, cd3 });
 
@@ -173,13 +173,13 @@ public class CollectionServiceTests
         var cd3 = Guid.NewGuid();
 
         _sut.UpdateCollection(
-            newCollection.Identifier,
+            newCollection.Id,
             null,
             new List<Guid> { cd1, cd2, });
 
         //then
         var updated = _sut.UpdateCollection(
-            newCollection.Identifier,
+            newCollection.Id,
             null,
             new List<Guid> { cd2, cd3 });
 
@@ -198,7 +198,7 @@ public class CollectionServiceTests
         _collectionRepositoryMock.AddCollection(newCollection);
 
         //when
-        var isDeleted = _sut.DeleteCollection(newCollection.Identifier);
+        var isDeleted = _sut.DeleteCollection(newCollection.Id);
 
         //then
         Assert.True(isDeleted);
@@ -226,10 +226,10 @@ public class CollectionServiceTests
         _itemsRepositoryMock.AddItem(mockItem);
 
         //when
-        var collection = _sut.AddItemToCollection(mockItem.Identifier, newCollection.Identifier);
+        var collection = _sut.AddItemToCollection(mockItem.Id, newCollection.Id);
 
         //then
-        Assert.True(collection.ItemsIds.First() == mockItem.Identifier.Value);
+        Assert.True(collection.ItemsIds.First() == mockItem.Id.Value);
     }
 
     [Test]
@@ -241,7 +241,7 @@ public class CollectionServiceTests
         _collectionRepositoryMock.AddCollection(newCollection);
 
         //when
-        var collection = _sut.AddItemToCollection(Guid.NewGuid(), newCollection.Identifier);
+        var collection = _sut.AddItemToCollection(Guid.NewGuid(), newCollection.Id);
 
         //then
         Assert.Null(collection);
@@ -255,7 +255,7 @@ public class CollectionServiceTests
         _collectionRepositoryMock.AddCollection(newCollection);
 
         //when
-        var collectionWithoutItem = _sut.RemoveItemFromCollection(Guid.NewGuid(), newCollection.Identifier);
+        var collectionWithoutItem = _sut.RemoveItemFromCollection(Guid.NewGuid(), newCollection.Id);
 
         //then
         Assert.Null(collectionWithoutItem);
@@ -270,12 +270,12 @@ public class CollectionServiceTests
 
         _collectionRepositoryMock.AddCollection(newCollection);
         _itemsRepositoryMock.AddItem(mockItem);
-        _sut.AddItemToCollection(mockItem.Identifier, newCollection.Identifier);
+        _sut.AddItemToCollection(mockItem.Id, newCollection.Id);
 
-        Assert.True(newCollection.GetItemsIds().First() == mockItem.Identifier);
+        Assert.True(newCollection.GetItemsIds().First() == mockItem.Id);
 
         //when
-        var collectionWithoutItem = _sut.RemoveItemFromCollection(mockItem.Identifier, newCollection.Identifier);
+        var collectionWithoutItem = _sut.RemoveItemFromCollection(mockItem.Id, newCollection.Id);
 
         //then
         Assert.True(collectionWithoutItem.ItemsIds.Count == 0);

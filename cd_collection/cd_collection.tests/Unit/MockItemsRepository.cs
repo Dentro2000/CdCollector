@@ -31,7 +31,7 @@ public class MockItemsRepository : IItemsRepository
 
     public CdItem? GetItem(Guid id)
     {
-        return _items.SingleOrDefault(x => x.Identifier.Value == id);
+        return _items.SingleOrDefault(x => x.Id.Value == id);
     }
 }
 

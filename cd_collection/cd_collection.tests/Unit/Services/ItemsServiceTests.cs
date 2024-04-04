@@ -47,10 +47,10 @@ public class ItemsServiceTests
         _mockItemsRepository.AddItem(MockItem.MockCdItem);
 
         //when
-        var item = _sut.GetItem(item1.Identifier);
+        var item = _sut.GetItem(item1.Id);
 
         //then
-        Assert.IsTrue(item.Identifier == item1.Identifier.Value);
+        Assert.IsTrue(item.Identifier == item1.Id.Value);
     }
 
     [Test]
@@ -97,7 +97,7 @@ public class ItemsServiceTests
         _mockItemsRepository.AddItem(item1);
         var newLabel = "some oother label";
         //when
-        var updatedItem = _sut.UpdateItem(item1.Identifier, null, null, newLabel, null);
+        var updatedItem = _sut.UpdateItem(item1.Id, null, null, newLabel, null);
         //then
 
         Assert.IsTrue(updatedItem.Artist == item1.Artist);
@@ -125,7 +125,7 @@ public class ItemsServiceTests
         _mockItemsRepository.AddItem(item1);
 
         //when
-        var isDeleted = _sut.DeleteItem(item1.Identifier);
+        var isDeleted = _sut.DeleteItem(item1.Id);
 
         //then
         Assert.IsEmpty(_sut.GetItems());

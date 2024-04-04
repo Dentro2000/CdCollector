@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace cd_collection.infrastructure.DataAccessLayer.Configurations;
 
-public sealed class CDItems : IEntityTypeConfiguration<CdItem>
+public sealed class CdItemsConfiguration : IEntityTypeConfiguration<CdItem>
 {
     public void Configure(EntityTypeBuilder<CdItem> builder)
     {
-        builder.HasKey(x => x.Identifier);
+        builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.Identifier)
-            .HasConversion(x => x.Value, x => new Identifier(x));
+        builder.Property(x => x.Id)
+            .HasConversion(x => x.Value, x => new CdItemId(x));
         
         builder.Property(x => x.Artist)
             .HasConversion(x => x.Value, x => new Artist(x));

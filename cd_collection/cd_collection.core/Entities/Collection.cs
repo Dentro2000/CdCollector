@@ -5,17 +5,17 @@ namespace cd_collection.core.Entities;
 
 public class Collection
 {
-    public Identifier Identifier { get; private set; }
+    public ColectionIdentfier Id { get; private set; }
     public CollectionName Name { get; private set; }
-    public IEnumerable<Identifier> ItemIdentifiers { get; private set; }
+    public IEnumerable<CdItemId> ItemIdentifiers { get; private set; }
     public Date CreationDate { get; private set; }
     public Date LastUpdate { get; private set; }
 
     public Collection(CollectionName name)
     {
-        Identifier = Guid.NewGuid();
+        Id = Guid.NewGuid();
         Name = name;
-        ItemIdentifiers = new List<Identifier>();
+        ItemIdentifiers = new List<CdItemId>();
         LastUpdate = DateTime.Now;
         CreationDate = DateTime.Now;
     }
@@ -33,7 +33,7 @@ public class Collection
         return this;
     }
 
-    public IEnumerable<Identifier> GetItemsIds() => ItemIdentifiers;
+    public IEnumerable<CdItemId> GetItemsIds() => ItemIdentifiers;
 
 
     public Collection RemoveItem(Guid itemId)
@@ -48,7 +48,7 @@ public class Collection
         return this;
     }
 
-    public void SetAllItems(List<Identifier> items)
+    public void SetAllItems(List<CdItemId> items)
     {
         ItemIdentifiers = items;
     }

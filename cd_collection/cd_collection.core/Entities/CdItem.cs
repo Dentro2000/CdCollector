@@ -4,17 +4,17 @@ namespace cd_collection.core.Entities;
 
 public class CdItem
 {
-    public Identifier Identifier { get; private set; }
+    public CdItemId Id { get; private set; }
     public Artist Artist { get; private set; }
     public Title Title { get; private set; }
     public Label Label { get; private set; }
     public Date ReleaseDate { get; private set; }
     public Date LastUpdate { get;  private set; }
 
-
+    private CdItem(){}
     public CdItem(Artist artist, Title title, Label label, Date releaseDate)
     {
-        Identifier = Guid.NewGuid();
+        Id = Guid.NewGuid();
         Artist = artist;
         Title = title;
         Label = label;

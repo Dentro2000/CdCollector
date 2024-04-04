@@ -30,7 +30,7 @@ public class CollectionsService : ICollectionsService
         _collectionsRepository.AddCollection(collection: collection);
 
         return _collectionsRepository
-            .GetCollection(collection.Identifier)
+            .GetCollection(collection.Id)
             .ConvertToDto();
     }
 

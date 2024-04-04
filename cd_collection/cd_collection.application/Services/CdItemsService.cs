@@ -21,7 +21,7 @@ public class CdItemsService : IItemsService
     {
         return _repository.GetItems().Select(item => new CdItemDto
         {
-            Identifier = item.Identifier,
+            Identifier = item.Id,
             Artist = item.Artist,
             Title = item.Title,
             Label = item.Label,
@@ -49,7 +49,7 @@ public class CdItemsService : IItemsService
         }
 
         _repository.AddItem(newItem);
-        return _repository.GetItem(newItem.Identifier).ConvertToDto();
+        return _repository.GetItem(newItem.Id).ConvertToDto();
     }
 
     public CdItemDto UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate)

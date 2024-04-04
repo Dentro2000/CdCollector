@@ -7,16 +7,18 @@ namespace cd_collection.application.Extensions;
 public static class ToDtoExtensions
 {
     public static CollectionDto ConvertToDto(this Collection? collection) =>
-        new(id: collection.Identifier,
+        new(id: collection.Id,
             name: collection.Name,
             itemsIds: collection
                 .GetItemsIds()
-                .ToGuids());
+                .Select(x => x.Value)
+                .ToList()
+        );
 
     public static CdItemDto ConvertToDto(this CdItem? item) =>
         new CdItemDto
         {
-            Identifier = item.Identifier,
+            Identifier = item.Id,
             Artist = item.Artist,
             Title = item.Title,
             Label = item.Label,
