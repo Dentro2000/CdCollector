@@ -2,10 +2,11 @@ using cd_collection.core.Exceptions;
 
 namespace cd_collection.core.ValueObjects;
 
-public record CdItemId
+public sealed record CdItemId
 {
     public Guid Value { get; private set; }
-
+    
+    
     public CdItemId(Guid value)
     {
         if (value == Guid.Empty)
