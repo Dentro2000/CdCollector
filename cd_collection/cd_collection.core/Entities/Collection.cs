@@ -7,7 +7,7 @@ public class Collection
 {
     public ColectionIdentfier Id { get; private set; }
     public CollectionName Name { get; private set; }
-    public IEnumerable<CdItemId> ItemIdentifiers { get; private set; }
+    public List<CdItemId> ItemIdentifiers { get; private set; }
     public Date CreationDate { get; private set; }
     public Date LastUpdate { get; private set; }
 
