@@ -11,7 +11,7 @@ public class CdItem
     public Date ReleaseDate { get; private set; }
     public Date LastUpdate { get;  private set; }
 
-    public List<Collection> ColectionIdentfiers {
+    public List<Collection> Colections{
         get;
         set;
     }

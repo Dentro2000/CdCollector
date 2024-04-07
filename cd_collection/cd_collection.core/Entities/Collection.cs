@@ -11,6 +11,9 @@ public class Collection
     public Date CreationDate { get; private set; }
     public Date LastUpdate { get; private set; }
 
+
+    public List<CdItem> Items { get; private set; }
+
     public Collection(CollectionName name)
     {
         Id = Guid.NewGuid();
