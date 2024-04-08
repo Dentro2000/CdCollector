@@ -8,6 +8,7 @@ internal sealed class CDCollectionDbContext : DbContext
 {
     public DbSet<Collection> Collections { get; set; }
     public DbSet<CdItem> CdItems { get; set; }
+    public DbSet<CollectionCdItem> CollectionCdItems { get; set; }
 
     public CDCollectionDbContext(DbContextOptions<CDCollectionDbContext> options) : base(options)
     {
@@ -18,6 +19,7 @@ internal sealed class CDCollectionDbContext : DbContext
         // modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         modelBuilder.ApplyConfiguration(new CdItemsConfiguration());
         modelBuilder.ApplyConfiguration(new CollectionsConfiguration());
+        modelBuilder.ApplyConfiguration(new CollectionCdItemConfiguration());
 
     }
 }

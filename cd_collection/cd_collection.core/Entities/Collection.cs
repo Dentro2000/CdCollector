@@ -11,6 +11,8 @@ public class Collection
     public Date CreationDate { get; private set; }
     public Date LastUpdate { get; private set; }
 
+    public ICollection<CollectionCdItem> CollectionCdItems { get; set; }
+
 
     public List<CdItem> Items { get; private set; }
 
