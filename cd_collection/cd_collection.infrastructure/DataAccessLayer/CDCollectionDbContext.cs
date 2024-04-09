@@ -16,10 +16,10 @@ internal sealed class CDCollectionDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-        modelBuilder.ApplyConfiguration(new CdItemsConfiguration());
-        modelBuilder.ApplyConfiguration(new CollectionsConfiguration());
-        modelBuilder.ApplyConfiguration(new CollectionCdItemConfiguration());
+        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+        // modelBuilder.ApplyConfiguration(new CdItemsConfiguration());
+        // modelBuilder.ApplyConfiguration(new CollectionsConfiguration());
+        // modelBuilder.ApplyConfiguration(new CollectionCdItemConfiguration());
 
     }
 }
