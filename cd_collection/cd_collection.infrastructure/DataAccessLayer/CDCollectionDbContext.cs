@@ -20,6 +20,5 @@ internal sealed class CDCollectionDbContext : DbContext
         // modelBuilder.ApplyConfiguration(new CdItemsConfiguration());
         // modelBuilder.ApplyConfiguration(new CollectionsConfiguration());
         // modelBuilder.ApplyConfiguration(new CollectionCdItemConfiguration());
-
     }
 }

@@ -15,3 +15,5 @@ internal sealed class CollectionCdItemConfiguration : IEntityTypeConfiguration<C
             .HasForeignKey(x => x.ItemId);
     }
 }
+
+
