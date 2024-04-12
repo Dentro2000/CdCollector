@@ -11,13 +11,6 @@ public class CdItem
     public Date ReleaseDate { get; private set; }
     public Date LastUpdate { get;  private set; }
     
-    public ICollection<CollectionCdItem> CollectionCdItems { get; set; }
-
-    public List<Collection> Colections{
-        get;
-        set;
-    }
-    
     public CdItem(Artist artist, Title title, Label label, Date releaseDate)
     {
         Id = Guid.NewGuid();
