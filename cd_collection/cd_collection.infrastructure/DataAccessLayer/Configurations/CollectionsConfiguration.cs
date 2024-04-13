@@ -23,8 +23,8 @@ internal sealed class CollectionsConfiguration : IEntityTypeConfiguration<Collec
         builder.Property(x => x.LastUpdate)
             .HasConversion(x => x.Value, x => new Date(x));
 
-        builder.Property(x => x.ItemIdentifiers)
-            .HasPostgresArrayConversion(x => x.Value, x => new CdItemId(x));
+        // builder.Property(x => x.ItemIdentifiers)
+        //     .HasPostgresArrayConversion(x => x.Value, x => new CdItemId(x));
 
     }
 }
