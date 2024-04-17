@@ -18,6 +18,4 @@ internal class InMemoryCollectionRepository : ICollectionRepository
     public IEnumerable<Collection> GetCollections() => _collections;
 
     public Collection? GetCollection(Guid id) => _collections.SingleOrDefault(x => x.Id.Value == id);
-    
-    
 }
