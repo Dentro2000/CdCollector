@@ -37,7 +37,7 @@ public class Collection
         return this;
     }
 
-    public IEnumerable<CdItemId> GetItemsIds() => CollectionCdItems.Select(x => x.ItemId);
+    public IEnumerable<CdItemId?> GetItemsIds() => CollectionCdItems.Select(x => x.ItemId);
 
 
     public Collection RemoveItem(Guid itemId)
