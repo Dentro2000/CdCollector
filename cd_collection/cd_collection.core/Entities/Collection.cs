@@ -19,8 +19,8 @@ public class Collection
     {
         Id = Guid.NewGuid();
         Name = name;
-        LastUpdate = DateTime.Now;
-        CreationDate = DateTime.Now;
+        LastUpdate = DateTime.UtcNow;
+        CreationDate = DateTime.UtcNow;
     }
 
     public void ChangeName(string name)
@@ -57,5 +57,5 @@ public class Collection
         // CollectionCdItems.Select(x => x.ItemId) = items;
     }
 
-    private void SetLastUpdate() => LastUpdate = DateTime.Now;
+    private void SetLastUpdate() => LastUpdate = DateTime.UtcNow;
 }

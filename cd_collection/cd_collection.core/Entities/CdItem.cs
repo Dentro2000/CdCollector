@@ -21,7 +21,7 @@ public class CdItem
         Title = title;
         Label = label;
         ReleaseDate = releaseDate;
-        LastUpdate = DateTime.Now;
+        LastUpdate = DateTime.UtcNow;
     }
 
     public void ChangeArtist(string newArtist)
@@ -48,5 +48,5 @@ public class CdItem
         SetLastUpdate();
     }
 
-    private void SetLastUpdate() => LastUpdate = DateTime.Now;
+    private void SetLastUpdate() => LastUpdate = DateTime.UtcNow;
 }
