@@ -3,7 +3,7 @@ using cd_collection.core.Entities;
 
 namespace cd_collection.infrastructure.DataAccessLayer.Repositories;
 
-internal class InMemoryItemsRepository : IItemsRepository
+public class InMemoryItemsRepository : IItemsRepository
 {
     private readonly ITime _time;
 

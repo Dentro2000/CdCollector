@@ -9,10 +9,11 @@ public static class InfrastructureServicesExtension
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
-        services.AddSingleton<IItemsRepository, InMemoryItemsRepository>();
-        services.AddSingleton<ICollectionRepository, InMemoryCollectionRepository>();
-        services.AddTransient<ITime, Time>();
         services.AddPostgres();
+        services.AddScoped<IItemsRepository, DbItemsRepository>();
+        services.AddScoped<ICollectionRepository, DbCollectionRepository>();
+        services.AddTransient<ITime, Time>();
+       
 
         return services;
     }
