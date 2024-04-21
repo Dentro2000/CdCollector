@@ -35,5 +35,4 @@ internal sealed class DbCollectionRepository: ICollectionRepository
     {
         return _context.Collections.SingleOrDefault(x => x.Id.Value == id);
     }
-    
 }
