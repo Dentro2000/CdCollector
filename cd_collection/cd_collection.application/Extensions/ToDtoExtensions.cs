@@ -9,11 +9,8 @@ public static class ToDtoExtensions
     public static CollectionDto ConvertToDto(this Collection? collection) =>
         new(id: collection.Id,
             name: collection.Name,
-            itemsIds: collection
-                .GetItemsIds()
-                .Select(x => x.Value)
-                .ToList()
-        );
+            itemsIds: collection.CdItems.Select(x => x.Id.Value).ToList());
+
 
     public static CdItemDto ConvertToDto(this CdItem? item) =>
         new CdItemDto

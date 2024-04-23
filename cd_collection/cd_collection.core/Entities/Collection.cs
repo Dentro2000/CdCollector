@@ -10,10 +10,7 @@ public class Collection
     public Date CreationDate { get; private set; }
     public Date LastUpdate { get; private set; }
 
-    public ICollection<CollectionCdItem> CollectionCdItems { get; set; }
-
-
-    public List<CdItem> Items { get; private set; }
+    public List<CdItem> CdItems { get; private set; }
 
     public Collection(CollectionName name)
     {
@@ -29,32 +26,32 @@ public class Collection
         SetLastUpdate();
     }
 
-    public Collection AddItem(Guid itemId)
+    public Collection AddItem(CdItem item)
     {
-        var coll = new CollectionCdItem();
-        CollectionCdItems.Add(coll);
+        CdItems.Add(item);
         SetLastUpdate();
         return this;
     }
 
-    public IEnumerable<CdItemId?> GetItemsIds() => CollectionCdItems.Select(x => x.ItemId);
+    // public IEnumerable<CdItemId?> GetItemsIds() => CollectionCdItems.Select(x => x.ItemId);
 
 
     public Collection RemoveItem(Guid itemId)
     {
-        if (!CollectionCdItems.Select(x => x.ItemId).ToList().Contains(itemId))
+        if (!CdItems.Select(x => x.Id).ToList().Contains(itemId))
         {
             throw new CannotRemoveItemException(itemId);
         }
 
-        CollectionCdItems.Select(x => x.ItemId).ToList().Remove(itemId);
+        CdItems.Select(x => x.Id).ToList().Remove(itemId);
         SetLastUpdate();
         return this;
     }
 
     public void SetAllItems(List<CdItemId> items)
     {
-        // CollectionCdItems.Select(x => x.ItemId) = items;
+       // CollectionCdItems.Select(x => x.ItemId) = items;
+       throw new NotImplementedException();
     }
 
     private void SetLastUpdate() => LastUpdate = DateTime.UtcNow;

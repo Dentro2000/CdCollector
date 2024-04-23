@@ -10,9 +10,8 @@ public class CdItem
     public Label Label { get; private set; }
     public Date ReleaseDate { get; private set; }
     public Date LastUpdate { get;  private set; }
-    
-    public ICollection<CollectionCdItem> CollectionCdItems { get; set; }
-    
+
+    public List<Collection> Collections { get; set; }
     
     public CdItem(Artist artist, Title title, Label label, Date releaseDate)
     {
