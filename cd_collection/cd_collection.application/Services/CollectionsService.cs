@@ -36,10 +36,12 @@ public class CollectionsService : ICollectionsService
 
     public IList<CollectionDto?> GetCollections()
     {
-        return _collectionsRepository
+        var z =  _collectionsRepository
             .GetCollections()
             .Select(x => x.ConvertToDto())
             .ToList();
+
+        return z;
     }
 
     public CollectionDto? UpdateCollection(Guid guid, string? collectionName, List<Guid> items)
@@ -94,7 +96,7 @@ public class CollectionsService : ICollectionsService
             return null;
         }
 
-        return collection.AddItem(itemId).ConvertToDto();
+        return collection.AddItem(item).ConvertToDto();
     }
 
     public CollectionDto? RemoveItemFromCollection(Guid itemId, Guid collectionId)
