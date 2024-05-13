@@ -10,7 +10,7 @@ public interface IItemsService
 
     CdItemDto? CreateItem(string artist, string title, string label, DateTime releaseDate);
 
-    CdItemDto? UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate);
+    void UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate);
 
     bool DeleteItem(Guid guid);
 }

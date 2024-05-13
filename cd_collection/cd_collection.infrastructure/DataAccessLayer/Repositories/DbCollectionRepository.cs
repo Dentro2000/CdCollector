@@ -1,18 +1,19 @@
 using cd_collection.core.Contracts;
 using cd_collection.core.Entities;
+using cd_collection.core.ValueObjects;
 
 
 namespace cd_collection.infrastructure.DataAccessLayer.Repositories;
 
-internal sealed class DbCollectionRepository: ICollectionRepository
+internal sealed class DbCollectionRepository : ICollectionRepository
 {
     private CDCollectionDbContext _context;
-    
+
     public DbCollectionRepository(CDCollectionDbContext context)
     {
         _context = context;
     }
-    
+
     //TODO: change to async
     public void AddCollection(Collection collection)
     {
@@ -31,8 +32,16 @@ internal sealed class DbCollectionRepository: ICollectionRepository
         return _context.Collections;
     }
 
-    public Collection? GetCollection(Guid id)
+    public Collection? GetCollection(ColectionIdentfier id)
     {
-        return _context.Collections.SingleOrDefault(x => x.Id.Value == id);
+        return _context
+            .Collections
+            .SingleOrDefault(x => x.Id == id);
+    }
+
+    public void UpdateCollection(Collection collection)
+    {
+        _context.Update(collection);
+        _context.SaveChanges(); 
     }
 }

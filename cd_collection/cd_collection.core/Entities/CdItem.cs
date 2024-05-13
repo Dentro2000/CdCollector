@@ -9,10 +9,10 @@ public class CdItem
     public Title Title { get; private set; }
     public Label Label { get; private set; }
     public Date ReleaseDate { get; private set; }
-    public Date LastUpdate { get;  private set; }
+    public Date LastUpdate { get; private set; }
 
     public List<Collection> Collections { get; set; }
-    
+
     public CdItem(Artist artist, Title title, Label label, Date releaseDate)
     {
         Id = Guid.NewGuid();
@@ -48,4 +48,18 @@ public class CdItem
     }
 
     private void SetLastUpdate() => LastUpdate = DateTime.UtcNow;
+}
+
+public static class CdItemExtensions
+{
+    public static bool IsSameItem(
+        this CdItem item, 
+        string artist, 
+        string title, 
+        string label, 
+        Date releaseDate)
+        => item.Artist == artist &&
+           item.Title == title &&
+           item.Label == label &&
+           item.ReleaseDate == releaseDate;
 }

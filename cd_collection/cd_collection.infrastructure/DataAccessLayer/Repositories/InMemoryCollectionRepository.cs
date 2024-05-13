@@ -1,5 +1,6 @@
 using cd_collection.core.Contracts;
 using cd_collection.core.Entities;
+using cd_collection.core.ValueObjects;
 
 namespace cd_collection.infrastructure.DataAccessLayer.Repositories;
 
@@ -17,5 +18,9 @@ internal class InMemoryCollectionRepository : ICollectionRepository
 
     public IEnumerable<Collection> GetCollections() => _collections;
 
-    public Collection? GetCollection(Guid id) => _collections.SingleOrDefault(x => x.Id.Value == id);
+    public Collection? GetCollection(ColectionIdentfier id) => _collections.SingleOrDefault(x => x.Id == id);
+    public void UpdateCollection(Collection collection)
+    {
+        throw new NotImplementedException();
+    }
 }

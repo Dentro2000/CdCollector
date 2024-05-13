@@ -4,6 +4,7 @@ using cd_collection.application.Services.Contracts;
 using cd_collection.core.Contracts;
 using cd_collection.core.Entities;
 using cd_collection.core.Exceptions.ItemServiceExceptions;
+using cd_collection.core.ValueObjects;
 
 namespace cd_collection.application.Services;
 
@@ -36,12 +37,11 @@ public class CdItemsService : IItemsService
     {
         var newItem = new CdItem(artist, title, label, releaseDate);
 
-        var ifItemAlreadyExist = _repository.GetItems()
-            .SingleOrDefault(x =>
-                x.Artist == artist
-                && x.Title == title
-                && x.Label == label
-                && x.ReleaseDate.Value == releaseDate);
+
+        //move to extension isSameItem
+        var ifItemAlreadyExist =
+            _repository.GetItems().SingleOrDefault(x => x.IsSameItem(artist, title, label, releaseDate));
+
 
         if (ifItemAlreadyExist != null)
         {
@@ -52,7 +52,7 @@ public class CdItemsService : IItemsService
         return _repository.GetItem(newItem.Id).ConvertToDto();
     }
 
-    public CdItemDto UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate)
+    public void UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate)
     {
         var item = _repository.GetItem(guid);
 
@@ -80,8 +80,8 @@ public class CdItemsService : IItemsService
         {
             item.ChangeReleaseDate(releaseDate.Value);
         }
-
-        return item.ConvertToDto();
+        
+        _repository.UpdateItem(item);
     }
 
     public bool DeleteItem(Guid guid)

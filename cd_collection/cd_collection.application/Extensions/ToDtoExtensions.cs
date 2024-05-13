@@ -1,15 +1,23 @@
 using cd_collection.application.DTO;
 using cd_collection.core.Entities;
-using cd_collection.core.ValueObjects;
 
 namespace cd_collection.application.Extensions;
 
 public static class ToDtoExtensions
 {
-    public static CollectionDto ConvertToDto(this Collection? collection) =>
-        new(id: collection.Id,
+    public static CollectionDto ConvertToDto(this Collection? collection)
+    {
+        if (collection?.CdItems != null && !collection.CdItems.Any())
+        {
+            return new CollectionDto(id: collection.Id.Value,
+                name: collection.Name,
+                itemsIds: collection.CdItems.Select(x => x.Id.Value).ToList());
+        }
+        
+        return new CollectionDto(id: collection.Id.Value,
             name: collection.Name,
-            itemsIds: collection.CdItems.Select(x => x.Id.Value).ToList());
+            itemsIds: new List<Guid>());
+    }
 
 
     public static CdItemDto ConvertToDto(this CdItem? item) =>

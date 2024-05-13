@@ -1,4 +1,5 @@
 using cd_collection.core.Entities;
+using cd_collection.core.ValueObjects;
 
 namespace cd_collection.core.Contracts;
 
@@ -10,5 +11,7 @@ public interface ICollectionRepository
 
     IEnumerable<Collection?> GetCollections();
 
-    Collection? GetCollection(Guid id);
+    Collection? GetCollection(ColectionIdentfier id);
+
+    void UpdateCollection(Collection collection);
 }

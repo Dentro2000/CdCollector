@@ -4,7 +4,7 @@ namespace cd_collection.application.Services.Contracts;
 
 public interface ICollectionsService
 {
-    IList<CollectionDto?> GetCollections();
+    List<CollectionDto>? GetCollections();
 
     CollectionDto? GetCollection(Guid guid);
 

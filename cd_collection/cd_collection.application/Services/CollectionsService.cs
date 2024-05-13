@@ -34,14 +34,20 @@ public class CollectionsService : ICollectionsService
             .ConvertToDto();
     }
 
-    public IList<CollectionDto?> GetCollections()
+    public List<CollectionDto> GetCollections()
     {
-        var z =  _collectionsRepository
+        var collections = 
+            _collectionsRepository
             .GetCollections()
-            .Select(x => x.ConvertToDto())
             .ToList();
 
-        return z;
+        if (!collections.Any())
+        {
+            return new List<CollectionDto>() { };
+        }
+
+        return collections.Select(x => x.ConvertToDto())
+            .ToList();
     }
 
     public CollectionDto? UpdateCollection(Guid guid, string? collectionName, List<Guid> items)
@@ -65,8 +71,11 @@ public class CollectionsService : ICollectionsService
         {
             collection.SetAllItems(items.ToIdentifiers());
         }
+        _collectionsRepository.UpdateCollection(collection);
 
-        return collection.ConvertToDto();
+        var z = _collectionsRepository.GetCollection(collection.Id);
+
+        return z.ConvertToDto();
     }
 
     public bool DeleteCollection(Guid guid)
@@ -96,7 +105,10 @@ public class CollectionsService : ICollectionsService
             return null;
         }
 
-        return collection.AddItem(item).ConvertToDto();
+        collection.AddItem(item);
+        _collectionsRepository.UpdateCollection(collection);
+
+        return _collectionsRepository.GetCollection(collectionId).ConvertToDto();
     }
 
     public CollectionDto? RemoveItemFromCollection(Guid itemId, Guid collectionId)

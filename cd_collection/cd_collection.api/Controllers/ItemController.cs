@@ -1,6 +1,7 @@
 using cd_collection.application.Commands;
 using cd_collection.application.DTO;
 using cd_collection.application.Services.Contracts;
+using cd_collection.core.Exceptions.ItemServiceExceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cd_collection.Controllers;
@@ -49,13 +50,17 @@ public class ItemController : ControllerBase
     public ActionResult<CdItemDto> UpdateItem(Guid itemIdentifier, string artist, string title, string label,
         DateTime releaseDate)
     {
-        var itemToUpdate = _itemsService.UpdateItem(itemIdentifier, artist, title, label, releaseDate);
-        if (itemToUpdate == null)
+        try
         {
-            return BadRequest();
+            _itemsService.UpdateItem(itemIdentifier, artist, title, label, releaseDate);
+        }
+        catch (CantUpdateItemException exception)
+        {
+            return BadRequest(exception.Message);
         }
 
-        var updatedItem = _itemsService.GetItem(itemToUpdate.Identifier);
+
+        var updatedItem = _itemsService.GetItem(itemIdentifier);
 
         return Ok(updatedItem);
     }

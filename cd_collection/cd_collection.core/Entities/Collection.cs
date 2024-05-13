@@ -18,6 +18,7 @@ public class Collection
         Name = name;
         LastUpdate = DateTime.UtcNow;
         CreationDate = DateTime.UtcNow;
+        CdItems = new List<CdItem>() { };
     }
 
     public void ChangeName(string name)
