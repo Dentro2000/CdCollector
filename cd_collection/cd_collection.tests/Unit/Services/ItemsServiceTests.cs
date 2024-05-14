@@ -60,7 +60,7 @@ public class ItemsServiceTests
         var title = "Title";
         var artist = "Fancy Artist";
         var label = "Best Music Productions";
-        var releaseDate = new DateTime(1987, 02, 21);
+        var releaseDate = new DateOnly(1987, 02, 21);
 
         //when
         var newItem = _sut.CreateItem(artist, title, label, releaseDate);
@@ -82,8 +82,9 @@ public class ItemsServiceTests
         var title = "Title";
         var artist = "Fancy Artist";
         var label = "Best Music Productions";
-        var releaseDate = new DateTime(1987, 02, 21);
-        var newItem = _sut.CreateItem(artist, title, label, releaseDate);
+        var releaseDate = new DateOnly(1987, 02, 21);
+        _sut.CreateItem(artist, title, label, releaseDate);
+        
         //when
         //then
         Assert.Throws<ItemAlreadyExistsException>(() => _sut.CreateItem(artist, title, label, releaseDate));
@@ -96,8 +97,10 @@ public class ItemsServiceTests
         var item1 = MockItem.MockCdItem;
         _mockItemsRepository.AddItem(item1);
         var newLabel = "some oother label";
+
         //when
-        var updatedItem = _sut.UpdateItem(item1.Id, null, null, newLabel, null);
+        _sut.UpdateItem(item1.Id, null, null, newLabel, null);
+        var updatedItem = _sut.GetItem(item1.Id);
         //then
 
         Assert.IsTrue(updatedItem.Artist == item1.Artist);

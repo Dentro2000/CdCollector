@@ -61,5 +61,5 @@ public static class CdItemExtensions
         => item.Artist == artist &&
            item.Title == title &&
            item.Label == label &&
-           item.ReleaseDate == releaseDate;
+           item.ReleaseDate == releaseDate.Value;
 }

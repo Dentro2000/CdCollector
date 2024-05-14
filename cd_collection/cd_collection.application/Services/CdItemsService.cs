@@ -36,13 +36,10 @@ public class CdItemsService : IItemsService
     public CdItemDto CreateItem(string artist, string title, string label, DateOnly releaseDate)
     {
         var newItem = new CdItem(artist, title, label, releaseDate);
-
-
-        //move to extension isSameItem
+        
         var ifItemAlreadyExist =
             _repository.GetItems().SingleOrDefault(x => x.IsSameItem(artist, title, label, releaseDate));
-
-
+        
         if (ifItemAlreadyExist != null)
         {
             throw new ItemAlreadyExistsException(title, artist, label, releaseDate);

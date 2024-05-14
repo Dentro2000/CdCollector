@@ -1,5 +1,6 @@
 using cd_collection.core.Contracts;
 using cd_collection.core.Entities;
+using cd_collection.core.ValueObjects;
 
 namespace cd_collection.tests;
 
@@ -11,8 +12,8 @@ public class MockItemsRepository : IItemsRepository
     {
         _items.Add(item);
     }
-
-    public bool DeleteItem(Guid guid)
+    
+    public bool DeleteItem(CdItemId guid)
     {
         var item = GetItem(guid);
         if (item != null)
@@ -29,9 +30,16 @@ public class MockItemsRepository : IItemsRepository
         return _items;
     }
 
-    public CdItem? GetItem(Guid id)
+    public void UpdateItem(CdItem item)
     {
-        return _items.SingleOrDefault(x => x.Id.Value == id);
+        var z = _items.Single(x => x.Id == item.Id);
+        _items.Remove(z);
+        _items.Add(item);
+    }
+
+    public CdItem? GetItem(CdItemId id)
+    {
+        return _items.SingleOrDefault(x => x.Id == id);
     }
 }
 
@@ -42,6 +50,6 @@ public static class MockItem
             "MockArtist",
             "MockTitle",
             "MockLabel",
-            new DateTime(2024, 01, 01)
+            new DateOnly(2024, 01, 01)
         );
 }
