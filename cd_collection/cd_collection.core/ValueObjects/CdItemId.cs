@@ -23,9 +23,3 @@ public sealed record CdItemId
     public static implicit operator CdItemId(Guid value)
         => new(value);
 }
-
-public static class IdentifierListExtension
-{ 
-    public static List<CdItemId> ToIdentifiers(this List<Guid> guids) => guids.Select(x => new CdItemId(x)).ToList();
-    public static List<Guid> ToGuids(this List<CdItemId> identifiers) => identifiers.Select(x => x.Value).ToList();
-}

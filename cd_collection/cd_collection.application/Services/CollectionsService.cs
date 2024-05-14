@@ -50,7 +50,7 @@ public class CollectionsService : ICollectionsService
             .ToList();
     }
 
-    public CollectionDto? UpdateCollection(Guid guid, string? collectionName, List<Guid> items)
+    public CollectionDto? UpdateCollection(Guid guid, string? collectionName, List<CdItem> items)
     {
         var collection = _collectionsRepository.GetCollection(guid);
 
@@ -69,7 +69,7 @@ public class CollectionsService : ICollectionsService
 
         if (items.Count > 0)
         {
-            collection.SetAllItems(items.ToIdentifiers());
+            collection.SetAllItems(items);
         }
         _collectionsRepository.UpdateCollection(collection);
 

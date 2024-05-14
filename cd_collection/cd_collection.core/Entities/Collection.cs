@@ -49,10 +49,11 @@ public class Collection
         return this;
     }
 
-    public void SetAllItems(List<CdItemId> items)
+    public Collection SetAllItems(List<CdItem> items)
     {
-        // CollectionCdItems.Select(x => x.ItemId) = items;
-        throw new NotImplementedException();
+        CdItems.AddRange(items);
+        SetLastUpdate();
+        return this;
     }
 
     private void SetLastUpdate() => LastUpdate = DateTime.UtcNow;
