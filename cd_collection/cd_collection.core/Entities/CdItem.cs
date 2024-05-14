@@ -8,12 +8,12 @@ public class CdItem
     public Artist Artist { get; private set; }
     public Title Title { get; private set; }
     public Label Label { get; private set; }
-    public Date ReleaseDate { get; private set; }
+    public ReleaseDate ReleaseDate { get; private set; }
     public Date LastUpdate { get; private set; }
 
     public List<Collection> Collections { get; set; }
 
-    public CdItem(Artist artist, Title title, Label label, Date releaseDate)
+    public CdItem(Artist artist, Title title, Label label, ReleaseDate releaseDate)
     {
         Id = Guid.NewGuid();
         Artist = artist;
@@ -41,7 +41,7 @@ public class CdItem
         SetLastUpdate();
     }
 
-    public void ChangeReleaseDate(DateTime newReleaseDate)
+    public void ChangeReleaseDate(DateOnly newReleaseDate)
     {
         ReleaseDate = newReleaseDate;
         SetLastUpdate();
@@ -57,7 +57,7 @@ public static class CdItemExtensions
         string artist, 
         string title, 
         string label, 
-        Date releaseDate)
+        ReleaseDate releaseDate)
         => item.Artist == artist &&
            item.Title == title &&
            item.Label == label &&

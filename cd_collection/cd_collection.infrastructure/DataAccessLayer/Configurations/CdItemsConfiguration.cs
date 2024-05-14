@@ -24,7 +24,7 @@ public sealed class CdItemsConfiguration : IEntityTypeConfiguration<CdItem>
             .HasConversion(x => x.Value, x => new Label(x));
         
         builder.Property(x => x.ReleaseDate)
-            .HasConversion(x => x.Value, x => new Date(x));
+            .HasConversion(x => x.Value, x => new ReleaseDate(x));
         
         builder.Property(x => x.LastUpdate)
             .HasConversion(x => x.Value, x => new Date(x));

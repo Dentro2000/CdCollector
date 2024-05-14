@@ -10,5 +10,5 @@ public class CdItemDto
 
     public string Label { get; set; }
 
-    public DateTime ReleaseDate { get; set; }
+    public DateOnly ReleaseDate { get; set; }
 }

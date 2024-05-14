@@ -48,7 +48,7 @@ public class ItemController : ControllerBase
 
     [HttpPut("{itemIdentifier:guid}/update")]
     public ActionResult<CdItemDto> UpdateItem(Guid itemIdentifier, string artist, string title, string label,
-        DateTime releaseDate)
+        DateOnly releaseDate)
     {
         try
         {

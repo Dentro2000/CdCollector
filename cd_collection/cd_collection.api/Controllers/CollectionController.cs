@@ -49,6 +49,7 @@ public class CdCollectionController : ControllerBase
     [HttpPut("{collectionId:guid}")]
     public ActionResult<CollectionDto> UpdateCollection(Guid collectionId, UpdateCollection command)
     {
+        
         var collection = _collectionsService.UpdateCollection(collectionId, command.CollectionName, command.Items);
         if (collection == null)
         {

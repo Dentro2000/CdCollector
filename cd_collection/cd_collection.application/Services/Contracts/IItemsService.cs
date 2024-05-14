@@ -8,9 +8,9 @@ public interface IItemsService
 
     CdItemDto GetItem(Guid id);
 
-    CdItemDto? CreateItem(string artist, string title, string label, DateTime releaseDate);
+    CdItemDto? CreateItem(string artist, string title, string label, DateOnly releaseDate);
 
-    void UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate);
+    void UpdateItem(Guid guid, string? artist, string? title, string? label, DateOnly? releaseDate);
 
     bool DeleteItem(Guid guid);
 }

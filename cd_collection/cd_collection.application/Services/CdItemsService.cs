@@ -33,7 +33,7 @@ public class CdItemsService : IItemsService
     public CdItemDto? GetItem(Guid id) => _repository.GetItem(id: id).ConvertToDto();
 
 
-    public CdItemDto CreateItem(string artist, string title, string label, DateTime releaseDate)
+    public CdItemDto CreateItem(string artist, string title, string label, DateOnly releaseDate)
     {
         var newItem = new CdItem(artist, title, label, releaseDate);
 
@@ -52,7 +52,7 @@ public class CdItemsService : IItemsService
         return _repository.GetItem(newItem.Id).ConvertToDto();
     }
 
-    public void UpdateItem(Guid guid, string? artist, string? title, string? label, DateTime? releaseDate)
+    public void UpdateItem(Guid guid, string? artist, string? title, string? label, DateOnly? releaseDate)
     {
         var item = _repository.GetItem(guid);
 
