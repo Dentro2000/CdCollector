@@ -14,8 +14,7 @@ internal sealed class DbCollectionRepository : ICollectionRepository
     {
         _context = context;
     }
-
-    //TODO: change to async
+    
     public void AddCollection(Collection collection)
     {
         _context.Collections.Add(collection);

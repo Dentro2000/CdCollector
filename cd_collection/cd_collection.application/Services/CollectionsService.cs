@@ -34,7 +34,7 @@ public class CollectionsService : ICollectionsService
             .ConvertToDto();
     }
 
-    public List<CollectionDto> GetCollections()
+    public IList<CollectionDto> GetCollections()
     {
         var collections = 
             _collectionsRepository
@@ -97,14 +97,12 @@ public class CollectionsService : ICollectionsService
 
     public CollectionDto? AddItemToCollection(Guid itemId, Guid collectionId)
     {
-        //Handle on the items side
         var collection = _collectionsRepository.GetCollection(collectionId);
         var item = _itemsRepository.GetItem(itemId);
 
         if (collection == null || item == null)
         {
-            //throw exception and get rid of optionals
-            return null;
+            throw new CantAddItemToCollectionException();
         }
 
         collection.AddItem(item);

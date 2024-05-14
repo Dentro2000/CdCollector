@@ -6,7 +6,7 @@ namespace cd_collection.application.Services.Contracts;
 
 public interface ICollectionsService
 {
-    List<CollectionDto>? GetCollections();
+    IList<CollectionDto>? GetCollections();
 
     CollectionDto? GetCollection(Guid guid);
 
