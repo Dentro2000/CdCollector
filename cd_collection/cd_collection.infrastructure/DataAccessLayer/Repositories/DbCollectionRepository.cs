@@ -1,6 +1,7 @@
 using cd_collection.core.Contracts;
 using cd_collection.core.Entities;
 using cd_collection.core.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace cd_collection.infrastructure.DataAccessLayer.Repositories;
@@ -29,13 +30,14 @@ internal sealed class DbCollectionRepository : ICollectionRepository
 
     public IEnumerable<Collection?> GetCollections()
     {
-        return _context.Collections;
+        return _context.Collections.Include(x=>x.CdItems);
     }
 
     public Collection? GetCollection(ColectionIdentfier id)
     {
         return _context
             .Collections
+            .Include(x => x.CdItems)
             .SingleOrDefault(x => x.Id == id);
     }
 

@@ -7,7 +7,7 @@ public static class ToDtoExtensions
 {
     public static CollectionDto ConvertToDto(this Collection? collection)
     {
-        if (collection?.CdItems != null && !collection.CdItems.Any())
+        if (collection.CdItems.Any())
         {
             return new CollectionDto(id: collection.Id.Value,
                 name: collection.Name,

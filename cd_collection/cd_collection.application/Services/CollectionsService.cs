@@ -121,6 +121,8 @@ public class CollectionsService : ICollectionsService
             return null;
         }
 
-        return collection.RemoveItem(itemId).ConvertToDto();
+        collection.RemoveItem(item);
+        _collectionsRepository.UpdateCollection(collection);
+        return  _collectionsRepository.GetCollection(collectionId).ConvertToDto();
     }
 }

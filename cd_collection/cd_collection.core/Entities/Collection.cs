@@ -37,22 +37,22 @@ public class Collection
     // public IEnumerable<CdItemId?> GetItemsIds() => CollectionCdItems.Select(x => x.ItemId);
 
 
-    public Collection RemoveItem(Guid itemId)
+    public Collection RemoveItem(CdItem item)
     {
-        if (!CdItems.Select(x => x.Id).ToList().Contains(itemId))
+        CdItems.Remove(item);
+        if (!CdItems.Select(x => x.Id).ToList().Contains(item.Id.Value))
         {
-            throw new CannotRemoveItemException(itemId);
+            throw new CannotRemoveItemException(item.Id);
         }
 
-        CdItems.Select(x => x.Id).ToList().Remove(itemId);
         SetLastUpdate();
         return this;
     }
 
     public void SetAllItems(List<CdItemId> items)
     {
-       // CollectionCdItems.Select(x => x.ItemId) = items;
-       throw new NotImplementedException();
+        // CollectionCdItems.Select(x => x.ItemId) = items;
+        throw new NotImplementedException();
     }
 
     private void SetLastUpdate() => LastUpdate = DateTime.UtcNow;
