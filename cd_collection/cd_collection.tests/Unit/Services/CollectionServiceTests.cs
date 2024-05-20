@@ -80,19 +80,20 @@ public class CollectionServiceTests
     }
 
     [Test]
-    public void UpdateCollection_ShouldReturnNull_If_NoCollections()
+    public void UpdateCollection_ShouldReturnException_If_NoCollections()
     {
         //given
         Assert.True(_collectionRepositoryMock.GetCollections().ToArray().Length == 0);
 
+        var cd2 = new CdItem("666", "9", "3", new DateOnly(2024, 05, 1));
+        _itemsRepositoryMock.AddItem(cd2);
+
         //when
-        var updated = _sut.UpdateCollection(
+        //then
+        Assert.Throws<CannotUpdateException>(() => _sut.UpdateCollection(
             Guid.NewGuid(),
             "Elo",
-            new List<Guid> { Guid.NewGuid() });
-
-        //then
-        Assert.IsNull(updated);
+            new List<Guid> { cd2.Id }));
     }
 
     [Test]
@@ -123,11 +124,17 @@ public class CollectionServiceTests
         var newCollection = new Collection("Test");
         _collectionRepositoryMock.AddCollection(newCollection);
 
+        var cd1 = new CdItem("2", "9", "3", new DateOnly(2024, 05, 1));
+        var cd2 = new CdItem("666", "9", "3", new DateOnly(2024, 05, 1));
+        _itemsRepositoryMock.AddItem(cd1);
+        _itemsRepositoryMock.AddItem(cd2);
+
+
         //when
         var updated = _sut.UpdateCollection(
             newCollection.Id,
             null,
-            new List<Guid> { Guid.NewGuid(), Guid.NewGuid() });
+            new List<Guid> { cd1.Id, cd2.Id });
 
         //then
         Assert.IsTrue(collections.First().CdItems.ToList().Count == 2);
@@ -142,24 +149,28 @@ public class CollectionServiceTests
         var newCollection = new Collection("Test");
         _collectionRepositoryMock.AddCollection(newCollection);
 
-        var cd1 = Guid.NewGuid();
-        var cd2 = Guid.NewGuid();
-        var cd3 = Guid.NewGuid();
+        var cd1 = new CdItem("1", "6", "3", new DateOnly(2024, 05, 1));
+        var cd2 = new CdItem("2", "8", "3", new DateOnly(2024, 05, 1));
+        var cd3 = new CdItem("2", "9", "3", new DateOnly(2024, 05, 1));
+        _itemsRepositoryMock.AddItem(cd1);
+        _itemsRepositoryMock.AddItem(cd2);
+        _itemsRepositoryMock.AddItem(cd3);
+
         _sut.UpdateCollection(
             newCollection.Id,
             null,
-            new List<Guid> { cd1, cd2, });
+            new List<Guid> { cd1.Id, cd2.Id, });
 
 
         //then
         var updated = _sut.UpdateCollection(
             newCollection.Id,
             null,
-            new List<Guid> { cd1, cd2, cd3 });
+            new List<Guid> { cd1.Id, cd2.Id, cd3.Id });
 
         //then
         Assert.IsTrue(
-            newCollection.CdItems.ToList().Count == 3);
+            updated.ItemsIds.Count == 3);
     }
 
     [Test]
@@ -169,26 +180,30 @@ public class CollectionServiceTests
         var newCollection = new Collection("Test");
         _collectionRepositoryMock.AddCollection(newCollection);
 
-        var cd1 = Guid.NewGuid();
-        var cd2 = Guid.NewGuid();
-        var cd3 = Guid.NewGuid();
+        var cd1 = new CdItem("1", "6", "3", new DateOnly(2024, 05, 1));
+        var cd2 = new CdItem("2", "8", "3", new DateOnly(2024, 05, 1));
+        var cd3 = new CdItem("2", "9", "3", new DateOnly(2024, 05, 1));
+
+        _itemsRepositoryMock.AddItem(cd1);
+        _itemsRepositoryMock.AddItem(cd2);
+        _itemsRepositoryMock.AddItem(cd3);
 
         _sut.UpdateCollection(
             newCollection.Id,
             null,
-            new List<Guid> { cd1, cd2, });
+            new List<Guid> { cd1.Id, cd2.Id, });
 
         //then
         var updated = _sut.UpdateCollection(
             newCollection.Id,
             null,
-            new List<Guid> { cd2, cd3 });
+            new List<Guid> { cd2.Id, cd3.Id });
 
         //then
         Assert.IsTrue(updated.ItemsIds.Count == 2);
-        Assert.IsTrue(updated.ItemsIds.Contains(cd2));
-        Assert.IsTrue(updated.ItemsIds.Contains(cd3));
-        Assert.IsTrue(!updated.ItemsIds.Contains(cd1));
+        Assert.IsTrue(updated.ItemsIds.Contains(cd2.Id));
+        Assert.IsTrue(updated.ItemsIds.Contains(cd3.Id));
+        Assert.IsTrue(!updated.ItemsIds.Contains(cd1.Id));
     }
 
     [Test]

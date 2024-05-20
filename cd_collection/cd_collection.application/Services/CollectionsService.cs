@@ -123,6 +123,6 @@ public class CollectionsService : ICollectionsService
 
         collection.RemoveItem(item);
         _collectionsRepository.UpdateCollection(collection);
-        return  _collectionsRepository.GetCollection(collectionId).ConvertToDto();
+        return _collectionsRepository.GetCollection(collectionId).ConvertToDto();
     }
 }

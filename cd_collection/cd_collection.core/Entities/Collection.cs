@@ -34,23 +34,25 @@ public class Collection
         return this;
     }
 
-    // public IEnumerable<CdItemId?> GetItemsIds() => CollectionCdItems.Select(x => x.ItemId);
+    public IEnumerable<CdItemId?> GetItemsIds() => CdItems.Select(x => x.Id);
 
 
     public Collection RemoveItem(CdItem item)
     {
-        CdItems.Remove(item);
+       
         if (!CdItems.Select(x => x.Id).ToList().Contains(item.Id.Value))
         {
             throw new CannotRemoveItemException(item.Id);
         }
-
+        
+        CdItems.Remove(item);
         SetLastUpdate();
         return this;
     }
 
     public Collection SetAllItems(List<CdItem> items)
     {
+        CdItems = new List<CdItem>();
         CdItems.AddRange(items);
         SetLastUpdate();
         return this;
