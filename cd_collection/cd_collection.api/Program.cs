@@ -1,6 +1,7 @@
 using cd_collection.application;
 using cd_collection.core;
 using cd_collection.infrastructure;
+using cd_collection.infrastructure.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -17,5 +18,6 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseInfrastructure();
 app.MapControllers();
 app.Run();
