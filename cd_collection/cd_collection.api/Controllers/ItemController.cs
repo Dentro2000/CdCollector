@@ -50,16 +50,7 @@ public class ItemController : ControllerBase
     public ActionResult<CdItemDto> UpdateItem(Guid itemIdentifier, string artist, string title, string label,
         DateOnly releaseDate)
     {
-        try
-        {
-            _itemsService.UpdateItem(itemIdentifier, artist, title, label, releaseDate);
-        }
-        catch (CantUpdateItemException exception)
-        {
-            return BadRequest(exception.Message);
-        }
-
-
+        _itemsService.UpdateItem(itemIdentifier, artist, title, label, releaseDate);
         var updatedItem = _itemsService.GetItem(itemIdentifier);
 
         return Ok(updatedItem);
