@@ -1,3 +1,4 @@
+using cd_collection.application.Abstractions;
 using cd_collection.application.Commands;
 using cd_collection.application.DTO;
 using cd_collection.application.Services.Contracts;
@@ -10,10 +11,12 @@ namespace cd_collection.Controllers;
 public class CdCollectionController : ControllerBase
 {
     private readonly ICollectionsService _collectionsService;
+    private readonly ICommandHandler<CreateCollection> _createCollectionCommandHandler;
 
-    public CdCollectionController(ICollectionsService collectionsService)
+    public CdCollectionController(ICollectionsService collectionsService, ICommandHandler<CreateCollection> createCollectionCommandHandler)
     {
         _collectionsService = collectionsService;
+        _createCollectionCommandHandler = createCollectionCommandHandler;
     }
 
     [HttpGet]
@@ -23,10 +26,15 @@ public class CdCollectionController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<CollectionDto> CreateCollection(CreateCollection command)
+    public async Task<ActionResult<CollectionDto>> CreateCollection(CreateCollection command)
     {
-        var collection = _collectionsService.CreateCollection(command.Name);
-        return Ok(collection);
+
+        await _createCollectionCommandHandler.HandleAsync(command);
+        // var collection = _collectionsService.CreateCollection(command.Name);
+        // return Ok(collection);
+        
+        //TODO: RETURN OK(COLLECTIONDTO) WHEN QUERY WILL BE IMPLEMENTED
+        return NoContent();
     }
 
 

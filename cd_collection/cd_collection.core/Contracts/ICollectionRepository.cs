@@ -5,7 +5,7 @@ namespace cd_collection.core.Contracts;
 
 public interface ICollectionRepository
 {
-    void AddCollection(Collection collection);
+    Task AddCollection(Collection collection);
 
     void DeleteCollection(Collection collection);
 

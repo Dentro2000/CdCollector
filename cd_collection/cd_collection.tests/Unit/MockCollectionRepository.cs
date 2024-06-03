@@ -9,9 +9,10 @@ class MockCollectionRepository : ICollectionRepository
     private List<Collection> _collections = new List<Collection> { };
 
 
-    public void AddCollection(Collection collection)
+    public Task AddCollection(Collection collection)
     {
         _collections.Add(collection);
+        return Task.CompletedTask;
     }
 
     public void DeleteCollection(Collection collection)

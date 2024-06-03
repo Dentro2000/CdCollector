@@ -14,11 +14,11 @@ internal sealed class DbCollectionRepository : ICollectionRepository
     {
         _context = context;
     }
-    
-    public void AddCollection(Collection collection)
+
+    public async Task AddCollection(Collection collection)
     {
-        _context.Collections.Add(collection);
-        _context.SaveChanges();
+        await _context.Collections.AddAsync(collection);
+        await _context.SaveChangesAsync();
     }
 
     public void DeleteCollection(Collection collection)

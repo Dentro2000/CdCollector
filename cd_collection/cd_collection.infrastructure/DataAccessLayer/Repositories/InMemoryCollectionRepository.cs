@@ -12,13 +12,14 @@ internal class InMemoryCollectionRepository : ICollectionRepository
         new(name: "FourFiveSix"),
     };
 
-    public void AddCollection(Collection collection) => _collections.Add(collection);
+    public async Task AddCollection(Collection collection) => _collections.Add(collection);
 
     public void DeleteCollection(Collection collection) => _collections.Remove(collection);
 
     public IEnumerable<Collection> GetCollections() => _collections;
 
     public Collection? GetCollection(ColectionIdentfier id) => _collections.SingleOrDefault(x => x.Id == id);
+
     public void UpdateCollection(Collection collection)
     {
         throw new NotImplementedException();

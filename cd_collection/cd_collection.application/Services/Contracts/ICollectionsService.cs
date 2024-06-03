@@ -10,7 +10,7 @@ public interface ICollectionsService
 
     CollectionDto? GetCollection(Guid guid);
 
-    CollectionDto? CreateCollection(string name);
+    // CollectionDto? CreateCollection(string name);
     CollectionDto? UpdateCollection(Guid guid, string? collectionName, List<Guid> items);
 
     bool DeleteCollection(Guid guid);

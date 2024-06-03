@@ -63,21 +63,21 @@ public class CollectionServiceTests
         Assert.True(collectionDto?.Name == "Test");
     }
 
-    [Test]
-    public void CreateCollectionTest()
-    {
-        //given
-        var newColelction = new Collection("Test");
-        _collectionRepositoryMock.AddCollection(newColelction);
-
-        var collectionName = "NewCollection";
-
-        //when
-        _sut.CreateCollection(collectionName);
-
-        //then
-        Assert.True(_collectionRepositoryMock.GetCollections().Count() == 2);
-    }
+    // [Test]
+    // public void CreateCollectionTest()
+    // {
+    //     //given
+    //     var newColelction = new Collection("Test");
+    //     _collectionRepositoryMock.AddCollection(newColelction);
+    //
+    //     var collectionName = "NewCollection";
+    //
+    //     //when
+    //     _sut.CreateCollection(collectionName);
+    //
+    //     //then
+    //     Assert.True(_collectionRepositoryMock.GetCollections().Count() == 2);
+    // }
 
     [Test]
     public void UpdateCollection_ShouldReturnException_If_NoCollections()

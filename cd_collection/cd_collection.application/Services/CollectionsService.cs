@@ -23,16 +23,16 @@ public class CollectionsService : ICollectionsService
 
     public CollectionDto? GetCollection(Guid guid) => _collectionsRepository.GetCollection(guid)?.ConvertToDto();
 
-    public CollectionDto CreateCollection(string name)
-    {
-        var collection = new Collection(name: name);
-
-        _collectionsRepository.AddCollection(collection: collection);
-
-        return _collectionsRepository
-            .GetCollection(collection.Id)
-            .ConvertToDto();
-    }
+    // public CollectionDto CreateCollection(string name)
+    // {
+    //     var collection = new Collection(name: name);
+    //
+    //     _collectionsRepository.AddCollection(collection: collection);
+    //
+    //     return _collectionsRepository
+    //         .GetCollection(collection.Id)
+    //         .ConvertToDto();
+    // }
 
     public IList<CollectionDto> GetCollections()
     {
