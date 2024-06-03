@@ -33,9 +33,7 @@ public class CdCollectionController : ControllerBase
     [HttpGet("{collectionId:guid}")]
     public ActionResult<List<CollectionDto>> GetCollection(Guid collectionId)
     {
-        var collection = _collectionsService
-            .GetCollections()
-            .SingleOrDefault(x => x.Id == collectionId);
+        var collection = _collectionsService.GetCollection(collectionId); 
 
         if (collection == null)
         {
