@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cd_collection.infrastructure.DataAccessLayer;
 
-internal sealed class CDCollectionDbContext : DbContext
+internal sealed class CdCollectionDbContext : DbContext
 {
     public DbSet<Collection> Collections { get; set; }
     public DbSet<CdItem> CdItems { get; set; }
 
-    public CDCollectionDbContext(DbContextOptions<CDCollectionDbContext> options) : base(options)
+    public CdCollectionDbContext(DbContextOptions<CdCollectionDbContext> options) : base(options)
     {
     }
 

@@ -7,9 +7,9 @@ namespace cd_collection.infrastructure.DataAccessLayer.Repositories;
 
 internal sealed class DbItemsRepository : IItemsRepository
 {
-    private CDCollectionDbContext _context;
+    private CdCollectionDbContext _context;
 
-    public DbItemsRepository(CDCollectionDbContext context)
+    public DbItemsRepository(CdCollectionDbContext context)
     {
         _context = context;
     }
