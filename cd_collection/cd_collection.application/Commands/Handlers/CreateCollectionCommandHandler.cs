@@ -12,8 +12,7 @@ public class CreateCollectionCommandHandler : ICommandHandler<CreateCollection>
     {
         _collectionsRepository = collectionsRepository;
     }
-
-    // TODO: CHANGE DATE TIME TO DATE ONLY IN DB -> CDITEM RELEASE DATE
+    
     public async Task HandleAsync(CreateCollection command)
     {
         var collection = new Collection(name: command.Name);

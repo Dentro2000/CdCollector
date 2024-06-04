@@ -12,8 +12,8 @@ using cd_collection.infrastructure.DataAccessLayer;
 namespace cd_collection.infrastructure.DataAccessLayer.Migrations
 {
     [DbContext(typeof(CdCollectionDbContext))]
-    [Migration("20240422191530_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240604042954_ChangeCdItemReleaseDateToDateOnly")]
+    partial class ChangeCdItemReleaseDateToDateOnly
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,8 +56,8 @@ namespace cd_collection.infrastructure.DataAccessLayer.Migrations
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("ReleaseDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("ReleaseDate")
+                        .HasColumnType("date");
 
                     b.Property<string>("Title")
                         .IsRequired()

@@ -10,7 +10,7 @@ using cd_collection.infrastructure.DataAccessLayer;
 
 namespace cd_collection.infrastructure.DataAccessLayer.Migrations
 {
-    [DbContext(typeof(CDCollectionDbContext))]
+    [DbContext(typeof(CdCollectionDbContext))]
     partial class CDCollectionDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -53,8 +53,8 @@ namespace cd_collection.infrastructure.DataAccessLayer.Migrations
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("ReleaseDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly>("ReleaseDate")
+                        .HasColumnType("date");
 
                     b.Property<string>("Title")
                         .IsRequired()
