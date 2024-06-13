@@ -11,10 +11,11 @@ public class Collection
     public Date LastUpdate { get; private set; }
 
     public List<CdItem> CdItems { get; private set; }
+    
 
-    public Collection(CollectionName name)
+    public Collection(CollectionName name, ColectionIdentfier id )
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Name = name;
         LastUpdate = DateTime.UtcNow;
         CreationDate = DateTime.UtcNow;

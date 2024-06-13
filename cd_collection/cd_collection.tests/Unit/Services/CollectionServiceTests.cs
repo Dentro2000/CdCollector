@@ -39,7 +39,7 @@ public class CollectionServiceTests
     public void GetCollectionsTest()
     {
         //given
-        var newColelction = new Collection("Test");
+        var newColelction = new Collection("Test", Guid.NewGuid());
         _collectionRepositoryMock.AddCollection(newColelction);
 
         //when
@@ -53,7 +53,7 @@ public class CollectionServiceTests
     public void GetCollectionTests()
     {
         //given
-        var newColelction = new Collection("Test");
+        var newColelction = new Collection("Test", Guid.NewGuid());
         _collectionRepositoryMock.AddCollection(newColelction);
 
         //when
@@ -102,7 +102,7 @@ public class CollectionServiceTests
         //given
         var collections = _collectionRepositoryMock.GetCollections();
 
-        var newCollection = new Collection("Test");
+        var newCollection = new Collection("Test", Guid.NewGuid());
         _collectionRepositoryMock.AddCollection(newCollection);
 
         //when
@@ -121,7 +121,7 @@ public class CollectionServiceTests
     {
         //given
         var collections = _collectionRepositoryMock.GetCollections();
-        var newCollection = new Collection("Test");
+        var newCollection = new Collection("Test", Guid.NewGuid());
         _collectionRepositoryMock.AddCollection(newCollection);
 
         var cd1 = new CdItem("2", "9", "3", new DateOnly(2024, 05, 1));
@@ -146,7 +146,7 @@ public class CollectionServiceTests
         //given
         _collectionRepositoryMock.GetCollections();
 
-        var newCollection = new Collection("Test");
+        var newCollection = new Collection("Test", Guid.NewGuid());
         _collectionRepositoryMock.AddCollection(newCollection);
 
         var cd1 = new CdItem("1", "6", "3", new DateOnly(2024, 05, 1));
@@ -177,7 +177,7 @@ public class CollectionServiceTests
     public void UpdateCollection_ShouldRemoveItem()
     {
         //given
-        var newCollection = new Collection("Test");
+        var newCollection = new Collection("Test", Guid.NewGuid());
         _collectionRepositoryMock.AddCollection(newCollection);
 
         var cd1 = new CdItem("1", "6", "3", new DateOnly(2024, 05, 1));
@@ -210,7 +210,7 @@ public class CollectionServiceTests
     public void DeleteCollection_Should_DeleteCollection()
     {
         //given
-        var newCollection = new Collection("Test");
+        var newCollection = new Collection("Test", Guid.NewGuid());
         _collectionRepositoryMock.AddCollection(newCollection);
 
         //when
@@ -235,7 +235,7 @@ public class CollectionServiceTests
     public void AddItemToCollection_Should_AddItemToCollection()
     {
         //given
-        var newCollection = new Collection("Test");
+        var newCollection = new Collection("Test", Guid.NewGuid());
         var mockItem = MockItem.MockCdItem;
 
         _collectionRepositoryMock.AddCollection(newCollection);
@@ -252,7 +252,7 @@ public class CollectionServiceTests
     public void AddItemToCollection_Should_ReturnException_IfNoItem()
     {
         //given
-        var newCollection = new Collection("Test");
+        var newCollection = new Collection("Test", Guid.NewGuid());
 
         _collectionRepositoryMock.AddCollection(newCollection);
 
@@ -266,7 +266,7 @@ public class CollectionServiceTests
     public void RemoveItemFromCollection_Should_ReturnNullIfNoItem()
     {
         //given
-        var newCollection = new Collection("Test");
+        var newCollection = new Collection("Test", Guid.NewGuid());
         _collectionRepositoryMock.AddCollection(newCollection);
 
         //when
@@ -280,7 +280,7 @@ public class CollectionServiceTests
     public void RemoveItemFromCollection_Should_ReturnCollection()
     {
         //given
-        var newCollection = new Collection("Test");
+        var newCollection = new Collection("Test", Guid.NewGuid());
         var mockItem = MockItem.MockCdItem;
 
         _collectionRepositoryMock.AddCollection(newCollection);

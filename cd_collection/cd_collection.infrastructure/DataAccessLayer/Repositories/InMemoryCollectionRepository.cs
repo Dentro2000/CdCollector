@@ -8,8 +8,8 @@ internal class InMemoryCollectionRepository : ICollectionRepository
 {
     private readonly List<Collection?> _collections = new List<Collection?>
     {
-        new(name: "OneTwoThree"),
-        new(name: "FourFiveSix"),
+        new(name: "OneTwoThree", Guid.NewGuid()),
+        new(name: "FourFiveSix", Guid.NewGuid()),
     };
 
     public async Task AddCollection(Collection collection) => _collections.Add(collection);

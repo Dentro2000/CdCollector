@@ -19,7 +19,8 @@ public static class InfrastructureServicesExtension
         services.AddSingleton<ExceptionMiddleware>();
         services.AddScoped<IItemsRepository, DbItemsRepository>();
         services.AddScoped<ICollectionRepository, DbCollectionRepository>();
-        services.AddScoped<IQueryHandler<GetCollections, IEnumerable<CollectionDto>>, GetCollectionsQueryHandler>();
+        services.AddScoped<IQueryHandler<GetCollections, IEnumerable<CollectionDto>>, GetCollectionsQueryHandler>();  
+        services.AddScoped<IQueryHandler<GetCollection, CollectionDto>, GetCollectionQueryHandler>();  
         services.AddTransient<ITime, Time>();
        
 

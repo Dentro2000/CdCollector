@@ -10,7 +10,7 @@ public class CollectionEntitiesTests
     [SetUp]
     public void Setup()
     {
-        _sut = new Collection("MyCollection");
+        _sut = new Collection("MyCollection", Guid.NewGuid());
     }
 
     [TearDown]

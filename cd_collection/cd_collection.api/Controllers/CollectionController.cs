@@ -5,6 +5,7 @@ using cd_collection.application.Queries;
 using cd_collection.application.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace cd_collection.Controllers;
 
 [ApiController]
@@ -14,14 +15,17 @@ public class CdCollectionController : ControllerBase
     private readonly ICollectionsService _collectionsService;
     private readonly ICommandHandler<CreateCollection> _createCollectionCommandHandler;
     private readonly IQueryHandler<GetCollections, IEnumerable<CollectionDto>> _getCollectionsQuery;
+    private readonly IQueryHandler<GetCollection, CollectionDto> _getCollectionQuery;
 
     public CdCollectionController(ICollectionsService collectionsService,
         ICommandHandler<CreateCollection> createCollectionCommandHandler,
-        IQueryHandler<GetCollections, IEnumerable<CollectionDto>> getCollectionsQuery)
+        IQueryHandler<GetCollections, IEnumerable<CollectionDto>> getCollectionsQuery,
+        IQueryHandler<GetCollection, CollectionDto> getCollectionQuery)
     {
         _collectionsService = collectionsService;
         _createCollectionCommandHandler = createCollectionCommandHandler;
         _getCollectionsQuery = getCollectionsQuery;
+        _getCollectionQuery = getCollectionQuery;
     }
 
     [HttpGet]
@@ -34,27 +38,17 @@ public class CdCollectionController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<CollectionDto>> CreateCollection(CreateCollection command)
     {
-        await _createCollectionCommandHandler.HandleAsync(command);
-        // var collection = _collectionsService.CreateCollection(command.Name);
-        // return Ok(collection);
+        var guid = Guid.NewGuid();
+        await _createCollectionCommandHandler.HandleAsync(command with { collectionId = guid });
 
-        //TODO: RETURN OK(COLLECTIONDTO) WHEN QUERY WILL BE IMPLEMENTED
-        return NoContent();
+        var newCollection = await _getCollectionQuery.HandleAsync(new GetCollection(guid));
+        return Ok(newCollection);
     }
 
 
     [HttpGet("{collectionId:guid}")]
-    public ActionResult<List<CollectionDto>> GetCollection(Guid collectionId)
-    {
-        var collection = _collectionsService.GetCollection(collectionId);
-
-        if (collection == null)
-        {
-            return NotFound();
-        }
-
-        return (Ok(collection));
-    }
+    public async Task<ActionResult<List<CollectionDto>>> GetCollection(Guid collectionId) =>
+        Ok(await _getCollectionQuery.HandleAsync(new GetCollection(collectionId)));
 
 
     [HttpPut("{collectionId:guid}")]

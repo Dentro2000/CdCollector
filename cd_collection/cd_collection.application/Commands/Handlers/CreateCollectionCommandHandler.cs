@@ -15,7 +15,7 @@ public class CreateCollectionCommandHandler : ICommandHandler<CreateCollection>
     
     public async Task HandleAsync(CreateCollection command)
     {
-        var collection = new Collection(name: command.Name);
+        var collection = new Collection(name: command.Name, command.collectionId);
         await _collectionsRepository.AddCollection(collection: collection);
     }
 }
