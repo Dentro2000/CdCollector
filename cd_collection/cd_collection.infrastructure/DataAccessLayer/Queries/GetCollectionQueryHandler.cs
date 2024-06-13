@@ -2,11 +2,12 @@ using cd_collection.application.Abstractions;
 using cd_collection.application.DTO;
 using cd_collection.application.Extensions;
 using cd_collection.application.Queries;
+using cd_collection.core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace cd_collection.infrastructure.DataAccessLayer.Queries;
 
-internal sealed class GetCollectionQueryHandler : IQueryHandler<GetCollection, CollectionDto>
+internal sealed class GetCollectionQueryHandler : IQueryHandler<GetCollection, CollectionDto?>
 {
     private CdCollectionDbContext _dbContext;
 
@@ -15,9 +16,12 @@ internal sealed class GetCollectionQueryHandler : IQueryHandler<GetCollection, C
         _dbContext = dbContext;
     }
 
-    public async Task<CollectionDto> HandleAsync(GetCollection query)
+    public async Task<CollectionDto?> HandleAsync(GetCollection query)
     {
-        var collection = await _dbContext.Collections.SingleAsync(x => x.Id.Value == query.CollectionId);
-        return collection.ConvertToDto();
+
+        var id = new ColectionIdentfier(query.CollectionId);
+        var collection = await _dbContext.Collections.AsNoTracking().SingleOrDefaultAsync( x => x.Id == id);
+          
+        return collection?.ConvertToDto();
     }
 }

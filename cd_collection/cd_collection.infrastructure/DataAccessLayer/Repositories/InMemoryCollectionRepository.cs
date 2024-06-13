@@ -20,7 +20,7 @@ internal class InMemoryCollectionRepository : ICollectionRepository
 
     public Collection? GetCollection(ColectionIdentfier id) => _collections.SingleOrDefault(x => x.Id == id);
 
-    public void UpdateCollection(Collection collection)
+    public Task UpdateCollection(Collection collection)
     {
         throw new NotImplementedException();
     }

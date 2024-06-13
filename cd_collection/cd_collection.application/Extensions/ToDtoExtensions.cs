@@ -5,7 +5,7 @@ namespace cd_collection.application.Extensions;
 
 public static class ToDtoExtensions
 {
-    public static CollectionDto ConvertToDto(this Collection? collection)
+    public static CollectionDto? ConvertToDto(this Collection? collection)
     {
         if (collection.CdItems.Any())
         {

@@ -9,7 +9,7 @@ public interface IItemsRepository
 
     bool DeleteItem(CdItemId guid);
 
-    IEnumerable<CdItem?> GetItems();
+    IEnumerable<CdItem> GetItems();
 
     CdItem? GetItem(CdItemId id);
 

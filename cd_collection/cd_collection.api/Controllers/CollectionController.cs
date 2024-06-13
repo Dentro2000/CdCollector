@@ -3,6 +3,7 @@ using cd_collection.application.Commands;
 using cd_collection.application.DTO;
 using cd_collection.application.Queries;
 using cd_collection.application.Services.Contracts;
+using cd_collection.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -16,16 +17,19 @@ public class CdCollectionController : ControllerBase
     private readonly ICommandHandler<CreateCollection> _createCollectionCommandHandler;
     private readonly IQueryHandler<GetCollections, IEnumerable<CollectionDto>> _getCollectionsQuery;
     private readonly IQueryHandler<GetCollection, CollectionDto> _getCollectionQuery;
+    private readonly ICommandHandler<UpdateCollection> _updateCollectionCommandHandler;
 
     public CdCollectionController(ICollectionsService collectionsService,
         ICommandHandler<CreateCollection> createCollectionCommandHandler,
         IQueryHandler<GetCollections, IEnumerable<CollectionDto>> getCollectionsQuery,
-        IQueryHandler<GetCollection, CollectionDto> getCollectionQuery)
+        IQueryHandler<GetCollection, CollectionDto> getCollectionQuery, 
+        ICommandHandler<UpdateCollection> updateCollectionCommandHandler)
     {
         _collectionsService = collectionsService;
         _createCollectionCommandHandler = createCollectionCommandHandler;
         _getCollectionsQuery = getCollectionsQuery;
         _getCollectionQuery = getCollectionQuery;
+        _updateCollectionCommandHandler = updateCollectionCommandHandler;
     }
 
     [HttpGet]
@@ -36,12 +40,13 @@ public class CdCollectionController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<CollectionDto>> CreateCollection(CreateCollection command)
+    public async Task<ActionResult<CollectionDto>> CreateCollection(CreateCollectionRequestModel request)
     {
-        var guid = Guid.NewGuid();
-        await _createCollectionCommandHandler.HandleAsync(command with { collectionId = guid });
 
-        var newCollection = await _getCollectionQuery.HandleAsync(new GetCollection(guid));
+        var command = new CreateCollection(request.CollectionName, Guid.NewGuid());
+        await _createCollectionCommandHandler.HandleAsync(command);
+
+        var newCollection = await _getCollectionQuery.HandleAsync(new GetCollection(command.CollectionId));
         return Ok(newCollection);
     }
 
@@ -52,15 +57,19 @@ public class CdCollectionController : ControllerBase
 
 
     [HttpPut("{collectionId:guid}")]
-    public ActionResult<CollectionDto> UpdateCollection(Guid collectionId, UpdateCollection command)
+    public async Task<ActionResult<CollectionDto>> UpdateCollection(Guid collectionId, UpdateCollection command)
     {
-        var collection = _collectionsService.UpdateCollection(collectionId, command.CollectionName, command.Items);
-        if (collection == null)
-        {
-            return NotFound();
-        }
 
-        return Ok(collection);
+        await _updateCollectionCommandHandler.HandleAsync(command with { collectionId = collectionId });
+        var updated = await _getCollectionQuery.HandleAsync(new GetCollection(collectionId));
+        return Ok(updated);
+        // var collection = _collectionsService.UpdateCollection(collectionId, command.CollectionName, command.Items);
+        // if (collection == null)
+        // {
+        //     return NotFound();
+        // }
+        //
+        // return Ok(collection);
     }
 
 

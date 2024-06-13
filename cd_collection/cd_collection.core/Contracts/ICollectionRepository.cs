@@ -13,5 +13,5 @@ public interface ICollectionRepository
 
     Collection? GetCollection(ColectionIdentfier id);
 
-    void UpdateCollection(Collection collection);
+    Task UpdateCollection(Collection collection);
 }

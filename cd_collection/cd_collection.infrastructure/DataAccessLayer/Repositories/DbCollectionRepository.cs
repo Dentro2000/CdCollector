@@ -27,7 +27,7 @@ internal sealed class DbCollectionRepository : ICollectionRepository
         _context.SaveChanges();
     }
 
-    public IEnumerable<Collection?> GetCollections()
+    public IEnumerable<Collection> GetCollections()
     {
         return _context.Collections.Include(x=>x.CdItems);
     }
@@ -40,9 +40,10 @@ internal sealed class DbCollectionRepository : ICollectionRepository
             .SingleOrDefault(x => x.Id == id);
     }
 
-    public void UpdateCollection(Collection collection)
+    public async Task UpdateCollection(Collection collection)
     {
-        _context.Update(collection);
-        _context.SaveChanges(); 
+       _context.Update(collection);
+       await _context.SaveChangesAsync(); 
+        
     }
 }

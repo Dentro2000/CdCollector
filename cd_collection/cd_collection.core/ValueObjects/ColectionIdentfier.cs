@@ -16,8 +16,8 @@ public record ColectionIdentfier
         Value = value;
     }
 
-    public static implicit operator Guid(ColectionIdentfier identifier)
-        => identifier.Value;
+    public static implicit operator Guid(ColectionIdentfier id)
+        => id.Value;
 
     public static implicit operator ColectionIdentfier(Guid value)
         => new(value);
