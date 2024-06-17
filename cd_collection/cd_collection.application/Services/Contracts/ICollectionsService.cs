@@ -9,8 +9,7 @@ public interface ICollectionsService
     IList<CollectionDto>? GetCollections();
 
     CollectionDto? GetCollection(Guid guid);
-
-    // CollectionDto? CreateCollection(string name);
+    
     CollectionDto? UpdateCollection(Guid guid, string? collectionName, List<Guid> items);
 
     bool DeleteCollection(Guid guid);

@@ -15,7 +15,7 @@ class MockCollectionRepository : ICollectionRepository
         return Task.CompletedTask;
     }
 
-    public void DeleteCollection(Collection collection)
+    public async Task DeleteCollection(Collection collection)
     {
         _collections.Remove(collection);
     }
@@ -24,9 +24,9 @@ class MockCollectionRepository : ICollectionRepository
     {
         return _collections;
     }
-    
 
-    public void UpdateCollection(Collection collection)
+
+    public async Task UpdateCollection(Collection collection)
     {
         var z = _collections.Single(x => x.Id == collection.Id);
         _collections.Remove(z);

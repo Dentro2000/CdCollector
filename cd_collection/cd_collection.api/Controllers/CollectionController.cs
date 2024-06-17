@@ -18,31 +18,32 @@ public class CdCollectionController : ControllerBase
     private readonly IQueryHandler<GetCollections, IEnumerable<CollectionDto>> _getCollectionsQuery;
     private readonly IQueryHandler<GetCollection, CollectionDto> _getCollectionQuery;
     private readonly ICommandHandler<UpdateCollection> _updateCollectionCommandHandler;
+    private readonly ICommandHandler<DeleteCollection> _deleteCollectionCommandHandler;
 
     public CdCollectionController(ICollectionsService collectionsService,
         ICommandHandler<CreateCollection> createCollectionCommandHandler,
         IQueryHandler<GetCollections, IEnumerable<CollectionDto>> getCollectionsQuery,
-        IQueryHandler<GetCollection, CollectionDto> getCollectionQuery, 
-        ICommandHandler<UpdateCollection> updateCollectionCommandHandler)
+        IQueryHandler<GetCollection, CollectionDto> getCollectionQuery,
+        ICommandHandler<UpdateCollection> updateCollectionCommandHandler,
+        ICommandHandler<DeleteCollection> deleteCollectionCommandHandler)
     {
         _collectionsService = collectionsService;
         _createCollectionCommandHandler = createCollectionCommandHandler;
         _getCollectionsQuery = getCollectionsQuery;
         _getCollectionQuery = getCollectionQuery;
         _updateCollectionCommandHandler = updateCollectionCommandHandler;
+        _deleteCollectionCommandHandler = deleteCollectionCommandHandler;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CollectionDto>>> GetAllCollections()
     {
         return Ok(await _getCollectionsQuery.HandleAsync(new GetCollections()));
-        // return Ok(_collectionsService.GetCollections());
     }
 
     [HttpPost]
     public async Task<ActionResult<CollectionDto>> CreateCollection(CreateCollectionRequestModel request)
     {
-
         var command = new CreateCollection(request.CollectionName, Guid.NewGuid());
         await _createCollectionCommandHandler.HandleAsync(command);
 
@@ -59,28 +60,16 @@ public class CdCollectionController : ControllerBase
     [HttpPut("{collectionId:guid}")]
     public async Task<ActionResult<CollectionDto>> UpdateCollection(Guid collectionId, UpdateCollection command)
     {
-
         await _updateCollectionCommandHandler.HandleAsync(command with { collectionId = collectionId });
         var updated = await _getCollectionQuery.HandleAsync(new GetCollection(collectionId));
         return Ok(updated);
-        // var collection = _collectionsService.UpdateCollection(collectionId, command.CollectionName, command.Items);
-        // if (collection == null)
-        // {
-        //     return NotFound();
-        // }
-        //
-        // return Ok(collection);
     }
 
 
     [HttpDelete("{collectionId:guid}")]
     public async Task<ActionResult> DeleteCollection(Guid collectionId)
     {
-        var isCollectionDeleted = _collectionsService.DeleteCollection(collectionId);
-        if (isCollectionDeleted == false)
-        {
-            return BadRequest();
-        }
+        await _deleteCollectionCommandHandler.HandleAsync(new DeleteCollection(collectionId));
 
         return NoContent();
     }

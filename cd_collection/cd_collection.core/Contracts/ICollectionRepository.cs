@@ -7,7 +7,7 @@ public interface ICollectionRepository
 {
     Task AddCollection(Collection collection);
 
-    void DeleteCollection(Collection collection);
+    Task DeleteCollection(Collection collection);
 
     IEnumerable<Collection?> GetCollections();
 
