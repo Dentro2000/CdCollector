@@ -1,7 +1,8 @@
 using cd_collection.application.Commands;
 using cd_collection.application.DTO;
+using cd_collection.application.Queries;
 using cd_collection.application.Services.Contracts;
-using cd_collection.core.Exceptions.ItemServiceExceptions;
+using cd_collection.infrastructure.DataAccessLayer.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cd_collection.Controllers;
@@ -11,10 +12,12 @@ namespace cd_collection.Controllers;
 public class ItemController : ControllerBase
 {
     private readonly IItemsService _itemsService;
+    private readonly GetItemQueryHandler _getItemQueryHandler;
 
-    public ItemController(IItemsService itemsService)
+    public ItemController(IItemsService itemsService, GetItemQueryHandler getItemQueryHandler)
     {
         _itemsService = itemsService;
+        _getItemQueryHandler = getItemQueryHandler;
     }
 
     [HttpGet]
@@ -26,7 +29,7 @@ public class ItemController : ControllerBase
     [HttpGet("{itemIdentifier:guid}")]
     public ActionResult<CdItemDto> GetItem(Guid itemIdentifier)
     {
-        return Ok(_itemsService.GetItem(itemIdentifier));
+        return Ok(_getItemQueryHandler.HandleAsync(new GetCdItem(itemIdentifier)));
     }
 
     [HttpPost]

@@ -14,7 +14,7 @@ internal class InMemoryCollectionRepository : ICollectionRepository
 
     public async Task AddCollection(Collection collection) => _collections.Add(collection);
 
-    public void DeleteCollection(Collection collection) => _collections.Remove(collection);
+    public async Task DeleteCollection(Collection collection) => _collections.Remove(collection);
 
     public IEnumerable<Collection> GetCollections() => _collections;
 

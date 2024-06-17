@@ -21,15 +21,15 @@ internal sealed class DbCollectionRepository : ICollectionRepository
         await _context.SaveChangesAsync();
     }
 
-    public void DeleteCollection(Collection collection)
+    public async Task DeleteCollection(Collection collection)
     {
         _context.Collections.Remove(collection);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
     public IEnumerable<Collection> GetCollections()
     {
-        return _context.Collections.Include(x=>x.CdItems);
+        return _context.Collections.Include(x => x.CdItems);
     }
 
     public Collection? GetCollection(ColectionIdentfier id)
@@ -42,8 +42,7 @@ internal sealed class DbCollectionRepository : ICollectionRepository
 
     public async Task UpdateCollection(Collection collection)
     {
-       _context.Update(collection);
-       await _context.SaveChangesAsync(); 
-        
+        _context.Update(collection);
+        await _context.SaveChangesAsync();
     }
 }

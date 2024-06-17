@@ -21,6 +21,7 @@ public static class InfrastructureServicesExtension
         services.AddScoped<ICollectionRepository, DbCollectionRepository>();
         services.AddScoped<IQueryHandler<GetCollections, IEnumerable<CollectionDto>>, GetCollectionsQueryHandler>();  
         services.AddScoped<IQueryHandler<GetCollection, CollectionDto>, GetCollectionQueryHandler>();  
+        services.AddScoped<IQueryHandler<GetCdItem, CdItemDto>, GetItemQueryHandler>();  
         services.AddTransient<ITime, Time>();
        
 
