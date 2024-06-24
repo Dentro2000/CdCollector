@@ -19,13 +19,15 @@ public class CdCollectionController : ControllerBase
     private readonly IQueryHandler<GetCollection, CollectionDto> _getCollectionQuery;
     private readonly ICommandHandler<UpdateCollection> _updateCollectionCommandHandler;
     private readonly ICommandHandler<DeleteCollection> _deleteCollectionCommandHandler;
+    private readonly ICommandHandler<AddItemToCollection> _addItemToCollectionCommandHalnder;
 
     public CdCollectionController(ICollectionsService collectionsService,
         ICommandHandler<CreateCollection> createCollectionCommandHandler,
         IQueryHandler<GetCollections, IEnumerable<CollectionDto>> getCollectionsQuery,
         IQueryHandler<GetCollection, CollectionDto> getCollectionQuery,
         ICommandHandler<UpdateCollection> updateCollectionCommandHandler,
-        ICommandHandler<DeleteCollection> deleteCollectionCommandHandler)
+        ICommandHandler<DeleteCollection> deleteCollectionCommandHandler,
+        ICommandHandler<AddItemToCollection> addItemToCollectionCommandHalnder)
     {
         _collectionsService = collectionsService;
         _createCollectionCommandHandler = createCollectionCommandHandler;
@@ -33,6 +35,7 @@ public class CdCollectionController : ControllerBase
         _getCollectionQuery = getCollectionQuery;
         _updateCollectionCommandHandler = updateCollectionCommandHandler;
         _deleteCollectionCommandHandler = deleteCollectionCommandHandler;
+        _addItemToCollectionCommandHalnder = addItemToCollectionCommandHalnder;
     }
 
     [HttpGet]
@@ -75,13 +78,11 @@ public class CdCollectionController : ControllerBase
     }
 
     [HttpPut("items/{collectionId:guid}/add")]
-    public ActionResult<CollectionDto> AddItemToCollection(Guid itemId, Guid collectionId)
+    public async Task<ActionResult<CollectionDto>> AddItemToCollection(Guid itemId, Guid collectionId)
     {
-        var collection = _collectionsService.AddItemToCollection(itemId, collectionId);
-        if (collection == null)
-        {
-            return BadRequest();
-        }
+        await _addItemToCollectionCommandHalnder.HandleAsync(new AddItemToCollection(itemId, collectionId));
+
+        var collection = await _getCollectionQuery.HandleAsync(new GetCollection(collectionId));
 
         return Ok(collection);
     }
