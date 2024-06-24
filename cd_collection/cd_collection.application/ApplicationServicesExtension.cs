@@ -28,6 +28,7 @@ public static class ApplicationServicesExtension
         services.AddScoped<ICommandHandler<UpdateCollection>, UpdateCollectionCommandHandler>();
         services.AddScoped<ICommandHandler<DeleteCollection>, DeleteCollectionCommandHandler>();
         services.AddScoped<ICommandHandler<AddItemToCollection>, AddItemToCollectionCommandHandler>();
+        services.AddScoped<ICommandHandler<CreateItem>, CreateItemCommandHandler>();
 
         
         services.AddScoped<IItemsService, CdItemsService>();

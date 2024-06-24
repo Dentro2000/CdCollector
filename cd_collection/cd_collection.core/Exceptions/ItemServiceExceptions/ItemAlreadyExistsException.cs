@@ -1,9 +1,11 @@
+using cd_collection.core.Entities;
+
 namespace cd_collection.core.Exceptions.ItemServiceExceptions;
 
 public class ItemAlreadyExistsException : CustomException
 {
-    public ItemAlreadyExistsException(string title, string artist, string label, DateOnly releaseDate)
-        : base($"Item {title} by {artist} released in {releaseDate} by {label} label already exists ")
+    public ItemAlreadyExistsException(CdItem item)
+        : base($"Item {item.Title} by {item.Artist} released in {item.ReleaseDate} by {item.Label} label already exists ")
     {
     }
 }

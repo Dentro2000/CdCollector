@@ -45,7 +45,7 @@ public class CdCollectionController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<CollectionDto>> CreateCollection(CreateCollectionRequestModel request)
+    public async Task<ActionResult<CollectionDto>> CreateCollection(CreateCollectionRequest request)
     {
         var command = new CreateCollection(request.CollectionName, Guid.NewGuid());
         await _createCollectionCommandHandler.HandleAsync(command);

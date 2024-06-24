@@ -1,8 +1,10 @@
 using cd_collection.application.Commands;
+using cd_collection.application.Commands.Handlers;
 using cd_collection.application.DTO;
 using cd_collection.application.Queries;
 using cd_collection.application.Services.Contracts;
 using cd_collection.infrastructure.DataAccessLayer.Queries;
+using cd_collection.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cd_collection.Controllers;
@@ -13,11 +15,14 @@ public class ItemController : ControllerBase
 {
     private readonly IItemsService _itemsService;
     private readonly GetItemQueryHandler _getItemQueryHandler;
+    private readonly CreateItemCommandHandler _createItemCommandHandler;
 
-    public ItemController(IItemsService itemsService, GetItemQueryHandler getItemQueryHandler)
+    public ItemController(IItemsService itemsService, GetItemQueryHandler getItemQueryHandler,
+        CreateItemCommandHandler createItemCommandHandler)
     {
         _itemsService = itemsService;
         _getItemQueryHandler = getItemQueryHandler;
+        _createItemCommandHandler = createItemCommandHandler;
     }
 
     [HttpGet]
@@ -33,20 +38,14 @@ public class ItemController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<CdItemDto> CreateItem(CreateItem command)
+    public async Task<ActionResult<CdItemDto>> CreateItem(CreateItemRequest request)
     {
-        var newItem = _itemsService.CreateItem(
-            command.Artist,
-            command.Title,
-            command.Label,
-            command.ReleaseDate);
+        var itemGuid = Guid.NewGuid();
+        var command = new CreateItem(itemGuid, request.Artist, request.Title, request.Label, request.ReleaseDate);
+        await _createItemCommandHandler.HandleAsync(command);
+        var item = await _getItemQueryHandler.HandleAsync(new GetCdItem(itemGuid));
 
-        if (newItem == null)
-        {
-            return BadRequest("Item already exists");
-        }
-
-        return (Ok(newItem));
+        return (Ok(item));
     }
 
     [HttpPut("{itemIdentifier:guid}/update")]

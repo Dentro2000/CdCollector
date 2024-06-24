@@ -35,14 +35,15 @@ public class CdItemsService : IItemsService
 
     public CdItemDto CreateItem(string artist, string title, string label, DateOnly releaseDate)
     {
-        var newItem = new CdItem(artist, title, label, releaseDate);
-        
+        var guid = Guid.NewGuid();
+        var newItem = new CdItem(guid, artist, title, label, releaseDate);
+
         var ifItemAlreadyExist =
-            _repository.GetItems().SingleOrDefault(x => x.IsSameItem(artist, title, label, releaseDate));
-        
+            _repository.GetItems().SingleOrDefault(x => x.IsSameItem(newItem));
+
         if (ifItemAlreadyExist != null)
         {
-            throw new ItemAlreadyExistsException(title, artist, label, releaseDate);
+            throw new ItemAlreadyExistsException(newItem);
         }
 
         _repository.AddItem(newItem);
@@ -77,7 +78,7 @@ public class CdItemsService : IItemsService
         {
             item.ChangeReleaseDate(releaseDate.Value);
         }
-        
+
         _repository.UpdateItem(item);
     }
 

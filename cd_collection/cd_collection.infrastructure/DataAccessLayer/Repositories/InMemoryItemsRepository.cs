@@ -19,7 +19,7 @@ public class InMemoryItemsRepository : IItemsRepository
         new("SomeArtist", "SomeTitle", "SomeLabel", _time.CurrentDateOnly()),
     };
 
-    public void AddItem(CdItem item) => _items.Add(item);
+    public async Task AddItem(CdItem item) => _items.Add(item);
 
 
     public bool DeleteItem(CdItemId guid)

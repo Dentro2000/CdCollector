@@ -13,9 +13,9 @@ public class CdItem
 
     public List<Collection> Collections { get; set; }
 
-    public CdItem(Artist artist, Title title, Label label, ReleaseDate releaseDate)
+    public CdItem(Guid itemId, Artist artist, Title title, Label label, ReleaseDate releaseDate)
     {
-        Id = Guid.NewGuid();
+        Id = itemId;
         Artist = artist;
         Title = title;
         Label = label;
@@ -54,12 +54,9 @@ public static class CdItemExtensions
 {
     public static bool IsSameItem(
         this CdItem item, 
-        string artist, 
-        string title, 
-        string label, 
-        ReleaseDate releaseDate)
-        => item.Artist == artist &&
-           item.Title == title &&
-           item.Label == label &&
-           item.ReleaseDate == releaseDate.Value;
+        CdItem itemToCompare)
+        => item.Artist == itemToCompare.Artist &&
+           item.Title == itemToCompare.Title &&
+           item.Label == itemToCompare.Label &&
+           item.ReleaseDate == itemToCompare.ReleaseDate.Value;
 }

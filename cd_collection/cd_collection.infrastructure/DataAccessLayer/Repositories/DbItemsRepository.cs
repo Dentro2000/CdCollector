@@ -14,10 +14,10 @@ internal sealed class DbItemsRepository : IItemsRepository
         _context = context;
     }
 
-    public void AddItem(CdItem item)
+    public async Task AddItem(CdItem item)
     {
-        _context.CdItems.Add(item);
-        _context.SaveChanges();
+        await _context.CdItems.AddAsync(item);
+        await _context.SaveChangesAsync();
     }
 
     public bool DeleteItem(CdItemId guid)
