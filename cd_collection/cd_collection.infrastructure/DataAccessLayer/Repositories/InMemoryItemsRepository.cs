@@ -15,8 +15,8 @@ public class InMemoryItemsRepository : IItemsRepository
 
     private List<CdItem?> _items => new List<CdItem?>()
     {
-        new("SomeArtist", "SomeTitle", "SomeLabel", _time.CurrentDateOnly()),
-        new("SomeArtist", "SomeTitle", "SomeLabel", _time.CurrentDateOnly()),
+        new(Guid.NewGuid(), "SomeArtist", "SomeTitle", "SomeLabel", _time.CurrentDateOnly()),
+        new(Guid.NewGuid(), "SomeArtist", "SomeTitle", "SomeLabel", _time.CurrentDateOnly()),
     };
 
     public async Task AddItem(CdItem item) => _items.Add(item);
