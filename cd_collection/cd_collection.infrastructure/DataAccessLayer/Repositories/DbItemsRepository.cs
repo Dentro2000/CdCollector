@@ -14,7 +14,7 @@ internal sealed class DbItemsRepository : IItemsRepository
         _context = context;
     }
 
-    public async Task AddItem(CdItem item)
+    public async Task AddItemAsync(CdItem item)
     {
         await _context.CdItems.AddAsync(item);
         await _context.SaveChangesAsync();
@@ -34,10 +34,7 @@ internal sealed class DbItemsRepository : IItemsRepository
         return _context.CdItems;
     }
 
-    public CdItem? GetItem(CdItemId id)
-    {
-        return _context.CdItems.SingleOrDefault(x => x.Id == id);
-    }
+    public CdItem? GetItem(CdItemId id) => _context.CdItems.SingleOrDefault(x => x.Id == id);
 
     public void UpdateItem(CdItem item)
     {

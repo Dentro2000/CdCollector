@@ -46,7 +46,7 @@ public class CdItemsService : IItemsService
             throw new ItemAlreadyExistsException(newItem);
         }
 
-        _repository.AddItem(newItem);
+        _repository.AddItemAsync(newItem);
         return _repository.GetItem(newItem.Id).ConvertToDto();
     }
 

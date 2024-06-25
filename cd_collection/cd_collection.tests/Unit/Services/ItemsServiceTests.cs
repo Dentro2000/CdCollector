@@ -28,8 +28,8 @@ public class ItemsServiceTests
     public void GetItems_Should_ReturnItemDtos()
     {
         //given
-        _mockItemsRepository.AddItem(MockItem.MockCdItem);
-        _mockItemsRepository.AddItem(MockItem.MockCdItem);
+        _mockItemsRepository.AddItemAsync(MockItem.MockCdItem);
+        _mockItemsRepository.AddItemAsync(MockItem.MockCdItem);
 
         //when
         var items = _sut.GetItems();
@@ -43,8 +43,8 @@ public class ItemsServiceTests
     {
         //given
         var item1 = MockItem.MockCdItem;
-        _mockItemsRepository.AddItem(item1);
-        _mockItemsRepository.AddItem(MockItem.MockCdItem);
+        _mockItemsRepository.AddItemAsync(item1);
+        _mockItemsRepository.AddItemAsync(MockItem.MockCdItem);
 
         //when
         var item = _sut.GetItem(item1.Id);
@@ -95,7 +95,7 @@ public class ItemsServiceTests
     {
         //given
         var item1 = MockItem.MockCdItem;
-        _mockItemsRepository.AddItem(item1);
+        _mockItemsRepository.AddItemAsync(item1);
         var newLabel = "some oother label";
 
         //when
@@ -125,7 +125,7 @@ public class ItemsServiceTests
     {
         //given
         var item1 = MockItem.MockCdItem;
-        _mockItemsRepository.AddItem(item1);
+        _mockItemsRepository.AddItemAsync(item1);
 
         //when
         var isDeleted = _sut.DeleteItem(item1.Id);

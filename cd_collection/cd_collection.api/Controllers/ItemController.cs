@@ -1,8 +1,10 @@
+using cd_collection.application.Abstractions;
 using cd_collection.application.Commands;
 using cd_collection.application.Commands.Handlers;
 using cd_collection.application.DTO;
 using cd_collection.application.Queries;
 using cd_collection.application.Services.Contracts;
+using cd_collection.core.Entities;
 using cd_collection.infrastructure.DataAccessLayer.Queries;
 using cd_collection.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +16,11 @@ namespace cd_collection.Controllers;
 public class ItemController : ControllerBase
 {
     private readonly IItemsService _itemsService;
-    private readonly GetItemQueryHandler _getItemQueryHandler;
-    private readonly CreateItemCommandHandler _createItemCommandHandler;
+    private readonly IQueryHandler<GetCdItem, CdItemDto> _getItemQueryHandler;
+    private readonly ICommandHandler<CreateItem> _createItemCommandHandler;
 
-    public ItemController(IItemsService itemsService, GetItemQueryHandler getItemQueryHandler,
-        CreateItemCommandHandler createItemCommandHandler)
+    public ItemController(IItemsService itemsService, IQueryHandler<GetCdItem, CdItemDto> getItemQueryHandler,
+        ICommandHandler<CreateItem> createItemCommandHandler)
     {
         _itemsService = itemsService;
         _getItemQueryHandler = getItemQueryHandler;

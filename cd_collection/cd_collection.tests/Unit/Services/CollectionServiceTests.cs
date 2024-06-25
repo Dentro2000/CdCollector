@@ -86,7 +86,7 @@ public class CollectionServiceTests
         Assert.True(_collectionRepositoryMock.GetCollections().ToArray().Length == 0);
 
         var cd2 = new CdItem("666", "9", "3", new DateOnly(2024, 05, 1));
-        _itemsRepositoryMock.AddItem(cd2);
+        _itemsRepositoryMock.AddItemAsync(cd2);
 
         //when
         //then
@@ -126,8 +126,8 @@ public class CollectionServiceTests
 
         var cd1 = new CdItem("2", "9", "3", new DateOnly(2024, 05, 1));
         var cd2 = new CdItem("666", "9", "3", new DateOnly(2024, 05, 1));
-        _itemsRepositoryMock.AddItem(cd1);
-        _itemsRepositoryMock.AddItem(cd2);
+        _itemsRepositoryMock.AddItemAsync(cd1);
+        _itemsRepositoryMock.AddItemAsync(cd2);
 
 
         //when
@@ -152,9 +152,9 @@ public class CollectionServiceTests
         var cd1 = new CdItem("1", "6", "3", new DateOnly(2024, 05, 1));
         var cd2 = new CdItem("2", "8", "3", new DateOnly(2024, 05, 1));
         var cd3 = new CdItem("2", "9", "3", new DateOnly(2024, 05, 1));
-        _itemsRepositoryMock.AddItem(cd1);
-        _itemsRepositoryMock.AddItem(cd2);
-        _itemsRepositoryMock.AddItem(cd3);
+        _itemsRepositoryMock.AddItemAsync(cd1);
+        _itemsRepositoryMock.AddItemAsync(cd2);
+        _itemsRepositoryMock.AddItemAsync(cd3);
 
         _sut.UpdateCollection(
             newCollection.Id,
@@ -184,9 +184,9 @@ public class CollectionServiceTests
         var cd2 = new CdItem("2", "8", "3", new DateOnly(2024, 05, 1));
         var cd3 = new CdItem("2", "9", "3", new DateOnly(2024, 05, 1));
 
-        _itemsRepositoryMock.AddItem(cd1);
-        _itemsRepositoryMock.AddItem(cd2);
-        _itemsRepositoryMock.AddItem(cd3);
+        _itemsRepositoryMock.AddItemAsync(cd1);
+        _itemsRepositoryMock.AddItemAsync(cd2);
+        _itemsRepositoryMock.AddItemAsync(cd3);
 
         _sut.UpdateCollection(
             newCollection.Id,
@@ -239,7 +239,7 @@ public class CollectionServiceTests
         var mockItem = MockItem.MockCdItem;
 
         _collectionRepositoryMock.AddCollection(newCollection);
-        _itemsRepositoryMock.AddItem(mockItem);
+        _itemsRepositoryMock.AddItemAsync(mockItem);
 
         //when
         var collection = _sut.AddItemToCollection(mockItem.Id, newCollection.Id);
@@ -284,7 +284,7 @@ public class CollectionServiceTests
         var mockItem = MockItem.MockCdItem;
 
         _collectionRepositoryMock.AddCollection(newCollection);
-        _itemsRepositoryMock.AddItem(mockItem);
+        _itemsRepositoryMock.AddItemAsync(mockItem);
         _sut.AddItemToCollection(mockItem.Id, newCollection.Id);
 
         Assert.True(newCollection.CdItems.First() == mockItem);

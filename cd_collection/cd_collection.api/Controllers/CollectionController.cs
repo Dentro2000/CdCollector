@@ -19,7 +19,7 @@ public class CdCollectionController : ControllerBase
     private readonly IQueryHandler<GetCollection, CollectionDto> _getCollectionQuery;
     private readonly ICommandHandler<UpdateCollection> _updateCollectionCommandHandler;
     private readonly ICommandHandler<DeleteCollection> _deleteCollectionCommandHandler;
-    private readonly ICommandHandler<AddItemToCollection> _addItemToCollectionCommandHalnder;
+    private readonly ICommandHandler<AddItemToCollection> _addItemToCollectionCommandHandler;
 
     public CdCollectionController(ICollectionsService collectionsService,
         ICommandHandler<CreateCollection> createCollectionCommandHandler,
@@ -27,7 +27,7 @@ public class CdCollectionController : ControllerBase
         IQueryHandler<GetCollection, CollectionDto> getCollectionQuery,
         ICommandHandler<UpdateCollection> updateCollectionCommandHandler,
         ICommandHandler<DeleteCollection> deleteCollectionCommandHandler,
-        ICommandHandler<AddItemToCollection> addItemToCollectionCommandHalnder)
+        ICommandHandler<AddItemToCollection> addItemToCollectionCommandHandler)
     {
         _collectionsService = collectionsService;
         _createCollectionCommandHandler = createCollectionCommandHandler;
@@ -35,7 +35,7 @@ public class CdCollectionController : ControllerBase
         _getCollectionQuery = getCollectionQuery;
         _updateCollectionCommandHandler = updateCollectionCommandHandler;
         _deleteCollectionCommandHandler = deleteCollectionCommandHandler;
-        _addItemToCollectionCommandHalnder = addItemToCollectionCommandHalnder;
+        _addItemToCollectionCommandHandler = addItemToCollectionCommandHandler;
     }
 
     [HttpGet]
@@ -80,7 +80,7 @@ public class CdCollectionController : ControllerBase
     [HttpPut("items/{collectionId:guid}/add")]
     public async Task<ActionResult<CollectionDto>> AddItemToCollection(Guid itemId, Guid collectionId)
     {
-        await _addItemToCollectionCommandHalnder.HandleAsync(new AddItemToCollection(itemId, collectionId));
+        await _addItemToCollectionCommandHandler.HandleAsync(new AddItemToCollection(itemId, collectionId));
 
         var collection = await _getCollectionQuery.HandleAsync(new GetCollection(collectionId));
 

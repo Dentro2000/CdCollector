@@ -5,7 +5,7 @@ namespace cd_collection.core.Contracts;
 
 public interface IItemsRepository
 {
-    Task AddItem(CdItem item);
+    Task AddItemAsync(CdItem item);
 
     bool DeleteItem(CdItemId guid);
 

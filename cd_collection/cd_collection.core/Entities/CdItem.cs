@@ -8,19 +8,20 @@ public class CdItem
     public Artist Artist { get; private set; }
     public Title Title { get; private set; }
     public Label Label { get; private set; }
-    public ReleaseDate ReleaseDate { get; private set; }
+    public ReleaseDate ReleaseDate { get; private set; }    
     public Date LastUpdate { get; private set; }
 
     public List<Collection> Collections { get; set; }
 
-    public CdItem(Guid itemId, Artist artist, Title title, Label label, ReleaseDate releaseDate)
+    public CdItem(CdItemId id, Artist artist, Title title, Label label, ReleaseDate releaseDate)
     {
-        Id = itemId;
+        Id = id;
         Artist = artist;
         Title = title;
         Label = label;
         ReleaseDate = releaseDate;
         LastUpdate = DateTime.UtcNow;
+        Collections = new List<Collection>() { };
     }
 
     public void ChangeArtist(string newArtist)

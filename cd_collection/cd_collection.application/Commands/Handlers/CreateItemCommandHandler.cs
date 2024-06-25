@@ -16,19 +16,16 @@ public class CreateItemCommandHandler : ICommandHandler<CreateItem>
 
     public async Task HandleAsync(CreateItem command)
     {
-       
         var item = new CdItem(command.ItemId, command.Artist, command.Title, command.Label, command.ReleaseDate);
+        
+        
+        var ifItemAlreadyExists = _itemsRepository.GetItems().FirstOrDefault(x => x.IsSameItem(item));
 
-        var ifItemAlreadyExist =
-            _itemsRepository
-                .GetItems()
-                .SingleOrDefault(x => x.IsSameItem(item));
-
-        if (ifItemAlreadyExist != null)
+        if (ifItemAlreadyExists != null)
         {
             throw new ItemAlreadyExistsException(item);
         }
 
-        await _itemsRepository.AddItem(item);
+        await _itemsRepository.AddItemAsync(item);
     }
 }
