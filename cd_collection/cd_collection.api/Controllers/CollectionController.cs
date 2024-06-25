@@ -82,7 +82,7 @@ public class CdCollectionController : ControllerBase
     {
         await _addItemToCollectionCommandHandler.HandleAsync(new AddItemToCollection(itemId, collectionId));
 
-        var collection = await _getCollectionQuery.HandleAsync(new GetCollection(collectionId));
+            var collection = await _getCollectionQuery.HandleAsync(new GetCollection(collectionId));
 
         return Ok(collection);
     }

@@ -20,7 +20,10 @@ internal sealed class GetCollectionQueryHandler : IQueryHandler<GetCollection, C
     {
 
         var id = new ColectionIdentfier(query.CollectionId);
-        var collection = await _dbContext.Collections.AsNoTracking().SingleOrDefaultAsync( x => x.Id == id);
+        var collection = await _dbContext.Collections
+            .AsNoTracking()
+            .Include(x => x.CdItems)
+            .SingleOrDefaultAsync( x => x.Id == id);
           
         return collection?.ConvertToDto();
     }
