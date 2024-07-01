@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cd_collection.infrastructure.DataAccessLayer.Queries;
 
-internal class GetItemsQueryHandler: IQueryHandler<GetItems, IEnumerable<CdItemDto>>
+internal class GetItemsQueryHandler : IQueryHandler<GetItems, IEnumerable<CdItemDto>>
 {
     private readonly CdCollectionDbContext _dbContext;
 
@@ -21,5 +21,4 @@ internal class GetItemsQueryHandler: IQueryHandler<GetItems, IEnumerable<CdItemD
             .AsNoTracking()
             .Select(x => x.ConvertToDto())
             .ToListAsync();
-
 }

@@ -24,7 +24,7 @@ internal class GetItemQueryHandler: IQueryHandler<GetItem, CdItemDto>
         var cdItem = await _dbContext.CdItems
             .AsNoTracking()
             .SingleOrDefaultAsync(x => x.Id == cdItemId);
-        
+        //TODO: PROBABLY SHOULD NOT CONVERT TO DTO HERE
         return cdItem.ConvertToDto();
     }
 }

@@ -18,6 +18,7 @@ internal sealed class GetCollectionsQueryHandler : IQueryHandler<GetCollections,
     public async Task<IEnumerable<CollectionDto>> HandleAsync(GetCollections query) =>
         await _dbContext
             .Collections
+            .Include(x => x.CdItems)
             .AsNoTracking()
             .Select(x => x.ConvertToDto())
             .ToListAsync();

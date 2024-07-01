@@ -33,9 +33,9 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<CdItemDto>> GetAllItems()
+    public async Task<ActionResult<List<CdItemDto>>> GetAllItems()
     {
-        return Ok(_getItemsQueryHandler.HandleAsync(new GetItems()));
+        return Ok(await _getItemsQueryHandler.HandleAsync(new GetItems()));
     }
 
     [HttpGet("{itemIdentifier:guid}")]

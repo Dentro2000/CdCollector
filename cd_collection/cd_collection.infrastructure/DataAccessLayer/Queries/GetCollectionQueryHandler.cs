@@ -18,13 +18,12 @@ internal sealed class GetCollectionQueryHandler : IQueryHandler<GetCollection, C
 
     public async Task<CollectionDto?> HandleAsync(GetCollection query)
     {
-
         var id = new ColectionIdentfier(query.CollectionId);
         var collection = await _dbContext.Collections
-            .AsNoTracking()
             .Include(x => x.CdItems)
-            .SingleOrDefaultAsync( x => x.Id == id);
-          
+            .AsNoTracking()
+            .SingleOrDefaultAsync(x => x.Id == id);
+
         return collection?.ConvertToDto();
     }
 }

@@ -9,12 +9,14 @@ public static class ToDtoExtensions
     {
         if (collection.CdItems.Any())
         {
-            return new CollectionDto(id: collection.Id.Value,
+            return new CollectionDto(
+                id: collection.Id.Value,
                 name: collection.Name,
                 itemsIds: collection.CdItems.Select(x => x.Id.Value).ToList());
         }
         
-        return new CollectionDto(id: collection.Id.Value,
+        return new CollectionDto(
+            id: collection.Id.Value,
             name: collection.Name,
             itemsIds: new List<Guid>());
     }
@@ -23,7 +25,7 @@ public static class ToDtoExtensions
     public static CdItemDto ConvertToDto(this CdItem? item) =>
         new CdItemDto
         {
-            Identifier = item.Id,
+            Identifier = item.Id.Value,
             Artist = item.Artist,
             Title = item.Title,
             Label = item.Label,

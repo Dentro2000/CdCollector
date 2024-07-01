@@ -24,7 +24,8 @@ internal sealed class ExceptionMiddleware : IMiddleware
         {
             CustomException => (StatusCodes.Status400BadRequest,
                 new Error(exception.GetType().Name.Replace("Exception", ""), exception.Message)),
-            _ => (StatusCodes.Status500InternalServerError, new Error("error", "There was an error"))
+            //TODO: DELETE EXCEPTION MESSAGE FROM PRODUCTION
+            _ => (StatusCodes.Status500InternalServerError, new Error("error", $"There was an error: {exception.Message}"))
         };
 
         context.Response.StatusCode = statusCode;
