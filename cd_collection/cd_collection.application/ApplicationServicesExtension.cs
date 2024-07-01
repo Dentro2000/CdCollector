@@ -1,10 +1,8 @@
 using cd_collection.application.Abstractions;
-using cd_collection.application.Commands;
-using cd_collection.application.Commands.Handlers;
+using cd_collection.application.Commands.CollectionCommands;
 using cd_collection.application.Commands.Handlers.CollectionCommandHandlers;
 using cd_collection.application.Commands.Handlers.ItemCommandHandlers;
-using cd_collection.application.Services;
-using cd_collection.application.Services.Contracts;
+using cd_collection.application.Commands.ItemsCommands;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace cd_collection.application;
@@ -36,8 +34,6 @@ public static class ApplicationServicesExtension
         services.AddScoped<ICommandHandler<DeleteItem>, DeleteItemCommandHandler>();
 
         
-        services.AddScoped<IItemsService, CdItemsService>();
-        services.AddScoped<ICollectionsService, CollectionsService>();
         return services;
     }
 }

@@ -1,11 +1,9 @@
 using cd_collection.application.Abstractions;
-using cd_collection.application.Commands;
+using cd_collection.application.Commands.CollectionCommands;
 using cd_collection.application.DTO;
 using cd_collection.application.Queries;
-using cd_collection.application.Services.Contracts;
 using cd_collection.Models;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace cd_collection.Controllers;
 
@@ -13,7 +11,6 @@ namespace cd_collection.Controllers;
 [Route("collections")]
 public class CdCollectionController : ControllerBase
 {
-    private readonly ICollectionsService _collectionsService;
     private readonly ICommandHandler<CreateCollection> _createCollectionCommandHandler;
     private readonly IQueryHandler<GetCollections, IEnumerable<CollectionDto>> _getCollectionsQuery;
     private readonly IQueryHandler<GetCollection, CollectionDto> _getCollectionQuery;
@@ -22,16 +19,15 @@ public class CdCollectionController : ControllerBase
     private readonly ICommandHandler<AddItemToCollection> _addItemToCollectionCommandHandler;
     private readonly ICommandHandler<RemoveItemFromCollection> _removeItemFromCollectionCommandHandler;
 
-    public CdCollectionController(ICollectionsService collectionsService,
+    public CdCollectionController(
         ICommandHandler<CreateCollection> createCollectionCommandHandler,
         IQueryHandler<GetCollections, IEnumerable<CollectionDto>> getCollectionsQuery,
         IQueryHandler<GetCollection, CollectionDto> getCollectionQuery,
         ICommandHandler<UpdateCollection> updateCollectionCommandHandler,
         ICommandHandler<DeleteCollection> deleteCollectionCommandHandler,
-        ICommandHandler<AddItemToCollection> addItemToCollectionCommandHandler, 
+        ICommandHandler<AddItemToCollection> addItemToCollectionCommandHandler,
         ICommandHandler<RemoveItemFromCollection> removeItemFromCollectionCommandHandler)
     {
-        _collectionsService = collectionsService;
         _createCollectionCommandHandler = createCollectionCommandHandler;
         _getCollectionsQuery = getCollectionsQuery;
         _getCollectionQuery = getCollectionQuery;

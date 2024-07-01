@@ -1,8 +1,7 @@
 using cd_collection.application.Abstractions;
-using cd_collection.application.Commands;
+using cd_collection.application.Commands.ItemsCommands;
 using cd_collection.application.DTO;
 using cd_collection.application.Queries;
-using cd_collection.application.Services.Contracts;
 using cd_collection.Models;
 using Microsoft.AspNetCore.Mvc;
 
