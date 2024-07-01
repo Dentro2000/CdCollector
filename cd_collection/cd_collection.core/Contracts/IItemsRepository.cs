@@ -7,7 +7,7 @@ public interface IItemsRepository
 {
     Task AddItemAsync(CdItem item);
 
-    bool DeleteItem(CdItemId guid);
+    Task DeleteItem(CdItemId guid);
 
     IEnumerable<CdItem> GetItems();
 

@@ -20,13 +20,11 @@ internal sealed class DbItemsRepository : IItemsRepository
         await _context.SaveChangesAsync();
     }
 
-    public bool DeleteItem(CdItemId guid)
+    public async Task DeleteItem(CdItemId guid)
     {
         var item = _context.CdItems.Single(x => x.Id == guid);
         _context.Remove(item);
-        _context.SaveChanges();
-        //TODO: should not return
-        return true;
+        await _context.SaveChangesAsync();
     }
 
     public IEnumerable<CdItem?> GetItems()

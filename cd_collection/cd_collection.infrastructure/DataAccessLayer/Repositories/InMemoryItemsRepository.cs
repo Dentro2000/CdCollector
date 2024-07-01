@@ -22,22 +22,16 @@ public class InMemoryItemsRepository : IItemsRepository
     public async Task AddItemAsync(CdItem item) => _items.Add(item);
 
 
-    public bool DeleteItem(CdItemId guid)
+    public Task DeleteItem(CdItemId guid)
     {
-        var itemToRemove = _items.SingleOrDefault(x => x.Id == guid);
-        if (itemToRemove == null)
-        {
-            //throw exception
-            return false;
-        }
-
-        _items.Remove(itemToRemove);
-        return true;
+        _items.SingleOrDefault(x => x.Id == guid);
+        return Task.CompletedTask;
     }
 
     public IEnumerable<CdItem?> GetItems() => _items;
 
     public CdItem? GetItem(CdItemId id) => _items.SingleOrDefault(x => x.Id == id);
+
     public Task UpdateItemAsync(CdItem item)
     {
         throw new NotImplementedException();

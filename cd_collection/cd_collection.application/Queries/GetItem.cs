@@ -3,11 +3,11 @@ using cd_collection.application.DTO;
 
 namespace cd_collection.application.Queries;
 
-public class GetCdItem: IQuery<CdItemDto>
+public class GetItem: IQuery<CdItemDto>
 {
     public Guid CdItemId;
 
-    public GetCdItem(Guid cdItemId)
+    public GetItem(Guid cdItemId)
     {
         CdItemId = cdItemId;
     }

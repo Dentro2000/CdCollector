@@ -33,6 +33,7 @@ public static class ApplicationServicesExtension
         services.AddScoped<ICommandHandler<UpdateItem>, UpdateItemCommandHandler>();
         services.AddScoped<ICommandHandler<CreateItem>, CreateItemCommandHandler>();
         services.AddScoped<ICommandHandler<RemoveItemFromCollection>, RemoveItemFromCollectionCommandHandler>();
+        services.AddScoped<ICommandHandler<DeleteItem>, DeleteItemCommandHandler>();
 
         
         services.AddScoped<IItemsService, CdItemsService>();

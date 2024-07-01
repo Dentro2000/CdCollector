@@ -84,6 +84,6 @@ public class CdItemsService : IItemsService
 
     public bool DeleteItem(Guid guid)
     {
-        return _repository.DeleteItem(guid);
+        throw new NotImplementedException();
     }
 }
