@@ -1,4 +1,3 @@
-using cd_collection.application.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
