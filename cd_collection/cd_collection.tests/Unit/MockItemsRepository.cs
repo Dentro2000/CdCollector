@@ -30,7 +30,7 @@ public class MockItemsRepository : IItemsRepository
         return _items;
     }
 
-    public void UpdateItem(CdItem item)
+    public void UpdateItemAsync(CdItem item)
     {
         var z = _items.Single(x => x.Id == item.Id);
         _items.Remove(z);

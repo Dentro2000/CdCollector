@@ -56,7 +56,7 @@ public class CdItemsService : IItemsService
 
         if (item == null)
         {
-            throw new CantUpdateItemException(guid);
+            throw new ItemDontExistsException(guid);
         }
 
         if (!string.IsNullOrEmpty(artist))
@@ -79,7 +79,7 @@ public class CdItemsService : IItemsService
             item.ChangeReleaseDate(releaseDate.Value);
         }
 
-        _repository.UpdateItem(item);
+        _repository.UpdateItemAsync(item);
     }
 
     public bool DeleteItem(Guid guid)

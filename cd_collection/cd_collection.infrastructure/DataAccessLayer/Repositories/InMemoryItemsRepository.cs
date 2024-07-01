@@ -38,8 +38,8 @@ public class InMemoryItemsRepository : IItemsRepository
     public IEnumerable<CdItem?> GetItems() => _items;
 
     public CdItem? GetItem(CdItemId id) => _items.SingleOrDefault(x => x.Id == id);
-    public void UpdateItem(CdItem item)
+    public Task UpdateItemAsync(CdItem item)
     {
-       
+        throw new NotImplementedException();
     }
 }

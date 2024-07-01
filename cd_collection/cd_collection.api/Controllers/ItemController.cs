@@ -15,13 +15,15 @@ public class ItemController : ControllerBase
     private readonly IItemsService _itemsService;
     private readonly IQueryHandler<GetCdItem, CdItemDto> _getItemQueryHandler;
     private readonly ICommandHandler<CreateItem> _createItemCommandHandler;
+    private readonly ICommandHandler<UpdateItem> _updateItemCommandHandler;
 
     public ItemController(IItemsService itemsService, IQueryHandler<GetCdItem, CdItemDto> getItemQueryHandler,
-        ICommandHandler<CreateItem> createItemCommandHandler)
+        ICommandHandler<CreateItem> createItemCommandHandler, ICommandHandler<UpdateItem> updateItemCommandHandler)
     {
         _itemsService = itemsService;
         _getItemQueryHandler = getItemQueryHandler;
         _createItemCommandHandler = createItemCommandHandler;
+        _updateItemCommandHandler = updateItemCommandHandler;
     }
 
     [HttpGet]
@@ -31,9 +33,9 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet("{itemIdentifier:guid}")]
-    public ActionResult<CdItemDto> GetItem(Guid itemIdentifier)
+    public async Task<ActionResult<CdItemDto>> GetItem(Guid itemIdentifier)
     {
-        return Ok(_getItemQueryHandler.HandleAsync(new GetCdItem(itemIdentifier)));
+        return Ok(await _getItemQueryHandler.HandleAsync(new GetCdItem(itemIdentifier)));
     }
 
     [HttpPost]
@@ -48,16 +50,18 @@ public class ItemController : ControllerBase
     }
 
     [HttpPut("{itemIdentifier:guid}/update")]
-    public ActionResult<CdItemDto> UpdateItem(Guid itemIdentifier, string artist, string title, string label,
+    public async Task<ActionResult<CdItemDto>> UpdateItem(Guid itemIdentifier, string artist, string title, string label,
         DateOnly releaseDate)
     {
-        _itemsService.UpdateItem(itemIdentifier, artist, title, label, releaseDate);
-        var updatedItem = _itemsService.GetItem(itemIdentifier);
+        var updateItemCommand = new UpdateItem(itemIdentifier, artist, title, label, releaseDate);
+        await _updateItemCommandHandler.HandleAsync(updateItemCommand);
 
+        var updatedItem = await _getItemQueryHandler.HandleAsync(new GetCdItem(itemIdentifier));
+        
         return Ok(updatedItem);
     }
 
     [HttpDelete("{itemIdentifier:guid}/remove")]
-    public ActionResult DeleteCollection(Guid itemIdentifier)
+    public ActionResult DeleteItem(Guid itemIdentifier)
         => _itemsService.DeleteItem(itemIdentifier) == false ? BadRequest() : NoContent();
 }

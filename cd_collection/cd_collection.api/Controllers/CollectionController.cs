@@ -20,6 +20,7 @@ public class CdCollectionController : ControllerBase
     private readonly ICommandHandler<UpdateCollection> _updateCollectionCommandHandler;
     private readonly ICommandHandler<DeleteCollection> _deleteCollectionCommandHandler;
     private readonly ICommandHandler<AddItemToCollection> _addItemToCollectionCommandHandler;
+    private readonly ICommandHandler<RemoveItemFromCollection> _removeItemFromCollectionCommandHandler;
 
     public CdCollectionController(ICollectionsService collectionsService,
         ICommandHandler<CreateCollection> createCollectionCommandHandler,
@@ -27,7 +28,8 @@ public class CdCollectionController : ControllerBase
         IQueryHandler<GetCollection, CollectionDto> getCollectionQuery,
         ICommandHandler<UpdateCollection> updateCollectionCommandHandler,
         ICommandHandler<DeleteCollection> deleteCollectionCommandHandler,
-        ICommandHandler<AddItemToCollection> addItemToCollectionCommandHandler)
+        ICommandHandler<AddItemToCollection> addItemToCollectionCommandHandler, 
+        ICommandHandler<RemoveItemFromCollection> removeItemFromCollectionCommandHandler)
     {
         _collectionsService = collectionsService;
         _createCollectionCommandHandler = createCollectionCommandHandler;
@@ -36,6 +38,7 @@ public class CdCollectionController : ControllerBase
         _updateCollectionCommandHandler = updateCollectionCommandHandler;
         _deleteCollectionCommandHandler = deleteCollectionCommandHandler;
         _addItemToCollectionCommandHandler = addItemToCollectionCommandHandler;
+        _removeItemFromCollectionCommandHandler = removeItemFromCollectionCommandHandler;
     }
 
     [HttpGet]
@@ -63,7 +66,7 @@ public class CdCollectionController : ControllerBase
     [HttpPut("{collectionId:guid}")]
     public async Task<ActionResult<CollectionDto>> UpdateCollection(Guid collectionId, UpdateCollection command)
     {
-        await _updateCollectionCommandHandler.HandleAsync(command with { collectionId = collectionId });
+        await _updateCollectionCommandHandler.HandleAsync(command with { CollectionId = collectionId });
         var updated = await _getCollectionQuery.HandleAsync(new GetCollection(collectionId));
         return Ok(updated);
     }
@@ -82,20 +85,16 @@ public class CdCollectionController : ControllerBase
     {
         await _addItemToCollectionCommandHandler.HandleAsync(new AddItemToCollection(itemId, collectionId));
 
-            var collection = await _getCollectionQuery.HandleAsync(new GetCollection(collectionId));
+        var collection = await _getCollectionQuery.HandleAsync(new GetCollection(collectionId));
 
         return Ok(collection);
     }
 
     [HttpDelete("items/{collectionId:guid}/remove")]
-    public ActionResult<CollectionDto> RemoveItemFromCollection(Guid itemId, Guid collectionId)
+    public async Task<ActionResult<CollectionDto>> RemoveItemFromCollection(Guid itemId, Guid collectionId)
     {
-        var collection = _collectionsService.RemoveItemFromCollection(itemId, collectionId);
-        if (collection == null)
-        {
-            return BadRequest();
-        }
-
+        await _removeItemFromCollectionCommandHandler.HandleAsync(new RemoveItemFromCollection(itemId, collectionId));
+        var collection = await _getCollectionQuery.HandleAsync(new GetCollection(collectionId));
         return Ok(collection);
     }
 }

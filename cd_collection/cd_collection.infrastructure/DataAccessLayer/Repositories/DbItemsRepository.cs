@@ -36,9 +36,9 @@ internal sealed class DbItemsRepository : IItemsRepository
 
     public CdItem? GetItem(CdItemId id) => _context.CdItems.SingleOrDefault(x => x.Id == id);
 
-    public void UpdateItem(CdItem item)
+    public async Task UpdateItemAsync(CdItem item)
     {
         _context.Update(item);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 }

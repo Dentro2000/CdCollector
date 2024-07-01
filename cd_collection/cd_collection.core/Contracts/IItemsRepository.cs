@@ -13,5 +13,5 @@ public interface IItemsRepository
 
     CdItem? GetItem(CdItemId id);
 
-    void UpdateItem(CdItem item);
+    Task UpdateItemAsync(CdItem item);
 }

@@ -116,7 +116,7 @@ public class ItemsServiceTests
         //given
         //when
         //then
-        Assert.Throws<CantUpdateItemException>(() =>
+        Assert.Throws<ItemDontExistsException>(() =>
             _sut.UpdateItem(Guid.NewGuid(), null, null, "newLabel", null));
     }
 

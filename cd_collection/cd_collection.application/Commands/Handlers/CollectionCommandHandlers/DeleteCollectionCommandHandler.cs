@@ -2,7 +2,7 @@ using cd_collection.application.Abstractions;
 using cd_collection.core.Contracts;
 using cd_collection.core.Exceptions;
 
-namespace cd_collection.application.Commands.Handlers;
+namespace cd_collection.application.Commands.Handlers.CollectionCommandHandlers;
 
 public class DeleteCollectionCommandHandler : ICommandHandler<DeleteCollection>
 {

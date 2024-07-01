@@ -43,7 +43,7 @@ public class Collection
        
         if (!CdItems.Select(x => x.Id).ToList().Contains(item.Id.Value))
         {
-            throw new CannotRemoveItemException(item.Id);
+            throw new CannotRemoveItemException(item.Id, Id);
         }
         
         CdItems.Remove(item);
